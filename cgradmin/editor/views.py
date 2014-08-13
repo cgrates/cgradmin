@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+#from django.views.decorators.csrf import csrf_exempt
 import json, socket, itertools
 
 class JSONClient(object):
@@ -25,11 +25,11 @@ class JSONClient(object):
            raise Exception(response.get('error'))
        return response.get('result')
 
-
-
 rpc =JSONClient(("localhost", 2012))
 
-@csrf_exempt
-def index(request, method):
-    response = rpc.call(method, json.loads(request.body))
-    return HttpResponse(json.dumps(response), content_type="application/json")
+def call(request, method):
+   param = json.loads(request.body.decode("utf-8")) if request.body else ""
+   print(param)
+   response = rpc.call(method, param)
+   print(response)
+   return HttpResponse(json.dumps(response), content_type="application/json")
