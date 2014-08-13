@@ -29,7 +29,5 @@ rpc =JSONClient(("localhost", 2012))
 
 def call(request, method):
    param = json.loads(request.body.decode("utf-8")) if request.body else ""
-   print(param)
    response = rpc.call(method, param)
-   print(response)
    return HttpResponse(json.dumps(response), content_type="application/json")
