@@ -1,5 +1,4 @@
 import json
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from editor.json_client import CGRConnector

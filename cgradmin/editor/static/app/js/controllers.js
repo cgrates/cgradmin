@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', [])
+angular.module('cgradminApp.controllers', [])
     .controller('MyCtrl1', ['$scope', function($scope) {
     }])
     .controller('MyCtrl2', ['$scope', '$http', function($scope, $http) {
