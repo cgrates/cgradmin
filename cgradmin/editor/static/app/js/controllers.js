@@ -4,7 +4,6 @@
 
 angular.module('myApp.controllers', [])
     .controller('MyCtrl1', ['$scope', function($scope) {
-
     }])
     .controller('MyCtrl2', ['$scope', '$http', function($scope, $http) {
         var url = '/call/CDRStatsV1.GetMetrics';

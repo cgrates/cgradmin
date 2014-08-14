@@ -1,33 +1,13 @@
+import json
 from django.shortcuts import render
 from django.http import HttpResponse
-#from django.views.decorators.csrf import csrf_exempt
-import json, socket, itertools
+from django.views.decorators.http import require_POST
+from editor.json_client import CGRConnector
 
-class JSONClient(object):
-   def __init__(self, addr):
-       self.socket = socket.create_connection(addr)
-       self.id_counter = itertools.count()
-   def __del__(self):
-       self.socket.close()
-   def call(self, name, *params):
-       request = dict(id=next(self.id_counter),
-                   params=list(params),
-                   method=name)
-       self.socket.sendall(json.dumps(request).encode())
-       # This must loop if resp is bigger than 4K
-       response = self.socket.recv(4096)
-       response = json.loads(response.decode())
-       if response.get('id') != request.get('id'):
-           raise Exception("expected id=%s, received id=%s: %s"
-                           %(request.get('id'), response.get('id'),
-                             response.get('error')))
-       if response.get('error') is not None:
-           raise Exception(response.get('error'))
-       return response.get('result')
+connector = CGRConnector()
 
-rpc =JSONClient(("localhost", 2012))
-
+@require_POST
 def call(request, method):
    param = json.loads(request.body.decode("utf-8")) if request.body else ""
-   response = rpc.call(method, param)
+   response = connector.call(method, param)
    return HttpResponse(json.dumps(response), content_type="application/json")
