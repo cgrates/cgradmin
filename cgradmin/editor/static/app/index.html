@@ -31,12 +31,36 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">cgr-admin</a>
+        <a class="navbar-brand" id="brand" href="/">cgr-admin</a>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><a href="#/view1">View1</a></li>
-          <li><a href="#/view2">View2</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Editor <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li class="dropdown-header">Rating</li>
+              <li><a href="#/timings">Timings</a></li>
+              <li><a href="#/destinations">Destinations</a></li>
+              <li><a href="#/rates">Rates</a></li>
+              <li><a href="#/destinationrates">Destination Rates</a></li>
+              <li><a href="#/ratingplans">Rating Plans</a></li>
+              <li><a href="#/ratingprofiles">Rating Profiles</a></li>
+              <li><a href="#/rpaliases">Rating Profile Aliases</a></li>
+              <li><a href="#/cataliases">Category Aliases</a></li>
+              <li><a href="#/lcrrules">Lcr Rules</a></li>
+              <li><a href="#/cdrstats">Cdr Stats</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Accounting</li>
+              <li><a href="#/actions">Actions</a></li>
+              <li><a href="#/actionplans">Action Plans</a></li>
+              <li><a href="#/actiontriggers">Action Triggers</a></li>
+              <li><a href="#/accountactions">Account Actions</a></li>
+              <li><a href="#/sharedgroups">Shared Groups</a></li>
+              <li><a href="#/derivedcharges">Derived Charges</a></li>
+            </ul>
+          </li>
+          <li><a href="#/import">Import</a></li>
+          <li><a href="#/export">Export</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -48,7 +72,11 @@
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <div ng-view></div>
-    <div>Angular seed app: v<span app-version></span></div>
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">cgr-admin v<span app-version></span></p>
+      </div>
+    </div>
   </div>
 
   <!-- In production use:
