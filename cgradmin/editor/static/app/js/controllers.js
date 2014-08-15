@@ -3,40 +3,52 @@
 /* Controllers */
 
 angular.module('cgradminApp.controllers', [])
-    .controller('TimingsCtrl', ['$scope', function($scope) {
-    }])
-    .controller('DestinationsCtrl', ['$scope', '$http', function($scope, $http) {
-        var url = '/call/CDRStatsV1.GetMetrics';
-        var param = {StatsQueueId: 'CDRST1'};
-        $http.post(url, param).success(function(data, status, headers, config) {
-            $scope.status = data;
-        });
-    }])
-    .controller('RatesCtrl', ['$scope', function($scope) {
-    }])
-    .controller('DestinationRatesCtrl', ['$scope', function($scope) {
-    }])
-    .controller('RatingPlansCtrl', ['$scope', function($scope) {
-    }])
-    .controller('RatingProfilesCtrl', ['$scope', function($scope) {
-    }])
-    .controller('RatingProfileAliasesCtrl', ['$scope', function($scope) {
-    }])
-    .controller('CategoryAliasesCtrl', ['$scope', function($scope) {
-    }])
-    .controller('LcrRulesCtrl', ['$scope', function($scope) {
-    }])
-    .controller('CdrStatsCtrl', ['$scope', function($scope) {
-    }])
-    .controller('ActionsCtrl', ['$scope', function($scope) {
-    }])
-    .controller('ActionPlansCtrl', ['$scope', function($scope) {
-    }])
-    .controller('ActionTriggersCtrl', ['$scope', function($scope) {
-    }])
-    .controller('AccountActionsCtrl', ['$scope', function($scope) {
-    }])
-    .controller('SharedGroupsCtrl', ['$scope', function($scope) {
-    }])
-    .controller('DerivedChargesCtrl', ['$scope', function($scope) {
-    }]);
+    .controller('TimingsCtrl', function($scope, statusFactory, tpidsFactory) {
+        statusFactory.GetStatus().success(function(data) {$scope.status = data;});
+        tpidsFactory.GetTpIds().success(function(data) {$scope.tpids = data;});
+    })
+    .controller('DestinationsCtrl', function($scope, destinationsFactory) {
+        destinationsFactory.GetDestinationIds().success(function(data) {$scope.destinations = data;});
+    })
+    .controller('DestinationDetailCtrl', function($scope, $routeParams, destinationsFactory) {
+        if($routeParams.destId){
+            destinationsFactory.GetDestination($routeParams.destId).success(function(data) {$scope.dest = data;});
+        } else {
+            $scope.showId = true;
+        }
+        $scope.saveDestination=function(){
+            if(angular.isString($scope.dest.Prefixes)) {
+                $scope.dest.Prefixes = $scope.dest.Prefixes.split(",");
+            }
+            destinationsFactory.SetDestination($scope.dest).success(function(data){$scope.result = data;});
+        };
+    })
+    .controller('RatesCtrl', function($scope) {
+    })
+    .controller('DestinationRatesCtrl', function($scope) {
+    })
+    .controller('RatingPlansCtrl', function($scope) {
+    })
+    .controller('RatingProfilesCtrl', function($scope) {
+    })
+    .controller('RatingProfileAliasesCtrl', function($scope) {
+    })
+    .controller('CategoryAliasesCtrl', function($scope) {
+    })
+    .controller('LcrRulesCtrl', function($scope) {
+    })
+    .controller('CdrStatsCtrl', function($scope, metricsFactory) {
+        metricsFactory.GetMetrics({StatsQueueId: 'CDRST1'}).success(function(data) {$scope.metrics = data;});
+    })
+    .controller('ActionsCtrl', function($scope) {
+    })
+    .controller('ActionPlansCtrl', function($scope) {
+    })
+    .controller('ActionTriggersCtrl', function($scope) {
+    })
+    .controller('AccountActionsCtrl', function($scope) {
+    })
+    .controller('SharedGroupsCtrl', function($scope) {
+    })
+    .controller('DerivedChargesCtrl', function($scope) {
+    });

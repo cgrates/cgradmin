@@ -39,10 +39,11 @@ class CGRConnector(object):
     def call(self, method, param):
         try:
             return self.rpc.call(method, param)
-        except:
-            self.connect()
-            try:
-                return self.rpc.call(method, param)
-            except:
-                return self.err
+        except Exception as inst:
+           print("ERROR: ", inst)
+           self.connect()
+           try:
+              return self.rpc.call(method, param)
+           except:
+              return self.err
         
