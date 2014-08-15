@@ -37,7 +37,9 @@ angular.module('cgradminApp.services', [])
             return $http.post('/call/ApierV1.GetTPDestination', {TPid : $cookieStore.get('tpid'), DestinationId: destId});
         };
         factory.SetDestination = function(dest){
-            dest.Tpid = $cookieStore.get('tpid');
+            if(!dest.Tpid){
+                dest.Tpid = $cookieStore.get('tpid');
+            }
             return $http.post('/call/ApierV1.SetTPDestination', dest);
         };
         return factory;
