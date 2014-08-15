@@ -4,6 +4,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('cgradminApp', [
     'ngRoute',
+    'ngCookies',
     'cgradminApp.filters',
     'cgradminApp.services',
     'cgradminApp.directives',

@@ -28,16 +28,16 @@ angular.module('cgradminApp.services', [])
         };
         return factory;
     })
-    .factory('destinationsFactory', function($http){
+    .factory('destinationsFactory', function($http, $cookieStore) {
         var factory = {};
         factory.GetDestinationIds = function(){
-            return $http.post('/call/ApierV1.GetTPDestinationIds', {TPid : 'first'});
+            return $http.post('/call/ApierV1.GetTPDestinationIds', {TPid : $cookieStore.get('tpid')});
         };
         factory.GetDestination = function(destId){
-            return $http.post('/call/ApierV1.GetTPDestination', {TPid : 'first', DestinationId: destId});
+            return $http.post('/call/ApierV1.GetTPDestination', {TPid : $cookieStore.get('tpid'), DestinationId: destId});
         };
         factory.SetDestination = function(dest){
-            dest.Tpid = 'first';
+            dest.Tpid = $cookieStore.get('tpid');
             return $http.post('/call/ApierV1.SetTPDestination', dest);
         };
         return factory;

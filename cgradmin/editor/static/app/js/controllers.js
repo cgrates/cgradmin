@@ -3,9 +3,21 @@
 /* Controllers */
 
 angular.module('cgradminApp.controllers', [])
-    .controller('TimingsCtrl', function($scope, statusFactory, tpidsFactory) {
+    .controller('TpIdsCtrl', function($scope, $cookieStore, tpidsFactory) {
+        $scope.tpid = $cookieStore.get('tpid');
+        tpidsFactory.GetTpIds().success(function(data) {
+            $scope.tpids = data;
+            if(!$scope.tpid){
+                $scope.tpid = data[0];
+                $cookieStore.put('tpid', $scope.tpid);
+            }
+        });
+        $scope.SetTpId = function(tpid){
+             $cookieStore.put('tpid', tpid);
+        };
+    })
+    .controller('TimingsCtrl', function($scope, statusFactory) {
         statusFactory.GetStatus().success(function(data) {$scope.status = data;});
-        tpidsFactory.GetTpIds().success(function(data) {$scope.tpids = data;});
     })
     .controller('DestinationsCtrl', function($scope, destinationsFactory) {
         destinationsFactory.GetDestinationIds().success(function(data) {$scope.destinations = data;});
