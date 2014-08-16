@@ -1,15 +1,14 @@
-<h3>Destination {{dest.DestinationId}}</h3>
-
+<h3>Destination {{destCtrl.dest.DestinationId}}</h3>
 <form class="form-horizontal" role="form">
   <div class="form-group">
     <div ng-show="showId">
       <label for="dest_id" class="control-label">DestinationId</label>
-      <input type="text" class="form-control" id="dest_id" ng-model="dest.DestinationId"/>
+      <input type="text" class="form-control" id="dest_id" ng-model="destCtrl.dest.DestinationId"/>
     </div>
   </div>
   <div class="form-group">
     <label for="prefixes" class="control-label">Prefixes</label>
-    <textarea class="form-control" id="prefixes" ng-model="dest.Prefixes"></textarea>
+    <textarea class="form-control" id="prefixes" ng-model="destCtrl.dest.Prefixes"></textarea>
   </div>
   <div class="form-group">
     <button class="btn btn-default" ng-click="saveDestination()">Save</button>

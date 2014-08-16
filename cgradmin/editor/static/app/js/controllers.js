@@ -3,64 +3,70 @@
 /* Controllers */
 
 angular.module('cgradminApp.controllers', [])
-    .controller('TpIdsCtrl', function($scope, $cookieStore, tpidsFactory) {
-        $scope.tpid = $cookieStore.get('tpid');
+    .controller('TpIdsCtrl', function($cookieStore, tpidsFactory) {
+        this.tpid = $cookieStore.get('tpid');
+        var ctrl = this;
+        ctrl.tpids = [];
         tpidsFactory.GetTpIds().success(function(data) {
-            $scope.tpids = data;
-            if(!$scope.tpid){
-                $scope.tpid = data[0];
-                $cookieStore.put('tpid', $scope.tpid);
+            ctrl.tpids = data;
+            if(!ctrl.tpid){
+                ctrl.tpid = data[0];
+                $cookieStore.put('tpid', ctrl.tpid);
             }
         });
-        $scope.SetTpId = function(tpid){
+        this.SetTpId = function(tpid){
              $cookieStore.put('tpid', tpid);
         };
     })
-    .controller('TimingsCtrl', function($scope, statusFactory) {
-        statusFactory.GetStatus().success(function(data) {$scope.status = data;});
+    .controller('TimingsCtrl', function(statusFactory) {
+        var ctrl = this;
+        statusFactory.GetStatus().success(function(data) {ctrl.status = data;});
     })
-    .controller('DestinationsCtrl', function($scope, destinationsFactory) {
-        destinationsFactory.GetDestinationIds().success(function(data) {$scope.destinations = data;});
+    .controller('DestinationsCtrl', function(destinationsFactory) {
+        var ctrl = this;
+        destinationsFactory.GetDestinationIds().success(function(data) {ctrl.destinations = data;});
     })
-    .controller('DestinationDetailCtrl', function($scope, $routeParams, destinationsFactory) {
+    .controller('DestinationDetailCtrl', function($routeParams, destinationsFactory) {
+        var ctrl = this;
         if($routeParams.destId){
-            destinationsFactory.GetDestination($routeParams.destId).success(function(data) {$scope.dest = data;});
+            destinationsFactory.GetDestination($routeParams.destId).success(function(data) {ctrl.dest = data;});
         } else {
-            $scope.showId = true;
+            this.showId = true;
         }
-        $scope.saveDestination=function(){
-            if(angular.isString($scope.dest.Prefixes)) {
-                $scope.dest.Prefixes = $scope.dest.Prefixes.split(",");
+        this.saveDestination=function(){
+            if(angular.isString(this.dest.Prefixes)) {
+                this.dest.Prefixes = this.dest.Prefixes.split(",");
             }
-            destinationsFactory.SetDestination($scope.dest).success(function(data){$scope.result = data;});
+            destinationsFactory.SetDestination(this.dest).success(function(data){ctrl.result = data;});
         };
     })
-    .controller('RatesCtrl', function($scope) {
+    .controller('RatesCtrl', function() {
     })
-    .controller('DestinationRatesCtrl', function($scope) {
+    .controller('DestinationRatesCtrl', function() {
     })
-    .controller('RatingPlansCtrl', function($scope) {
+    .controller('RatingPlansCtrl', function() {
     })
-    .controller('RatingProfilesCtrl', function($scope) {
+    .controller('RatingProfilesCtrl', function() {
     })
-    .controller('RatingProfileAliasesCtrl', function($scope) {
+    .controller('RatingProfileAliasesCtrl', function() {
     })
-    .controller('CategoryAliasesCtrl', function($scope) {
+    .controller('CategoryAliasesCtrl', function() {
     })
-    .controller('LcrRulesCtrl', function($scope) {
+    .controller('LcrRulesCtrl', function() {
     })
-    .controller('CdrStatsCtrl', function($scope, metricsFactory) {
-        metricsFactory.GetMetrics({StatsQueueId: 'CDRST1'}).success(function(data) {$scope.metrics = data;});
+    .controller('CdrStatsCtrl', function(metricsFactory) {
+        var ctrl = this;
+        metricsFactory.GetMetrics({StatsQueueId: 'CDRST1'}).success(function(data) {ctrl.metrics = data;});
     })
-    .controller('ActionsCtrl', function($scope) {
+    .controller('ActionsCtrl', function() {
     })
-    .controller('ActionPlansCtrl', function($scope) {
+    .controller('ActionPlansCtrl', function() {
     })
-    .controller('ActionTriggersCtrl', function($scope) {
+    .controller('ActionTriggersCtrl', function() {
     })
-    .controller('AccountActionsCtrl', function($scope) {
+    .controller('AccountActionsCtrl', function() {
     })
-    .controller('SharedGroupsCtrl', function($scope) {
+    .controller('SharedGroupsCtrl', function() {
     })
-    .controller('DerivedChargesCtrl', function($scope) {
+    .controller('DerivedChargesCtrl', function() {
     });
