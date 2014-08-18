@@ -18,39 +18,71 @@ angular.module('cgradminApp.controllers', [])
            $cookieStore.put('tpid', tpid);
          };
        })
-       .controller('TimingsCtrl', function(statusFactory) {
-         var ctrl = this;
-         statusFactory.getStatus().success(function(data) {ctrl.status = data;});
-       })
-       .controller('DestinationsCtrl', function(destinationsFactory) {
-         this.dest = {};
+       .controller('TimingsCtrl', function(resFactory) {
+         this.partial = 'timings';
+         this.res = {};
          this.detailsVisible = false;
          var ctrl = this;
-         destinationsFactory.getDestinationIds().success(function(data) {ctrl.destinations = data;});
+         resFactory.getResourceIds('ApierV1.GetTPTimingIds').success(function(data) {ctrl.resources = data;});
 
-         this.showDetails = function(destId){
+         this.showDetails = function(resId){
            this.result = '';
-           if (destId){
-             destinationsFactory.getDestination({DestinationId: destId}).success(function(data) {ctrl.dest = data;});
+           if (resId){
+             resFactory.getResource('ApierV1.GetTPTiming', {TimingId: resId}).success(function(data) {ctrl.res = data;});
            } else {
              this.showId = true;
            }
            this.detailsVisible = true;
          }
-         this.saveDestination = function(){
-           if(angular.isString(this.dest.Prefixes)) {
-             this.dest.Prefixes = this.dest.Prefixes.split(",");
+         this.saveResource = function(){
+           resFactory.setResource('ApierV1.SetTPTiming', this.res).success(function(data){ctrl.result = data;});
+           if(this.resources.indexOf(this.res.TimingId) == -1){
+             resFactory.getResourceIds('ApierV1.GetTPTimingIds').success(function(data) {ctrl.resources = data;});
            }
-           destinationsFactory.setDestination(this.dest).success(function(data){ctrl.result = data;});
-           destinationsFactory.getDestinationIds().success(function(data) {ctrl.destinations = data;});
-           this.dest = {};
+           this.res = {};
            this.detailsVisible = false;
          };
-         this.deleteDestination = function(destId){
-           destinationsFactory.delDestination({DestinationId: destId}).success(function(data){ctrl.result = data;});
-           var index = this.destinations.indexOf(destId);
+         this.deleteResource = function(resId){
+           resFactory.delResource('ApierV1.RemTPTiming', {TimingId: resId}).success(function(data){ctrl.result = data;});
+           var index = this.resources.indexOf(resId);
            if (index > -1){
-             this.destinations.splice(index, 1);
+             this.resources.splice(index, 1);
+           }
+         };
+       })
+       .controller('DestinationsCtrl', function(resFactory) {
+         this.partial = 'destinations';
+         this.res = {};
+         this.detailsVisible = false;
+         var ctrl = this;
+         resFactory.getResourceIds('ApierV1.GetTPDestinationIds').success(function(data) {ctrl.resources = data;});
+
+         this.showDetails = function(resId){
+           this.result = '';
+           if (resId){
+             resFactory.getResource('ApierV1.GetTPDestination', {DestinationId: resId}).success(function(data) {ctrl.res = data;});
+           } else {
+             this.res = {};
+             this.showId = true;
+           }
+           this.detailsVisible = true;
+         }
+         this.saveResource = function(){
+           if(angular.isString(this.res.Prefixes)) {
+             this.res.Prefixes = this.res.Prefixes.split(",");
+           }
+           resFactory.setResource('ApierV1.SetTPDestination', this.res).success(function(data){ctrl.result = data;});
+           if(this.resources.indexOf(this.res.DestinationId) == -1){
+             resFactory.getResourceIds('ApierV1.GetTPDestinationIds').success(function(data) {ctrl.resources = data;});
+           }
+           this.res = {};
+           this.detailsVisible = false;
+         };
+         this.deleteResource = function(resId){
+           resFactory.delResource('ApierV1.RemTPDestination', {DestinationId: resId}).success(function(data){ctrl.result = data;});
+           var index = this.resources.indexOf(resId);
+           if (index > -1){
+             this.resources.splice(index, 1);
            }
          };
        })

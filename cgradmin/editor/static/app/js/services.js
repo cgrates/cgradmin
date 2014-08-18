@@ -28,23 +28,23 @@ angular.module('cgradminApp.services', [])
          };
          return factory;
        })
-       .factory('destinationsFactory', function($http, $cookieStore) {
+       .factory('resFactory', function($http, $cookieStore) {
          var factory = {};
          var param = {TPid : $cookieStore.get('tpid')};
-         factory.getDestinationIds = function(){
-           return $http.post('/call/ApierV1.GetTPDestinationIds', param);
+         factory.getResourceIds = function(func){
+           return $http.post('/call/'+func, param);
          };
-         factory.getDestination = function(destParam){
+         factory.getResource = function(func, destParam){
            angular.extend(destParam, param);
-           return $http.post('/call/ApierV1.GetTPDestination', destParam);
+           return $http.post('/call/' + func, destParam);
          };
-         factory.setDestination = function(destParam){
+         factory.setResource = function(func, destParam){
            angular.extend(destParam, param);
-           return $http.post('/call/ApierV1.SetTPDestination', destParam);
+           return $http.post('/call/' + func, destParam);
          };
-         factory.delDestination = function(destParam){
+         factory.delResource = function(func, destParam){
            angular.extend(destParam, param);
-           return $http.post('/call/ApierV1.RemTPDestination', destParam);
+           return $http.post('/call/' + func, destParam);
          };
          return factory;
        })
