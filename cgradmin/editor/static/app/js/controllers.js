@@ -18,101 +18,139 @@ angular.module('cgradminApp.controllers', [])
            $cookieStore.put('tpid', tpid);
          };
        })
-       .controller('TimingsCtrl', function(resFactory) {
-         this.partial = 'timings';
-         this.res = {};
-         this.detailsVisible = false;
+       .controller('ResourcesCtrl', function($routeParams, resFactory){
          var ctrl = this;
-         resFactory.getResourceIds('ApierV1.GetTPTimingIds').success(function(data) {ctrl.resources = data;});
-
-         this.showDetails = function(resId){
-           this.result = '';
-           if (resId){
-             resFactory.getResource('ApierV1.GetTPTiming', {TimingId: resId}).success(function(data) {ctrl.res = data;});
-           } else {
-             this.showId = true;
-           }
-           this.detailsVisible = true;
-         }
-         this.saveResource = function(){
-           resFactory.setResource('ApierV1.SetTPTiming', this.res).success(function(data){ctrl.result = data;});
-           if(this.resources.indexOf(this.res.TimingId) == -1){
-             resFactory.getResourceIds('ApierV1.GetTPTimingIds').success(function(data) {ctrl.resources = data;});
-           }
-           this.res = {};
-           this.detailsVisible = false;
-         };
+         ctrl.partial = $routeParams.partial;
+         ctrl.resources = [];
+         resFactory.getResourceIds('ApierV1.GetTP' + ctrl.partial + 'Ids').success(function(data) {ctrl.resources = data;});
          this.deleteResource = function(resId){
-           resFactory.delResource('ApierV1.RemTPTiming', {TimingId: resId}).success(function(data){ctrl.result = data;});
+           var param = {};
+           param[ctrl.partial + 'Id'] = resId;
+           resFactory.delResource('ApierV1.RemTP' + ctrl.partial, param).success(function(data){ctrl.result = data;});
            var index = this.resources.indexOf(resId);
            if (index > -1){
              this.resources.splice(index, 1);
            }
          };
        })
-       .controller('DestinationsCtrl', function(resFactory) {
-         this.partial = 'destinations';
+       .controller('TimingsCtrl', function($routeParams, resFactory) {
          this.res = {};
-         this.detailsVisible = false;
+         this.resId = $routeParams.res_id;
          var ctrl = this;
-         resFactory.getResourceIds('ApierV1.GetTPDestinationIds').success(function(data) {ctrl.resources = data;});
 
-         this.showDetails = function(resId){
-           this.result = '';
-           if (resId){
-             resFactory.getResource('ApierV1.GetTPDestination', {DestinationId: resId}).success(function(data) {ctrl.res = data;});
-           } else {
-             this.res = {};
-             this.showId = true;
-           }
-           this.detailsVisible = true;
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('ApierV1.GetTPTiming', {TimingId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
          }
+
+         this.saveResource = function(){
+           resFactory.setResource('ApierV1.SetTPRatingProfile', this.res).success(function(data){ctrl.result = data;});
+         };
+       })
+       .controller('DestinationsCtrl', function($routeParams, resFactory) {
+         this.res = {};
+         this.resId = $routeParams.res_id;
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('ApierV1.GetTPDestination', {DestinationId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
          this.saveResource = function(){
            if(angular.isString(this.res.Prefixes)) {
              this.res.Prefixes = this.res.Prefixes.split(",");
            }
            resFactory.setResource('ApierV1.SetTPDestination', this.res).success(function(data){ctrl.result = data;});
-           if(this.resources.indexOf(this.res.DestinationId) == -1){
-             resFactory.getResourceIds('ApierV1.GetTPDestinationIds').success(function(data) {ctrl.resources = data;});
-           }
-           this.res = {};
-           this.detailsVisible = false;
-         };
-         this.deleteResource = function(resId){
-           resFactory.delResource('ApierV1.RemTPDestination', {DestinationId: resId}).success(function(data){ctrl.result = data;});
-           var index = this.resources.indexOf(resId);
-           if (index > -1){
-             this.resources.splice(index, 1);
-           }
          };
        })
-       .controller('RatesCtrl', function() {
+       .controller('RatesCtrl', function($routeParams, resFactory) {
+         this.res = {};
+         this.resId = $routeParams.res_id;
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('ApierV1.GetTPRate', {RateId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('ApierV1.SetTPRate', this.res).success(function(data){ctrl.result = data;});
+         };
        })
-       .controller('DestinationRatesCtrl', function() {
+       .controller('DestinationRatesCtrl', function($routeParams, resFactory) {
+         this.res = {};
+         this.resId = $routeParams.res_id;
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('ApierV1.GetTPDestinationRate', {DestinationRateId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('ApierV1.SetTPDestinationRate', this.res).success(function(data){ctrl.result = data;});
+         };
        })
-       .controller('RatingPlansCtrl', function() {
+       .controller('RatingPlansCtrl', function($routeParams, resFactory) {
+         this.res = {};
+         this.resId = $routeParams.res_id;
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('ApierV1.GetTPRatingPlan', {RatingPlanId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('ApierV1.SetTPRatingPlan', this.res).success(function(data){ctrl.result = data;});
+         };
        })
-       .controller('RatingProfilesCtrl', function() {
+       .controller('RatingProfilesCtrl', function($routeParams, resFactory) {
+         this.res = {};
+         this.resId = $routeParams.res_id;
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('ApierV1.GetTPRatingProfile', {RatingProfileId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('ApierV1.SetTPRatingProfile', this.res).success(function(data){ctrl.result = data;});
+         };
        })
-       .controller('RatingProfileAliasesCtrl', function() {
+       .controller('RatingProfileAliasesCtrl', function($routeParams, resFactory) {
        })
-       .controller('CategoryAliasesCtrl', function() {
+       .controller('CategoryAliasesCtrl', function($routeParams, resFactory) {
        })
-       .controller('LcrRulesCtrl', function() {
+       .controller('LcrRulesCtrl', function($routeParams, resFactory) {
        })
        .controller('CdrStatsCtrl', function(metricsFactory) {
          var ctrl = this;
          metricsFactory.getMetrics({StatsQueueId: 'CDRST1'}).success(function(data) {ctrl.metrics = data;});
        })
-       .controller('ActionsCtrl', function() {
+       .controller('ActionsCtrl', function($routeParams, resFactory) {
        })
-       .controller('ActionPlansCtrl', function() {
+       .controller('ActionPlansCtrl', function($routeParams, resFactory) {
        })
-       .controller('ActionTriggersCtrl', function() {
+       .controller('ActionTriggersCtrl', function($routeParams, resFactory) {
        })
-       .controller('AccountActionsCtrl', function() {
+       .controller('AccountActionsCtrl', function($routeParams, resFactory) {
        })
-       .controller('SharedGroupsCtrl', function() {
+       .controller('SharedGroupsCtrl', function($routeParams, resFactory) {
        })
-       .controller('DerivedChargesCtrl', function() {
+       .controller('DerivedChargesCtrl', function($routeParams, resFactory) {
        });

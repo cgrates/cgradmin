@@ -1,14 +1,13 @@
-<div class="container">
-  <ng-include src="'partials/'+resCtrl.partial+'.html'"></ng-include>
-  <p class="label label-info pull-right" ng-show="resCtrl.result">Operation result:{{resCtrl.result}}</p>
-  <h3>{{resCtrl.partial|titlecase}}</h3>
-  <p><a class="btn btn-primary btn-lg" href ng-click="resCtrl.showDetails()">New {{resCtrl.partial}}</a></p>
 
+<div ng-hide="resCtrl.detailsVisible">
+  <p><a class="btn btn-primary pull-right" href="#/{{resCtrl.partial|lowercase}}">New {{resCtrl.partial}}</a></p>
+  
+  <h3>{{resCtrl.partial}}</h3>
 
   <span ng-repeat="rId in resCtrl.resources">
     <div class="btn-group">
-      <a href class="btn btn-default btn-xs" ng-click="resCtrl.showDetails(rId)">{{rId}}</a>
-      <a href class="btn btn-danger btn-xs" ng-click="resCtrl.deleteResource(rId)"><span class="glyphicon glyphicon-trash"></span></a>
+      <a class="btn btn-default btn-xs" href="#/{{resCtrl.partial|lowercase}}/{{rId}}">{{rId}}</a>
+      <a class="btn btn-danger btn-xs" href ng-click="resCtrl.deleteResource(rId)"><span class="glyphicon glyphicon-trash"></span></a>
     </div>
   </span>
 </div>

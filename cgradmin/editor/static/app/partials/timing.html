@@ -1,4 +1,4 @@
-<div id="detail-view" class="pull-right" ng-show="resCtrl.detailsVisible">
+<div id="detail-view">
   <h4>Timing {{resCtrl.res.TimingId}}</h4>
   <form class="form-horizontal" role="form">
     <div class="form-group">
@@ -31,4 +31,6 @@
       <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
     </div>
   </form>
+  <p class="label label-info" ng-show="resCtrl.result">Operation result:{{resCtrl.result}}</p>
+  <back></back>
 </div>

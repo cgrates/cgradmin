@@ -26,15 +26,14 @@ class JSONClient(object):
 
 class CGRConnector(object):
     def __init__(self):
-        self.err = "ERROR: cannot connect to cgr-engine!"
         self.connect()
 
     def connect(self):
         try:
             print("Connecting to cgr-engine...")
             self.rpc = JSONClient(("localhost", 2012))
-        except:
-            print(self.err)
+        except Exception as e:
+            print(e)
 
     def call(self, method, param):
         try:
@@ -44,6 +43,6 @@ class CGRConnector(object):
            self.connect()
            try:
               return self.rpc.call(method, param)
-           except:
-              return self.err
+           except Exception as e:
+              return "ERROR: %s" % e
         

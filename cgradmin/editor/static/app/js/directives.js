@@ -12,7 +12,7 @@ angular.module('cgradminApp.directives', [])
     .directive('back', function() {
         return {
             restrict: 'E',
-            template: '<div><a href="" class="btn pull-right">Back</a></div>',
+            template: '<div><a href="" class="btn btn-default pull-right">Back</a></div>',
             link: function(scope, element) {
                 $(element).on('click', function() {
                     history.back();

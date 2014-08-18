@@ -1,0 +1,36 @@
+<div id="detail-view">
+  <h4>Timing {{resCtrl.res.DestinationRateId}}</h4>
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="res_id" class="control-label">DestinationRateId</label>
+        <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.DestinationRateId"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="years" class="control-label">Years</label>
+      <input type="text" class="form-control" id="years" ng-model="resCtrl.res.Years"/>
+    </div>
+    <div class="form-group">
+      <label for="months" class="control-label">Months</label>
+      <input type="text" class="form-control" id="months" ng-model="resCtrl.res.Months"/>
+    </div>
+    <div class="form-group">
+      <label for="monthdays" class="control-label">Month days</label>
+      <input type="text" class="form-control" id="monthdays" ng-model="resCtrl.res.MonthDays"/>
+    </div>
+    <div class="form-group">
+      <label for="weekdays" class="control-label">Week days</label>
+      <input type="text" class="form-control" id="weekdays" ng-model="resCtrl.res.WeekDays"/>
+    </div>
+    <div class="form-group">
+      <label for="time" class="control-label">Time</label>
+      <input type="text" class="form-control" id="time" ng-model="resCtrl.res.Time"/>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
+    </div>
+  </form>
+  <p class="label label-info" ng-show="resCtrl.result">Operation result:{{resCtrl.result}}</p>
+  <back></back>
+</div>
