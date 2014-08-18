@@ -66,7 +66,7 @@
           <li class="dropdown" ng-controller="TpIdsCtrl as tiCtrl">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">{{tiCtrl.tpid}} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="ti in tiCtrl.tpids"><a href="" ng-click="SetTpId(ti)">{{tiCtrl.ti}}</a></li>
+              <li ng-repeat="ti in tiCtrl.tpids"><a href ng-click="setTpId(ti)">{{ti}}</a></li>
             </ul>
           </li>
         </ul>
