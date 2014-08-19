@@ -8,26 +8,38 @@
         <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.RateId"/>
       </div>
     </div>
-    <div class="form-group">
-      <label for="years" class="control-label">Years</label>
-      <input type="text" class="form-control" id="years" ng-model="resCtrl.res.Years"/>
-    </div>
-    <div class="form-group">
-      <label for="months" class="control-label">Months</label>
-      <input type="text" class="form-control" id="months" ng-model="resCtrl.res.Months"/>
-    </div>
-    <div class="form-group">
-      <label for="monthdays" class="control-label">Month days</label>
-      <input type="text" class="form-control" id="monthdays" ng-model="resCtrl.res.MonthDays"/>
-    </div>
-    <div class="form-group">
-      <label for="weekdays" class="control-label">Week days</label>
-      <input type="text" class="form-control" id="weekdays" ng-model="resCtrl.res.WeekDays"/>
-    </div>
-    <div class="form-group">
-      <label for="time" class="control-label">Time</label>
-      <input type="text" class="form-control" id="time" ng-model="resCtrl.res.Time"/>
-    </div>
+    <section ng-controller="PanelCtrl as panelCtrl">
+      <span ng-repeat="rate_slot in resCtrl.res.RateSlots">
+        <div class="btn-group">
+          <a class="btn btn-default btn-xs" ng-class="{'btn-primary':panelCtrl.isActive($index)}" href ng-click="panelCtrl.select($index)">Slot {{$index}}</a>
+          <a ng-if="$index > 0" class="btn btn-danger btn-xs" href ng-click="panelCtrl.remove(resCtrl.res.RateSlots, $index)"">x</a>
+        </div>
+      </span>
+      <a class="btn btn-default btn-xs" href ng-click="panelCtrl.add(resCtrl.res.RateSlots)">+</a>
+      <div>
+        <div class="form-group">
+          <label for="connectfee" class="control-label">Connec Fee</label>
+          <input type="number" class="form-control" id="connectfee" ng-model="resCtrl.res.RateSlots[panelCtrl.index].ConnectFee"/>
+        </div>
+        <div class="form-group">
+          <label for="rateunit" class="control-label">Rate Unit</label>
+          <input type="text" class="form-control" id="rateunit" ng-model="resCtrl.res.RateSlots[panelCtrl.index].RateUnit"/>
+        </div>
+        <div class="form-group">
+          <label for="rateincrement" class="control-label">Rate Increment</label>
+          <input type="text" class="form-control" id="rateincrement" ng-model="resCtrl.res.RateSlots[panelCtrl.index].RateIncrement"/>
+        </div>
+        <div class="form-group">
+          <label for="groupintervalstart" class="control-label">Group Interval Start</label>
+          <input type="text" class="form-control" id="groupintervalstart" ng-model="resCtrl.res.RateSlots[panelCtrl.index].GroupIntervalStart"/>
+        </div>
+        <div class="form-group">
+          <label for="rate" class="control-label">Rate</label>
+          <input type="number" class="form-control" id="rate" ng-model="resCtrl.res.RateSlots[panelCtrl.index].Rate"/>
+        </div>
+      </div>
+    </section>
+
     <div class="form-group">
       <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
     </div>

@@ -7,6 +7,17 @@
 // In this case it is a simple value service.
 angular.module('cgradminApp.services', [])
        .value('version', '0.1')
+       .value('idMethods', {
+         "Timing": "GetTPTimingIds",
+         "Destination": "GetTPDestinationIds",
+         "Rate": "GetTPRateIds",
+         "DestinationRate": "GetTPDestinationRateIds",
+         "RatingPlan": "GetTPRatingPlanIds",
+         "RatingProfile": "GetTPRatingProfileLoadIds",
+         "Action": "GetTPActionIds",
+         "ActionTrigger": "GetTPActionTriggerIds",
+         "ActionPlan": "GetTPActionPlanIds",
+       })
        .factory('metricsFactory', function($http){
          var factory = {};
          factory.getMetrics = function(param){
@@ -32,20 +43,19 @@ angular.module('cgradminApp.services', [])
          var factory = {};
          var param = {TPid : $cookieStore.get('tpid')};
          factory.getResourceIds = function(func){
-           return $http.post('/call/'+func, param);
+           return $http.post('/call/ApierV1.'+func, param);
          };
-         factory.getResource = function(func, destParam){
-           angular.extend(destParam, param);
-           return $http.post('/call/' + func, destParam);
+         factory.getResource = function(func, finalParam){
+           angular.extend(finalParam, param);
+           return $http.post('/call/ApierV1.' + func, finalParam);
          };
-         factory.setResource = function(func, destParam){
-           angular.extend(destParam, param);
-           return $http.post('/call/' + func, destParam);
+         factory.setResource = function(func, finalParam){
+           angular.extend(finalParam, param);
+           return $http.post('/call/ApierV1.' + func, finalParam);
          };
-         factory.delResource = function(func, destParam){
-           angular.extend(destParam, param);
-           return $http.post('/call/' + func, destParam);
+         factory.delResource = function(func, finalParam){
+           angular.extend(finalParam, param);
+           return $http.post('/call/ApierV1.' + func, finalParam);
          };
          return factory;
-       })
-;
+       });
