@@ -136,6 +136,10 @@ angular.module('cgradminApp.controllers', [])
        .controller('RatingPlansCtrl', function($routeParams, resFactory) {
          this.res = {};
          this.resId = $routeParams.res_id;
+         this.destRatesIds = [];
+         this.tmIds = [];
+         resFactory.getResourceIds('GetTPDestinationRateIds').success(function(data) {ctrl.destRatesIds = data;});
+         resFactory.getResourceIds('GetTPTimingIds').success(function(data) {ctrl.tmIds = data;});
          var ctrl = this;
 
          this.result = '';

@@ -1,32 +1,48 @@
 <div id="detail-view">
-  <h4>Timing {{resCtrl.res.RatingPlanId}}</h4>
+  <h4>Rating Plan {{resCtrl.res.RatingPlanId}}</h4>
   <form class="form-horizontal" role="form">
     <div class="form-group">
       <div ng-show="resCtrl.showId">
-        <label for="res_id" class="control-label">RatingPlanId</label>
-        <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.RatingPlanId"/>
+        <label for="res_id" class="col-sm-2 control-label">RatingPlanId</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.RatingPlanId"/>
+        </div>
       </div>
     </div>
-    <div class="form-group">
-      <label for="years" class="control-label">Years</label>
-      <input type="text" class="form-control" id="years" ng-model="resCtrl.res.Years"/>
-    </div>
-    <div class="form-group">
-      <label for="months" class="control-label">Months</label>
-      <input type="text" class="form-control" id="months" ng-model="resCtrl.res.Months"/>
-    </div>
-    <div class="form-group">
-      <label for="monthdays" class="control-label">Month days</label>
-      <input type="text" class="form-control" id="monthdays" ng-model="resCtrl.res.MonthDays"/>
-    </div>
-    <div class="form-group">
-      <label for="weekdays" class="control-label">Week days</label>
-      <input type="text" class="form-control" id="weekdays" ng-model="resCtrl.res.WeekDays"/>
-    </div>
-    <div class="form-group">
-      <label for="time" class="control-label">Time</label>
-      <input type="text" class="form-control" id="time" ng-model="resCtrl.res.Time"/>
-    </div>
+    <section ng-controller="PanelCtrl as panelCtrl">
+      <ul class="nav nav-tabs marginBottom">
+        <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.RatingPlanBindings">
+          <a href ng-click="panelCtrl.select($index)">
+            <button ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.RatingPlanBindings, $index, $event)" class="close closeTab" type="button" >×</button>
+            RP Binding {{$index}}
+          </a>
+        </li>
+        <li>
+          <a href ng-click="panelCtrl.add(resCtrl.res.RatingPlanBindings)">+</a>
+        </li>
+      </ul>
+      <div class="form-group">
+        <label for="destRateId" class="col-sm-2 control-label">Destination Id</label>
+        <div class="col-sm-2">
+          <select id="destRateId" class="form-control" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].DestinationRatesId" ng-options="drId for drId in resCtrl.destRatesIds"></select>
+        </div>
+        <a class="btn btn-primary btn-sm col-sm-2" href="#/destinationrate">New Destination Rate</a>
+      </div>
+      <div class="form-group">
+        <label for="tmid" class="col-sm-2 control-label">Rate Id</label>
+        <div class="col-sm-2">
+          <select id="tmid" class="form-control" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].TimingId" ng-options="tmId for tmId in resCtrl.tmIds"></select>
+        </div>
+        <a class="btn btn-primary btn-sm col-sm-2" href="#/timing">New Timing</a>
+      </div>
+      <div class="form-group">
+        <label for="weight" class="col-sm-2 control-label">Weight</label>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="weight" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].Weight"/>
+        </div>
+      </div>
+    </section>
+
     <div class="form-group">
       <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
     </div>
