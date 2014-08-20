@@ -1,3 +1,98 @@
-<h3>Actions</h3>
+<div id="detail-view">
+  <h4>Action {{resCtrl.res.ActionId}}</h4>
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="res_id" class="col-sm-2 control-label">ActionId</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.ActionId"/>
+        </div>
+      </div>
+    </div>
+    <section  ng-controller="PanelCtrl as panelCtrl">
+      <ul class="nav nav-tabs marginBottom">
+        <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.Actions">
+          <a href ng-click="panelCtrl.select($index)">
+            <button type="button" ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.Actions, $index, $event)" class="close closeTab">×</button>
+            Action {{$index}}
+          </a>
+        </li>
+        <li>
+          <a href ng-click="panelCtrl.add(resCtrl.res.Actions)">+</a>
+        </li>
+      </ul>
+      <div class="form-group">
+        <label for="balancetype" class="col-sm-2 control-label">BalanceType</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="balancetype" ng-model="resCtrl.res.Actions[panelCtrl.index].BalanceType"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="balanceweight" class="col-sm-2 control-label">BalanceWeight</label>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="balanceweight" ng-model="resCtrl.res.Actions[panelCtrl.index].BalanceWeight"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="destinationid" class="col-sm-2 control-label">DestinationId</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="destinationid" ng-model="resCtrl.res.Actions[panelCtrl.index].DestinationId"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="direction" class="col-sm-2 control-label">Direction</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="direction" ng-model="resCtrl.res.Actions[panelCtrl.index].Direction"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="expirationtime" class="col-sm-2 control-label">ExpiryTime</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="expirationtime" ng-model="resCtrl.res.Actions[panelCtrl.index].ExpiryTime"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="extraparameters" class="col-sm-2 control-label">ExtraParameters</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="extraparameters" ng-model="resCtrl.res.Actions[panelCtrl.index].ExtraParameters"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="identifier" class="col-sm-2 control-label">Identifier</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="identifier" ng-model="resCtrl.res.Actions[panelCtrl.index].Identifier"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ratingsubject" class="col-sm-2 control-label">RatingSubject</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="ratingsubject" ng-model="resCtrl.res.Actions[panelCtrl.index].RatingSubject"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="sharedgroup" class="col-sm-2 control-label">SharedGroup</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="sharedgroup" ng-model="resCtrl.res.Actions[panelCtrl.index].SharedGroup"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="units" class="col-sm-2 control-label">Units</label>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="units" ng-model="resCtrl.res.Actions[panelCtrl.index].Units"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="weight" class="col-sm-2 control-label">Weight</label>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="weight" ng-model="resCtrl.res.Actions[panelCtrl.index].Weight"/>
+        </div>
+      </div>
+    </section>
 
-
+    <div class="form-group">
+      <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
+    </div>
+  </form>
+  <p class="label label-info" ng-show="resCtrl.result">Operation result:{{resCtrl.result}}</p>
+  <back></back>
+</div>

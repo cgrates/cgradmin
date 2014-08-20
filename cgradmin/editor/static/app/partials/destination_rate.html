@@ -10,41 +10,45 @@
       </div>
     </div>
     <section ng-controller="PanelCtrl as panelCtrl">
-      <ul class="nav nav-tabs marginBottom">
-        <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.DestinationRates">
-          <a href ng-click="panelCtrl.select($index)">
-            <button ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.DestinationRates, $index, $event)" class="close closeTab" type="button" >×</button>
-            DR {{$index}}
-          </a>
-        </li>
-        <li>
-          <a href ng-click="panelCtrl.add(resCtrl.res.DestinationRates)">+</a>
-        </li>
-      </ul>
-      <div class="form-group">
-        <label for="destid" class="col-sm-2 control-label">Destination Id</label>
-        <div class="col-sm-2">
-          <select id="destid" class="form-control" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId" ng-options="dId for dId in resCtrl.destIds"></select>
-        </div>
-        <a class="btn btn-primary btn-sm col-sm-2" href="#/destination">New Destination</a>
+      <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked marginBottom">
+          <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.DestinationRates">
+            <a href ng-click="panelCtrl.select($index)">
+              <button ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.DestinationRates, $index, $event)" class="close closeTab" type="button" >×</button>
+              DR {{$index}}
+            </a>
+          </li>
+          <li>
+            <a href ng-click="panelCtrl.add(resCtrl.res.DestinationRates)">+</a>
+          </li>
+        </ul>
       </div>
-      <div class="form-group">
-        <label for="rateid" class="col-sm-2 control-label">Rate Id</label>
-        <div class="col-sm-2">
-          <select id="rateid" class="form-control" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RateId" ng-options="rId for rId in resCtrl.rateIds"></select>
+      <div class="col-md-9">
+        <div class="form-group">
+          <label for="destid" class="col-sm-2 control-label">Destination Id</label>
+          <div class="col-sm-4">
+            <select id="destid" class="form-control" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId" ng-options="dId for dId in resCtrl.destIds"></select>
+          </div>
+          <a class="btn btn-primary btn-sm col-sm-2" href="#/destination">New Destination</a>
         </div>
-        <a class="btn btn-primary btn-sm col-sm-2" href="#/rate">New Rate</a>
-      </div>
-      <div class="form-group">
-        <label for="roundingmethod" class="col-sm-2 control-label">Rounding Method</label>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="roundingmethod" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RoundingMethod"/>
+        <div class="form-group">
+          <label for="rateid" class="col-sm-2 control-label">Rate Id</label>
+          <div class="col-sm-4">
+            <select id="rateid" class="form-control" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RateId" ng-options="rId for rId in resCtrl.rateIds"></select>
+          </div>
+          <a class="btn btn-primary btn-sm col-sm-2" href="#/rate">New Rate</a>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="roundingdecimals" class="col-sm-2 control-label">Rounding Decimals</label>
-        <div class="col-sm-2">
-          <input type="number" class="form-control" id="roundingdecimals" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RoundingDecimals"/>
+        <div class="form-group">
+          <label for="roundingmethod" class="col-sm-2 control-label">Rounding Method</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="roundingmethod" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RoundingMethod"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="roundingdecimals" class="col-sm-2 control-label">Rounding Decimals</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control" id="roundingdecimals" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RoundingDecimals"/>
+          </div>
         </div>
       </div>
     </section>

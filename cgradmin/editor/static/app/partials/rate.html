@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-    <section ng-controller="PanelCtrl as panelCtrl">
+    <section  ng-controller="PanelCtrl as panelCtrl">
       <ul class="nav nav-tabs marginBottom">
         <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.RateSlots">
           <a href ng-click="panelCtrl.select($index)">
@@ -22,8 +22,9 @@
           <a href ng-click="panelCtrl.add(resCtrl.res.RateSlots)">+</a>
         </li>
       </ul>
+
       <div class="form-group">
-        <label for="connectfee" class="col-sm-2 control-label">Connec Fee</label>
+        <label for="connectfee" class="col-sm-2 control-label">Connect Fee</label>
         <div class="col-sm-2">
           <input type="number" class="form-control" id="connectfee" ng-model="resCtrl.res.RateSlots[panelCtrl.index].ConnectFee"/>
         </div>

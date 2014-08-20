@@ -75,7 +75,7 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.setResource('SetTPRatingProfile', this.res).success(function(data){ctrl.result = data;});
+           resFactory.setResource('SetTPTiming', this.res).success(function(data){ctrl.result = data;});
          };
        })
        .controller('DestinationsCtrl', function($routeParams, resFactory) {
@@ -134,7 +134,7 @@ angular.module('cgradminApp.controllers', [])
          };
        })
        .controller('RatingPlansCtrl', function($routeParams, resFactory) {
-         this.res = {};
+         this.res = {RatingPlanBindings: [{}]};
          this.resId = $routeParams.res_id;
          this.destRatesIds = [];
          this.tmIds = [];
@@ -180,8 +180,40 @@ angular.module('cgradminApp.controllers', [])
          metricsFactory.getMetrics({StatsQueueId: 'CDRST1'}).success(function(data) {ctrl.metrics = data;});
        })
        .controller('ActionsCtrl', function($routeParams, resFactory) {
+         this.res = {Actions:[{}]};
+         this.resId = $routeParams.res_id;
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('GetTPActions', {ActionsId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('SetTPActions', this.res).success(function(data){ctrl.result = data;});
+         };
        })
        .controller('ActionPlansCtrl', function($routeParams, resFactory) {
+         this.res = {ActionPlan:[{}]};
+         this.resId = $routeParams.res_id;
+         this.actIds = [];
+         this.tmIds = [];
+         resFactory.getResourceIds('GetTPActionIds').success(function(data) {ctrl.actIds = data;});
+         resFactory.getResourceIds('GetTPTimingIds').success(function(data) {ctrl.tmIds = data;});
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('GetTPActionPlan', {Id: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('SetTPActionPlan', this.res).success(function(data){ctrl.result = data;});
+         };
        })
        .controller('ActionTriggersCtrl', function($routeParams, resFactory) {
        })
