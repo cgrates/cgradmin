@@ -20,7 +20,6 @@ angular.module('cgradminApp', [
          $routeProvider.when('/ratingplan/:res_id?', {templateUrl: 'partials/rating_plan.html', controller: 'RatingPlansCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/ratingprofile/:res_id?', {templateUrl: 'partials/rating_profile.html', controller: 'RatingProfilesCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/rpalias/:res_id?', {templateUrl: 'partials/rp_alias.html', controller: 'RatingProfileAliasesCtrl', controllerAs: 'resCrl'});
-         $routeProvider.when('/catalias/:res_id?', {templateUrl: 'partials/category_alias.html', controller: 'CategoryAliasesCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/action/:res_id?', {templateUrl: 'partials/action.html', controller: 'ActionsCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/actionplan/:res_id?', {templateUrl: 'partials/action_plan.html', controller: 'ActionPlansCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/actiontrigger/:res_id?', {templateUrl: 'partials/action_trigger.html', controller: 'ActionTriggersCtrl', controllerAs: 'resCtrl'});

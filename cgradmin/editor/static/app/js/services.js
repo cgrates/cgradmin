@@ -17,6 +17,7 @@ angular.module('cgradminApp.services', [])
          "Action": "GetTPActionIds",
          "ActionTrigger": "GetTPActionTriggerIds",
          "ActionPlan": "GetTPActionPlanIds",
+         "AccountAction": "GetTPAccountActionLoadIds",
        })
        .factory('metricsFactory', function($http){
          var factory = {};

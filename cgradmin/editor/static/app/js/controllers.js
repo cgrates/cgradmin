@@ -160,7 +160,7 @@ angular.module('cgradminApp.controllers', [])
 
          this.result = '';
          if(this.resId){
-           resFactory.getResource('GetTPRatingProfiles', {RatingProfileId: this.resId}).success(function(data) {ctrl.res = data;});
+           resFactory.getResource('GetTPRatingProfiles', {LoadId: this.resId}).success(function(data) {ctrl.res = data;});
          } else {
            this.showId = true;
          }
@@ -170,8 +170,6 @@ angular.module('cgradminApp.controllers', [])
          };
        })
        .controller('RatingProfileAliasesCtrl', function($routeParams, resFactory) {
-       })
-       .controller('CategoryAliasesCtrl', function($routeParams, resFactory) {
        })
        .controller('LcrRulesCtrl', function($routeParams, resFactory) {
        })
@@ -216,8 +214,38 @@ angular.module('cgradminApp.controllers', [])
          };
        })
        .controller('ActionTriggersCtrl', function($routeParams, resFactory) {
+         this.res = {ActionTriggers:[{}]};
+         this.resId = $routeParams.res_id;
+         this.actIds = [];
+         resFactory.getResourceIds('GetTPActionIds').success(function(data) {ctrl.actIds = data;});
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('GetTPActionTriggers', {ActionTriggersId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('SetTPActionTriggers', this.res).success(function(data){ctrl.result = data;});
+         };
        })
        .controller('AccountActionsCtrl', function($routeParams, resFactory) {
+         this.res = {};
+         this.resId = $routeParams.res_id;
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('GetTPAccountActions', {LoadId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('SetTPAccoutActions', this.res).success(function(data){ctrl.result = data;});
+         };
        })
        .controller('SharedGroupsCtrl', function($routeParams, resFactory) {
        })
