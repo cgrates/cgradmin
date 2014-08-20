@@ -30,7 +30,8 @@ angular.module('cgradminApp.controllers', [])
            resources.push({});
            this.index = resources.length-1;
          }
-         this.remove = function(resources, i){
+         this.remove = function(resources, i, event){
+           event.preventDefault();
            if (!confirm("Are you sure you want to delete this resource?")) {
              return;
            }
@@ -97,7 +98,7 @@ angular.module('cgradminApp.controllers', [])
          };
        })
        .controller('RatesCtrl', function($routeParams, resFactory) {
-         this.res = {};
+         this.res = {RateSlots:[{}]};
          this.resId = $routeParams.res_id;
          var ctrl = this;
 
@@ -113,9 +114,13 @@ angular.module('cgradminApp.controllers', [])
          };
        })
        .controller('DestinationRatesCtrl', function($routeParams, resFactory) {
-         this.res = {};
+         this.res = {DestinationRates:[{}]};
          this.resId = $routeParams.res_id;
+         this.destIds = ['*any'];
+         this.rateIds = [];
          var ctrl = this;
+         resFactory.getResourceIds('GetTPDestinationIds').success(function(data) {ctrl.destIds.push.apply(ctrl.destIds, data);});
+         resFactory.getResourceIds('GetTPRateIds').success(function(data) {ctrl.rateIds = data;});
 
          this.result = '';
          if(this.resId){

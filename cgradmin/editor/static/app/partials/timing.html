@@ -3,29 +3,41 @@
   <form class="form-horizontal" role="form">
     <div class="form-group">
       <div ng-show="resCtrl.showId">
-        <label for="res_id" class="control-label">TimingId</label>
-        <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.TimingId"/>
+        <label for="res_id" class="col-sm-2 control-label">TimingId</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.TimingId"/>
+        </div>
       </div>
     </div>
     <div class="form-group">
-      <label for="years" class="control-label">Years</label>
-      <input type="text" class="form-control" id="years" ng-model="resCtrl.res.Years"/>
+      <label for="years" class="col-sm-2 control-label">Years</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="years" ng-model="resCtrl.res.Years"/>
+      </div>
     </div>
     <div class="form-group">
-      <label for="months" class="control-label">Months</label>
-      <input type="text" class="form-control" id="months" ng-model="resCtrl.res.Months"/>
+      <label for="months" class="col-sm-2 control-label">Months</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="months" ng-model="resCtrl.res.Months"/>
+      </div>
     </div>
     <div class="form-group">
-      <label for="monthdays" class="control-label">Month days</label>
-      <input type="text" class="form-control" id="monthdays" ng-model="resCtrl.res.MonthDays"/>
+      <label for="monthdays" class="col-sm-2 control-label">Month days</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="monthdays" ng-model="resCtrl.res.MonthDays"/>
+      </div>
     </div>
     <div class="form-group">
-      <label for="weekdays" class="control-label">Week days</label>
-      <input type="text" class="form-control" id="weekdays" ng-model="resCtrl.res.WeekDays"/>
+      <label for="weekdays" class="col-sm-2 control-label">Week days</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="weekdays" ng-model="resCtrl.res.WeekDays"/>
+      </div>
     </div>
     <div class="form-group">
-      <label for="time" class="control-label">Time</label>
-      <input type="text" class="form-control" id="time" ng-model="resCtrl.res.Time"/>
+      <label for="time" class="col-sm-2 control-label">Time</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="time" ng-model="resCtrl.res.Time"/>
+      </div>
     </div>
     <div class="form-group">
       <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>

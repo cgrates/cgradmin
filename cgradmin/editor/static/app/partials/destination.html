@@ -3,13 +3,17 @@
   <form class="form-horizontal" role="form">
     <div class="form-group">
       <div ng-show="resCtrl.showId">
-        <label for="res_id" class="control-label">DestinationId</label>
-        <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.DestinationId"/>
+        <label for="res_id" class="col-sm-2 control-label">DestinationId</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.DestinationId"/>
+        </div>
       </div>
     </div>
     <div class="form-group">
-      <label for="prefixes" class="control-label">Prefixes</label>
-      <textarea class="form-control" id="prefixes" ng-model="resCtrl.res.Prefixes"></textarea>
+      <label for="prefixes" class="col-sm-2 control-label">Prefixes</label>
+      <div class="col-sm-2">
+        <textarea class="form-control" id="prefixes" ng-model="resCtrl.res.Prefixes"></textarea>
+      </div>
     </div>
     <div class="form-group">
       <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
