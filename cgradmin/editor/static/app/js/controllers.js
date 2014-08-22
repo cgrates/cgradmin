@@ -14,7 +14,8 @@ angular.module('cgradminApp.controllers', [])
              $cookieStore.put('tpid', ctrl.tpid);
            }
          });
-         this.getTpId = function(tpid){
+         this.setTpId = function(tpid){
+           this.tpid = tpid;
            $cookieStore.put('tpid', tpid);
          };
        })
@@ -173,9 +174,21 @@ angular.module('cgradminApp.controllers', [])
        })
        .controller('LcrRulesCtrl', function($routeParams, resFactory) {
        })
-       .controller('CdrStatsCtrl', function(metricsFactory) {
+       .controller('CdrStatsCtrl', function($routeParams, resFactory) {
+          this.res = {CdrStats:[{}]};
+         this.resId = $routeParams.res_id;
          var ctrl = this;
-         metricsFactory.getMetrics({StatsQueueId: 'CDRST1'}).success(function(data) {ctrl.metrics = data;});
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('GetTPCdrStats', {CdrStatsId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('SetTPCdrStats', this.res).success(function(data){ctrl.result = data;});
+         };
        })
        .controller('ActionsCtrl', function($routeParams, resFactory) {
          this.res = {Actions:[{}]};

@@ -1,8 +1,144 @@
-<h3>Cdr Stats</h3>
-
-
-<p>
-  Metrics: {{statsCtrl.metrics}}<br>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<div id="detail-view">
+  <h4>Cdr Stats {{resCtrl.res.CdrStatsId}}</h4>
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="res_id" class="col-sm-2 control-label">CdrStatsId</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.CdrStatsId"/>
+        </div>
+      </div>
+    </div>
+    <section  ng-controller="PanelCtrl as panelCtrl">
+      <ul class="nav nav-tabs marginBottom">
+        <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.CdrStats">
+          <a href ng-click="panelCtrl.select($index)">
+            <button type="button" ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.CdrStats, $index, $event)" class="close closeTab">×</button>
+            Stats {{$index}}
+          </a>
+        </li>
+        <li>
+          <a href ng-click="panelCtrl.add(resCtrl.res.CdrStats)">+</a>
+        </li>
+      </ul>
+      <div class="form-group">
+        <label for="QueueLength" class="col-sm-2 control-label">QueueLength</label>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="QueueLength" ng-model="resCtrl.res.CdrStats[panelCtrl.index].QueueLength"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="TimeWindow" class="col-sm-2 control-label">TimeWindow</label>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="TimeWindow" ng-model="resCtrl.res.CdrStats[panelCtrl.index].TimeWindow"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="SetupInterval" class="col-sm-2 control-label">SetupInterval</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="SetupInterval" ng-model="resCtrl.res.CdrStats[panelCtrl.index].SetupInterval"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="TOR" class="col-sm-2 control-label">TOR</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="TOR" ng-model="resCtrl.res.CdrStats[panelCtrl.index].TOR"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="CdrHost" class="col-sm-2 control-label">CdrHost</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="CdrHost" ng-model="resCtrl.res.CdrStats[panelCtrl.index].CdrHost"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="CdrSource" class="col-sm-2 control-label">CdrSource</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="CdrSource" ng-model="resCtrl.res.CdrStats[panelCtrl.index].CdrSource"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ReqType" class="col-sm-2 control-label">ReqType</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="ReqType" ng-model="resCtrl.res.CdrStats[panelCtrl.index].ReqType"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Direction" class="col-sm-2 control-label">Direction</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Direction" ng-model="resCtrl.res.CdrStats[panelCtrl.index].Direction"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Tenant" class="col-sm-2 control-label">Tenant</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Tenant" ng-model="resCtrl.res.CdrStats[panelCtrl.index].Tenant"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Category" class="col-sm-2 control-label">Category</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Category" ng-model="resCtrl.res.CdrStats[panelCtrl.index].Category"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Account" class="col-sm-2 control-label">Account</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Account" ng-model="resCtrl.res.CdrStats[panelCtrl.index].Account"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Subject" class="col-sm-2 control-label">Subject</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Subject" ng-model="resCtrl.res.CdrStats[panelCtrl.index].Subject"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="DestinationPrefix" class="col-sm-2 control-label">DestinationPrefix</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="DestinationPrefix" ng-model="resCtrl.res.CdrStats[panelCtrl.index].DestinationPrefix"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="UsageInterval" class="col-sm-2 control-label">UsageInterval</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="UsageInterval" ng-model="resCtrl.res.CdrStats[panelCtrl.index].UsageInterval"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="MediationRunIds" class="col-sm-2 control-label">MediationRunIds</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="MediationRunIds" ng-model="resCtrl.res.CdrStats[panelCtrl.index].MediationRunIds"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="RatedAccount" class="col-sm-2 control-label">RatedAccount</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="RatedAccount" ng-model="resCtrl.res.CdrStats[panelCtrl.index].RatedAccount"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="RatedSubject" class="col-sm-2 control-label">RatedSubject</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="RatedSubject" ng-model="resCtrl.res.CdrStats[panelCtrl.index].RatedSubject"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="CostInterval" class="col-sm-2 control-label">CostInterval</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="CostInterval" ng-model="resCtrl.res.CdrStats[panelCtrl.index].CostInterval"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ActionTriggers" class="col-sm-2 control-label">ActionTriggers</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="ActionTriggers" ng-model="resCtrl.res.CdrStats[panelCtrl.index].ActionTriggers"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
+      </div>
+  </form>
+  <p class="label label-info" ng-show="resCtrl.result">Operation result:{{resCtrl.result}}</p>
+  <back></back>
+</div>

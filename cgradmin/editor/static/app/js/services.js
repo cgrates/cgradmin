@@ -14,6 +14,7 @@ angular.module('cgradminApp.services', [])
          "DestinationRate": "GetTPDestinationRateIds",
          "RatingPlan": "GetTPRatingPlanIds",
          "RatingProfile": "GetTPRatingProfileLoadIds",
+         "CdrStats": "GetTPCdrStatsIds",
          "Action": "GetTPActionIds",
          "ActionTrigger": "GetTPActionTriggerIds",
          "ActionPlan": "GetTPActionPlanIds",

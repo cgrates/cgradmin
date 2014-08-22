@@ -44,8 +44,8 @@
               <li><a href="#/resource/DestinationRate">Destination Rates</a></li>
               <li><a href="#/resource/RatingPlan">Rating Plans</a></li>
               <li><a href="#/resource/RatingProfile">Rating Profiles</a></li>
-              <li><a href="#/resource/RpAlias">Rating Profile Aliases</a></li>
-              <li><a href="#/resource/LcrRule">Lcr Rules</a></li>
+              <!-- <li><a href="#/resource/RpAlias">Rating Profile Aliases</a></li> -->
+              <!-- <li><a href="#/resource/LcrRule">Lcr Rules</a></li> -->
               <li><a href="#/resource/CdrStats">Cdr Stats</a></li>
             </ul>
           </li>
@@ -67,7 +67,7 @@
           <li class="dropdown" ng-controller="TpIdsCtrl as tiCtrl">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">{{tiCtrl.tpid}} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="ti in tiCtrl.tpids"><a href ng-click="setTpId(ti)">{{ti}}</a></li>
+              <li ng-repeat="ti in tiCtrl.tpids"><a href ng-click="tiCtrl.setTpId(ti)">{{ti}}</a></li>
             </ul>
           </li>
         </ul>

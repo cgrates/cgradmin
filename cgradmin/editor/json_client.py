@@ -4,6 +4,8 @@ class JSONClient(object):
    def __init__(self, addr):
       self.socket = socket.create_connection(addr)
       self.id_counter = itertools.count()
+      self.BUFFER_SIZE = 4096
+
    def __del__(self):
       if hasattr(self, 'socket'):
          self.socket.close()
@@ -13,7 +15,11 @@ class JSONClient(object):
                      method=name)
       self.socket.sendall(json.dumps(request).encode())
       # This must loop if resp is bigger than 4K
-      response = self.socket.recv(4096)
+      resp = self.socket.recv(self.BUFFER_SIZE)
+      response = resp
+      while(len(resp) == self.BUFFER_SIZE):
+         resp = self.socket.recv(self.BUFFER_SIZE)
+         response += resp
       response = json.loads(response.decode())
       if response.get('id') != request.get('id'):
          raise Exception("expected id=%s, received id=%s: %s"
@@ -38,11 +44,13 @@ class CGRConnector(object):
     def call(self, method, param):
         try:
             return self.rpc.call(method, param)
-        except Exception as inst:
-           print("ERROR: ", inst)
+        except BrokenPipeError as inst:
            self.connect()
            try:
               return self.rpc.call(method, param)
            except Exception as e:
               return "ERROR: %s" % e
+        except Exception as e:
+           print("ERROR: ", type(e))
+           return "ERROR: %s" % e 
         
