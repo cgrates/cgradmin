@@ -51,6 +51,6 @@ class CGRConnector(object):
            except Exception as e:
               return "ERROR: %s" % e
         except Exception as e:
-           print("ERROR: ", type(e))
+           print("ERROR: ", type(e), e)
            return "ERROR: %s" % e 
         

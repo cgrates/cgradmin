@@ -26,7 +26,7 @@ angular.module('cgradminApp', [
          $routeProvider.when('/sharedgroup/:res_id?', {templateUrl: 'partials/shared_group.html', controller: 'SharedGroupsCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/accountaction/:res_id?', {templateUrl: 'partials/account_action.html', controller: 'AccountActionsCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/lcrrule/:res_id?', {templateUrl: 'partials/lcr_rule.html', controller: 'LcrRulesCtrl', controllerAs: 'resCtrl'});
-         $routeProvider.when('/derivedcharge/:res_id?', {templateUrl: 'partials/desrived_charge.html', controller: 'DerivedChargesCtrl', controllerAs: 'resCtrl'});
+         $routeProvider.when('/derivedcharger/:res_id?', {templateUrl: 'partials/derived_charger.html', controller: 'DerivedChargersCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/cdrstats/:res_id?', {templateUrl: 'partials/cdr_stat.html', controller: 'CdrStatsCtrl', controllerAs: 'resCtrl'});
          $routeProvider.otherwise({redirectTo: '/resource/Timing'});
        }]);

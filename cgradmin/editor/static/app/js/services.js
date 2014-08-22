@@ -20,7 +20,7 @@ angular.module('cgradminApp.services', [])
          "ActionPlan": "GetTPActionPlanIds",
          "AccountAction": "GetTPAccountActionLoadIds",
          "SharedGroup": "GetTPSharedGroupIds",
-         "DerivedCharge": "GetTPDerivedChargeIds",
+         "DerivedCharger": "GetTPDerivedChargerIds",
        })
        .factory('metricsFactory', function($http){
          var factory = {};

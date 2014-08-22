@@ -1,1 +1,137 @@
-<h3>Derived Charges</h3>
+<div id="detail-view">
+  <h4>Derived Charger {{resCtrl.res.Tennant}}</h4>
+  <form class="form-horizontal" role="form"> 
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Direction" class="col-sm-2 control-label">Direction</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Direction" ng-model="resCtrl.res.Direction"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Tenant" class="col-sm-2 control-label">Tenant</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Tenant" ng-model="resCtrl.res.Tenant"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Category" class="col-sm-2 control-label">Category</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Category" ng-model="resCtrl.res.Category"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Account" class="col-sm-2 control-label">Account</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Account" ng-model="resCtrl.res.Account"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Subject" class="col-sm-2 control-label">Subject</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Subject" ng-model="resCtrl.res.Subject"/>
+        </div>
+      </div>
+    </div>
+    <section  ng-controller="PanelCtrl as panelCtrl">
+      <ul class="nav nav-tabs marginBottom">
+        <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.DerivedChargers">
+          <a href ng-click="panelCtrl.select($index)">
+            <button type="button" ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.DerivedChargers, $index, $event)" class="close closeTab">×</button>
+            Charger {{$index}}
+          </a>
+        </li>
+        <li>
+          <a href ng-click="panelCtrl.add(resCtrl.res.DerivedChargers)">+</a>
+        </li>
+      </ul>
+      <div class="form-group">
+        <label for="RunId" class="col-sm-2 control-label">RunId</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="RunId" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].RunId"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="RunFilter" class="col-sm-2 control-label">RunFilter</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="RunFilter" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].RunFilter"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ReqtypeField" class="col-sm-2 control-label">ReqtypeField</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="ReqtypeField" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].ReqtypeField"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="DirectionField" class="col-sm-2 control-label">DirectionField</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="DirectionField" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].DirectionField"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="TenantField" class="col-sm-2 control-label">TenantField</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="TenantField" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].TenantField"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="CategoryField" class="col-sm-2 control-label">CategoryField</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="CategoryField" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].CategoryField"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="AccountField" class="col-sm-2 control-label">AccountField</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="AccountField" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].AccountField"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="SubjectField" class="col-sm-2 control-label">SubjectField</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="SubjectField" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].SubjectField"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="DestinationField" class="col-sm-2 control-label">DestinationField</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="DestinationField" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].DestinationField"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="SetupTimeField" class="col-sm-2 control-label">SetupTimeField</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="SetupTimeField" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].SetupTimeField"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="AnswerTimeField" class="col-sm-2 control-label">AnswerTimeField</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="AnswerTimeField" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].AnswerTimeField"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="DurationField" class="col-sm-2 control-label">DurationField</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="DurationField" ng-model="resCtrl.res.DerivedChargers[panelCtrl.index].DurationField"/>
+        </div>
+      </div>
+    </section>
+    <div class="form-group">
+      <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
+    </div>
+  </form>
+  <p class="label label-info" ng-show="resCtrl.result">Operation result:{{resCtrl.result}}</p>
+  <back></back>
+</div>
+
+

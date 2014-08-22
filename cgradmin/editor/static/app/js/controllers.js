@@ -276,5 +276,19 @@ angular.module('cgradminApp.controllers', [])
            resFactory.setResource('SetTPSharedGroups', this.res).success(function(data){ctrl.result = data;});
          };
        })
-       .controller('DerivedChargesCtrl', function($routeParams, resFactory) {
+       .controller('DerivedChargersCtrl', function($routeParams, resFactory) {
+         this.res = {DerivedChargers:[{}]};
+         this.resId = $routeParams.res_id;
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('GetTPDerivedChargers', {DerivedChargersId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('SetTPDerivedChargers', this.res).success(function(data){ctrl.result = data;});
+         };
        });
