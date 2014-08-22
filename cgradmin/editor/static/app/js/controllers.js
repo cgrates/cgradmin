@@ -248,6 +248,20 @@ angular.module('cgradminApp.controllers', [])
          };
        })
        .controller('SharedGroupsCtrl', function($routeParams, resFactory) {
+         this.res = {SharedGroups:[{}]};
+         this.resId = $routeParams.res_id;
+         var ctrl = this;
+
+         this.result = '';
+         if(this.resId){
+           resFactory.getResource('GetTPSharedGroups', {SharedGroupsId: this.resId}).success(function(data) {ctrl.res = data;});
+         } else {
+           this.showId = true;
+         }
+
+         this.saveResource = function(){
+           resFactory.setResource('SetTPSharedGroups', this.res).success(function(data){ctrl.result = data;});
+         };
        })
        .controller('DerivedChargesCtrl', function($routeParams, resFactory) {
        });

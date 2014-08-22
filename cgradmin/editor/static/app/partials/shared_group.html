@@ -1,1 +1,51 @@
-<h3>Shared Groups</h3>
+<div id="detail-view">
+  <h4>Action {{resCtrl.res.SharedGroupsId}}</h4>
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="res_id" class="col-sm-2 control-label">SharedGroupsId</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.SharedGroupsId"/>
+        </div>
+      </div>
+    </div>
+    <section  ng-controller="PanelCtrl as panelCtrl">
+      <ul class="nav nav-tabs marginBottom">
+        <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.SharedGroups">
+          <a href ng-click="panelCtrl.select($index)">
+            <button type="button" ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.SharedGroups, $index, $event)" class="close closeTab">×</button>
+            AccountParam {{$index}}
+          </a>
+        </li>
+        <li>
+          <a href ng-click="panelCtrl.add(resCtrl.res.SharedGroups)">+</a>
+        </li>
+      </ul>
+      <div class="form-group">
+        <label for="account" class="col-sm-2 control-label">Account</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="account" ng-model="resCtrl.res.SharedGroups[panelCtrl.index].Account"/>
+        </div>
+      </div>
+     <div class="form-group">
+        <label for="Strategy" class="col-sm-2 control-label">Strategy</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Strategy" ng-model="resCtrl.res.SharedGroups[panelCtrl.index].Strategy"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ratingsubj" class="col-sm-2 control-label">RatingSubject</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="ratingsubj" ng-model="resCtrl.res.SharedGroups[panelCtrl.index].RatingSubject"/>
+        </div>
+      </div>
+    </section>
+
+    <div class="form-group">
+      <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
+    </div>
+  </form>
+  <p class="label label-info" ng-show="resCtrl.result">Operation result:{{resCtrl.result}}</p>
+  <back></back>
+</div>
+
