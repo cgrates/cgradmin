@@ -3,8 +3,8 @@
   <p><a class="btn btn-primary pull-right" href="#/{{resCtrl.partial|lowercase}}">New {{resCtrl.partial}}</a></p>
   
   <h3>{{resCtrl.partial}}</h3>
-
-  <span ng-repeat="rId in resCtrl.resources">
+  <input type="search" class="form-control" id="main-search" placeholder="Search resource" ng-model="search_term"/>
+  <span ng-repeat="rId in resCtrl.resources|filter:search_term">
     <div class="btn-group">
       <a class="btn btn-default btn-xs" href="#/{{resCtrl.partial|lowercase}}/{{rId}}">{{rId}}</a>
       <a class="btn btn-danger btn-xs" href ng-click="resCtrl.deleteResource(rId)"><span class="glyphicon glyphicon-trash"></span></a>
