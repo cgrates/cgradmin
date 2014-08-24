@@ -283,7 +283,7 @@ angular.module('cgradminApp.controllers', [])
 
          this.result = '';
          if(this.resId){
-           resFactory.getResource('GetTPDerivedChargers', {DerivedChargersId: this.resId}).success(function(data) {ctrl.res = data;});
+           resFactory.getResource('GetTPDerivedChargers', {DerivedChargersId: this.resId}).success(function(data) {console.log(data);ctrl.res = data;});
          } else {
            this.showId = true;
          }
