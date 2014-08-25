@@ -18,3 +18,7 @@ body {
 #main-search {
     margin-bottom: 30px;
 }
+
+#main-search input {
+    width: 80%;
+}

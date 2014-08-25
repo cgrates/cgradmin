@@ -1,13 +1,27 @@
 
 <div ng-hide="resCtrl.detailsVisible">
-  <p><a class="btn btn-primary pull-right" href="#/{{resCtrl.partial|lowercase}}">New {{resCtrl.partial}}</a></p>
-  
-  <h3>{{resCtrl.partial}}</h3>
-  <input type="search" class="form-control" id="main-search" placeholder="Search resource" ng-model="search_term"/>
-  <span ng-repeat="rId in resCtrl.resources|filter:search_term">
-    <div class="btn-group">
-      <a class="btn btn-default btn-xs" href="#/{{resCtrl.partial|lowercase}}/{{rId}}">{{rId}}</a>
-      <a class="btn btn-danger btn-xs" href ng-click="resCtrl.deleteResource(rId)"><span class="glyphicon glyphicon-trash"></span></a>
-    </div>
-  </span>
+  <p><a class="btn btn-primary pull-right" href="#/{{resCtrl.res|lowercase}}">New {{resCtrl.res}}</a></p>
+
+  <h3>{{resCtrl.res}}</h3>
+  <form class="form-inline" role="form">
+  <div id="main-search" class="input-append">
+    <input type="search" class="form-control" placeholder="Search resource" ng-model="resCtrl.searchTerm"/>
+    <a href class="btn btn-default" ng-click="resCtrl.getPage(resCtrl.page)"><span class="glyphicon glyphicon-search"></span> Search</a>
+  </div>
+  </form>
+  <div>
+    <span ng-repeat="rId in resCtrl.resources|filter:search_term">
+      <div class="btn-group">
+        <a class="btn btn-default btn-xs" href="#/{{resCtrl.res|lowercase}}/{{rId}}">{{rId}}</a>
+        <a class="btn btn-danger btn-xs" href ng-click="resCtrl.deleteResource(rId)"><span class="glyphicon glyphicon-trash"></span></a>
+      </div>
+    </span>
+  </div>
 </div>
+
+
+<ul class="pagination">
+  <li><a ng-show="resCtrl.page>0" ng-click="resCtrl.getPage(resCtrl.page - 1)" href>&laquo;</a></li>
+  <li><a href="#/resource/{{resCtrl.res}}/{{resCtrl.page+1}}">{{resCtrl.page+1}}</a></li>
+  <li><a ng-show="resCtrl.resources.length >= resCtrl.itemsPerPage" ng-click="resCtrl.getPage(resCtrl.page + 1)" href>&raquo;</a></li>
+</ul>

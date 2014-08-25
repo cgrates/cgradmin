@@ -47,21 +47,41 @@ angular.module('cgradminApp.controllers', [])
        })
        .controller('ResourcesCtrl', function($routeParams, resFactory, idMethods){
          var ctrl = this;
-         ctrl.partial = $routeParams.partial;
+         ctrl.res = $routeParams.res;
          ctrl.resources = [];
-         resFactory.getResourceIds(idMethods[ctrl.partial]).success(function(data) {ctrl.resources = data;});
+         ctrl.page = 0;
+         ctrl.searchTerm = "";
+         if ($routeParams.page){
+           var p = Number($routeParams.page);
+           if (p > 0){
+             p -= 1;
+           } else {
+             p = 1;
+           }
+           ctrl.page =  p;
+         }
+         ctrl.itemsPerPage = 30;
+         resFactory.getResourceIds(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).success(function(data) {
+           ctrl.resources = data;
+         });
          this.deleteResource = function(resId){
            if (!confirm("Are you sure you want to delete this resource?")) {
              return;
            }
            var param = {};
-           param[ctrl.partial + 'sId'] = resId;
-           resFactory.delResource('RemTP' + ctrl.partial + 's', param).success(function(data){ctrl.result = data;});
+           param[ctrl.res + 'sId'] = resId;
+           resFactory.delResource('RemTP' + ctrl.res + 's', param).success(function(data){ctrl.result = data;});
            var index = this.resources.indexOf(resId);
            if (index > -1){
              this.resources.splice(index, 1);
            }
          };
+         this.getPage = function(page){
+           ctrl.page = page;
+           resFactory.getResourceIds(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).success(function(data) {
+             ctrl.resources = data;
+           });
+         }
        })
        .controller('TimingsCtrl', function($routeParams, resFactory) {
          this.res = {};
@@ -176,7 +196,7 @@ angular.module('cgradminApp.controllers', [])
        .controller('LcrRulesCtrl', function($routeParams, resFactory) {
        })
        .controller('CdrStatsCtrl', function($routeParams, resFactory) {
-          this.res = {CdrStats:[{}]};
+         this.res = {CdrStats:[{}]};
          this.resId = $routeParams.res_id;
          var ctrl = this;
 
@@ -286,7 +306,7 @@ angular.module('cgradminApp.controllers', [])
 
          this.result = '';
          if(this.resId){
-           resFactory.getResource('GetTPDerivedChargers', {DerivedChargersId: this.resId}).success(function(data) {console.log(data);ctrl.res = data;});
+           resFactory.getResource('GetTPDerivedChargers', {DerivedChargersId: this.resId}).success(function(data) {ctrl.res = data;});
          } else {
            this.showId = true;
          }

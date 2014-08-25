@@ -12,7 +12,7 @@ angular.module('cgradminApp', [
   'cgradminApp.controllers'
 ])
        .config(['$routeProvider', function($routeProvider) {
-         $routeProvider.when('/resource/:partial', {templateUrl: 'partials/resources.html', controller: 'ResourcesCtrl', controllerAs: 'resCtrl'});
+         $routeProvider.when('/resource/:res/:page?', {templateUrl: 'partials/resources.html', controller: 'ResourcesCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/timing/:res_id?', {templateUrl: 'partials/timing.html', controller: 'TimingsCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/destination/:res_id?', {templateUrl: 'partials/destination.html', controller: 'DestinationsCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/rate/:res_id?', {templateUrl: 'partials/rate.html', controller: 'RatesCtrl', controllerAs: 'resCtrl'});
