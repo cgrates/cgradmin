@@ -1,32 +1,71 @@
 <div id="detail-view">
-  <h4>Timing {{resCtrl.res.RatingProfileId}}</h4>
-  <form class="form-horizontal" role="form">
+  <h4>Rating Profile {{resCtrl.resId}}</h4>
+  <form class="form-horizontal" role="form"> 
     <div class="form-group">
       <div ng-show="resCtrl.showId">
-        <label for="res_id" class="control-label">RatingProfileId</label>
-        <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.RatingProfileId"/>
+        <label for="Direction" class="col-sm-2 control-label">Direction</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Direction" ng-model="resCtrl.res.Direction"/>
+        </div>
       </div>
     </div>
     <div class="form-group">
-      <label for="years" class="control-label">Years</label>
-      <input type="text" class="form-control" id="years" ng-model="resCtrl.res.Years"/>
+      <div ng-show="resCtrl.showId">
+        <label for="Tenant" class="col-sm-2 control-label">Tenant</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Tenant" ng-model="resCtrl.res.Tenant"/>
+        </div>
+      </div>
     </div>
     <div class="form-group">
-      <label for="months" class="control-label">Months</label>
-      <input type="text" class="form-control" id="months" ng-model="resCtrl.res.Months"/>
+      <div ng-show="resCtrl.showId">
+        <label for="Category" class="col-sm-2 control-label">Category</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Category" ng-model="resCtrl.res.Category"/>
+        </div>
+      </div>
     </div>
     <div class="form-group">
-      <label for="monthdays" class="control-label">Month days</label>
-      <input type="text" class="form-control" id="monthdays" ng-model="resCtrl.res.MonthDays"/>
+      <div ng-show="resCtrl.showId">
+        <label for="Subject" class="col-sm-2 control-label">Subject</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Subject" ng-model="resCtrl.res.Subject"/>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="weekdays" class="control-label">Week days</label>
-      <input type="text" class="form-control" id="weekdays" ng-model="resCtrl.res.WeekDays"/>
+    <section  ng-controller="PanelCtrl as panelCtrl">
+      <ul class="nav nav-tabs marginBottom">
+        <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.RatingPlanActivations">
+          <a href ng-click="panelCtrl.select($index)">
+            <button type="button" ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.RatingPlanActivations, $index, $event)" class="close closeTab">×</button>
+            Activation {{$index}}
+          </a>
+        </li>
+        <li>
+          <a href ng-click="panelCtrl.add(resCtrl.res.RatingPlanActivations)">+</a>
+        </li>
+      </ul>
+      <div class="form-group">
+        <label for="ActivationTime" class="col-sm-2 control-label">ActivationTime</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="ActivationTime" ng-model="resCtrl.res.RatingPlanActivations[panelCtrl.index].ActivationTime"/>
+        </div>
+      </div>
+      <div class="form-group">
+      <label for="ratingplan" class="col-sm-2 control-label">Rating Plan Id</label>
+      <div class="col-sm-2">
+        <select id="ratingplan" class="form-control" ng-model="resCtrl.res.RatingPlanActivations[panelCtrl.index].RatingPlanId" ng-options="id for id in resCtrl.rPlans"></select>
+        <p class="help-block">Example block-level help text here.</p>
+      </div>
+      <a class="btn btn-primary btn-sm col-sm-2" href="#/action">New Rating Plan</a>
     </div>
-    <div class="form-group">
-      <label for="time" class="control-label">Time</label>
-      <input type="text" class="form-control" id="time" ng-model="resCtrl.res.Time"/>
-    </div>
+      <div class="form-group">
+        <label for="FallbackSubjects" class="col-sm-2 control-label">Fallback Subjects</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="FallbackSubjects" ng-model="resCtrl.res.RatingPlanActivations[panelCtrl.index].FallbackSubjects"/>
+        </div>
+      </div>
+    </section>
     <div class="form-group">
       <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
     </div>
@@ -34,3 +73,5 @@
   <p class="label label-info" ng-show="resCtrl.result">Operation result:{{resCtrl.result}}</p>
   <back></back>
 </div>
+
+

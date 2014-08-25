@@ -155,13 +155,14 @@ angular.module('cgradminApp.controllers', [])
          };
        })
        .controller('RatingProfilesCtrl', function($routeParams, resFactory) {
-         this.res = {};
+         this.res = {RatingPlanActivations:[{}]};
          this.resId = $routeParams.res_id;
+         resFactory.getResourceIds('GetTPRatingPlanIds').success(function(data) {ctrl.rPlans = data;});
          var ctrl = this;
 
          this.result = '';
          if(this.resId){
-           resFactory.getResource('GetTPRatingProfiles', {LoadId: this.resId}).success(function(data) {ctrl.res = data;});
+           resFactory.getResource('GetTPRatingProfiles', {RatingProfilesId: this.resId}).success(function(data) {ctrl.res = data;});
          } else {
            this.showId = true;
          }
