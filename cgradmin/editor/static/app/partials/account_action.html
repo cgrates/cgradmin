@@ -5,7 +5,7 @@
       <div ng-show="resCtrl.showId">
         <label for="Direction" class="col-sm-2 control-label">Direction</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" id="Direction" ng-model="resCtrl.res.Direction"/>
+          <input type="text" class="form-control" id="Direction" placeholder="Short description" ng-model="resCtrl.res.Direction"/>
         </div>
       </div>
     </div>
@@ -26,19 +26,20 @@
       </div>
     </div>
     <div class="form-group">
-        <label for="actionplan" class="col-sm-2 control-label">Action Plan Id</label>
-        <div class="col-sm-2">
-          <select id="actionplan" class="form-control" ng-model="resCtrl.res.ActionPlanId" ng-options="id for id in resCtrl.actPlans"></select>
-        </div>
-        <a class="btn btn-primary btn-sm col-sm-2" href="#/action">New Action</a>
+      <label for="actionplan" class="col-sm-2 control-label">Action Plan Id</label>
+      <div class="col-sm-2">
+        <select id="actionplan" class="form-control" ng-model="resCtrl.res.ActionPlanId" ng-options="id for id in resCtrl.actPlans"></select>
+        <p class="help-block">Example block-level help text here.</p>
       </div>
-      <div class="form-group">
-        <label for="actrid" class="col-sm-2 control-label">Action Triggers Id</label>
-        <div class="col-sm-2">
-          <select id="actrid" class="form-control" ng-model="resCtrl.res.ActionTriggersId" ng-options="id for id in resCtrl.actTriggers"></select>
-        </div>
-        <a class="btn btn-primary btn-sm col-sm-2" href="#/timing">New Timing</a>
+      <a class="btn btn-primary btn-sm col-sm-2" href="#/action">New Action</a>
+    </div>
+    <div class="form-group">
+      <label for="actrid" class="col-sm-2 control-label">Action Triggers Id</label>
+      <div class="col-sm-2">
+        <select id="actrid" class="form-control" ng-model="resCtrl.res.ActionTriggersId" ng-options="id for id in resCtrl.actTriggers"></select>
       </div>
+      <a class="btn btn-primary btn-sm col-sm-2" href="#/timing">New Timing</a>
+    </div>
     <div class="form-group">
       <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
     </div>
