@@ -55,8 +55,8 @@ angular.module('cgradminApp.controllers', [])
              return;
            }
            var param = {};
-           param[ctrl.partial + 'Id'] = resId;
-           resFactory.delResource('RemTP' + ctrl.partial, param).success(function(data){ctrl.result = data;});
+           param[ctrl.partial + 'sId'] = resId;
+           resFactory.delResource('RemTP' + ctrl.partial + 's', param).success(function(data){ctrl.result = data;});
            var index = this.resources.indexOf(resId);
            if (index > -1){
              this.resources.splice(index, 1);
@@ -247,17 +247,19 @@ angular.module('cgradminApp.controllers', [])
        .controller('AccountActionsCtrl', function($routeParams, resFactory) {
          this.res = {};
          this.resId = $routeParams.res_id;
+         resFactory.getResourceIds('GetTPActionPlanIds').success(function(data) {ctrl.actPlans = data;});
+         resFactory.getResourceIds('GetTPActionTriggerIds').success(function(data) {ctrl.actTriggers = data;});
          var ctrl = this;
 
          this.result = '';
          if(this.resId){
-           resFactory.getResource('GetTPAccountActions', {LoadId: this.resId}).success(function(data) {ctrl.res = data;});
+           resFactory.getResource('GetTPAccountActions', {AccountActionsId: this.resId}).success(function(data) {ctrl.res = data;});
          } else {
            this.showId = true;
          }
 
          this.saveResource = function(){
-           resFactory.setResource('SetTPAccoutActions', this.res).success(function(data){ctrl.result = data;});
+           resFactory.setResource('SetTPAccountActions', this.res).success(function(data){ctrl.result = data;});
          };
        })
        .controller('SharedGroupsCtrl', function($routeParams, resFactory) {
