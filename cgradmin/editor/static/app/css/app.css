@@ -22,3 +22,16 @@ body {
 #main-search input {
     width: 80%;
 }
+
+#main-alert {
+    position: fixed;
+    z-index: 999999;
+    top: 12px;
+    right: 12px;
+    display: block;
+}
+
+.resource-button {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}

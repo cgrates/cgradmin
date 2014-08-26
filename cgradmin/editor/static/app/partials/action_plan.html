@@ -42,11 +42,9 @@
         </div>
       </div>
     </section>
-
-    <div class="form-group">
-      <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
+    <div class="btn-group">
+      <a class="btn btn-success" ng-click="resCtrl.saveResource()"><span class="glyphicon glyphicon-ok"></span> Save</a>
+      <back></back>
     </div>
   </form>
-  <p class="label label-info" ng-show="resCtrl.result">Operation result:{{resCtrl.result}}</p>
-  <back></back>
 </div>

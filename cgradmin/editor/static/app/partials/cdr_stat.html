@@ -135,10 +135,9 @@
           <input type="text" class="form-control" id="ActionTriggers" ng-model="resCtrl.res.CdrStats[panelCtrl.index].ActionTriggers"/>
         </div>
       </div>
-      <div class="form-group">
-        <button class="btn btn-default" ng-click="resCtrl.saveResource()">Save</button>
-      </div>
+      <div class="btn-group">
+      <a class="btn btn-success" ng-click="resCtrl.saveResource()"><span class="glyphicon glyphicon-ok"></span> Save</a>
+      <back></back>
+    </div>
   </form>
-  <p class="label label-info" ng-show="resCtrl.result">Operation result:{{resCtrl.result}}</p>
-  <back></back>
 </div>

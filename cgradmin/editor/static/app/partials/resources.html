@@ -11,7 +11,7 @@
   </form>
   <div>
     <span ng-repeat="rId in resCtrl.resources|filter:search_term">
-      <div class="btn-group">
+      <div class="resource-button btn-group">
         <a class="btn btn-default btn-xs" href="#/{{resCtrl.res|lowercase}}/{{rId}}">{{rId}}</a>
         <a class="btn btn-danger btn-xs" href ng-click="resCtrl.deleteResource(rId)"><span class="glyphicon glyphicon-trash"></span></a>
       </div>
@@ -19,9 +19,9 @@
   </div>
 </div>
 
-
-<ul class="pagination">
-  <li><a ng-show="resCtrl.page>0" ng-click="resCtrl.getPage(resCtrl.page - 1)" href>&laquo;</a></li>
+<ul class="pager">
+  <li><a ng-hide="resCtrl.page<=0" ng-click="resCtrl.getPage(resCtrl.page - 1)" href>Previous</a></li>
   <li><a href="#/resource/{{resCtrl.res}}/{{resCtrl.page+1}}">{{resCtrl.page+1}}</a></li>
-  <li><a ng-show="resCtrl.resources.length >= resCtrl.itemsPerPage" ng-click="resCtrl.getPage(resCtrl.page + 1)" href>&raquo;</a></li>
+  <li><input type="text" class="input-sm" placeholder="Items per page" ng-model="resCtrl.itemsPerPage"/></li>
+  <li><a ng-hide="resCtrl.resources.length < resCtrl.itemsPerPage" ng-click="resCtrl.getPage(resCtrl.page + 1)" href>Next</a></li>
 </ul>
