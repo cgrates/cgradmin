@@ -22,6 +22,6 @@
 <ul class="pager">
   <li><a ng-hide="resCtrl.page<=0" ng-click="resCtrl.getPage(resCtrl.page - 1)" href>Previous</a></li>
   <li><a href="#/resource/{{resCtrl.res}}/{{resCtrl.page+1}}">{{resCtrl.page+1}}</a></li>
-  <li><input type="text" class="input-sm" placeholder="Items per page" ng-model="resCtrl.itemsPerPage"/></li>
+  <!-- li><input type="number" class="input-sm" placeholder="Items per page" ng-model="resCtrl.itemsPerPage"/></li-->
   <li><a ng-hide="resCtrl.resources.length < resCtrl.itemsPerPage" ng-click="resCtrl.getPage(resCtrl.page + 1)" href>Next</a></li>
 </ul>
