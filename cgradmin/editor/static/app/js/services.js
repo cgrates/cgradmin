@@ -45,7 +45,7 @@ angular.module('cgradminApp.services', [])
        })
        .factory('resFactory', function($http, $cookieStore) {
          var factory = {};
-         factory.result = {message: ''};
+         factory.info = {message: ''};
          var param = {TPid : $cookieStore.get('tpid')};
          factory.getResourceIds = function(func, finalParam){
            angular.extend(finalParam, param);

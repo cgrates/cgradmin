@@ -74,8 +74,8 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-    <div ng-controller="NotificationCtrl as notifCtrl">
-      <div ng-show="notifCtrl.notification.message" class="alert alert-dismissible" ng-class="notifCtrl.getClass()" id="main-alert" role="alert">
+    <div ng-controller="NotificationCtrl as notifCtrl" id="main-alert">
+      <div ng-show="notifCtrl.notification.message" class="alert alert-dismissible" ng-class="notifCtrl.getClass()" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         {{notifCtrl.notification.message}}
       </div>
