@@ -28,5 +28,6 @@ angular.module('cgradminApp', [
          $routeProvider.when('/lcrrule/:res_id?', {templateUrl: 'partials/lcr_rule.html', controller: 'LcrRulesCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/derivedcharger/:res_id?', {templateUrl: 'partials/derived_charger.html', controller: 'DerivedChargersCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/cdrstats/:res_id?', {templateUrl: 'partials/cdr_stat.html', controller: 'CdrStatsCtrl', controllerAs: 'resCtrl'});
+         $routeProvider.when('/import', {templateUrl: 'partials/import.html'});
          $routeProvider.otherwise({redirectTo: '/resource/Timing'});
        }]);
