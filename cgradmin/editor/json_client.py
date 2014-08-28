@@ -1,4 +1,5 @@
 import json, socket, itertools
+from threading import Lock
 
 class JSONClient(object):
    def __init__(self, addr):
@@ -33,6 +34,7 @@ class JSONClient(object):
 class CGRConnector(object):
     def __init__(self):
         self.connect()
+        self.lock= Lock()
 
     def connect(self):
         try:
@@ -43,6 +45,7 @@ class CGRConnector(object):
 
     def call(self, method, param):
         try:
+            self.lock.acquire()
             return self.rpc.call(method, param)
         except BrokenPipeError as inst:
            self.connect()
@@ -52,5 +55,7 @@ class CGRConnector(object):
               return "ERROR: %s" % e
         except Exception as e:
            print("ERROR: ", type(e), e)
-           return "ERROR: %s" % e 
+           return "ERROR: %s" % e
+        finally:
+           self.lock.release()
         

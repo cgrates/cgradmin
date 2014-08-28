@@ -83,7 +83,7 @@ angular.module('cgradminApp.controllers', [])
             }
             var param = {};
             param[ctrl.res + 'sId'] = resId;
-            resFactory.delResource('RemTP' + ctrl.res + 's', param).success(function(data){ctrl.result.message = data;});
+            resFactory.delResource('RemTP' + ctrl.res + 's', param).success(function(data){resFactory.setMessage(data);});
             var index = this.resources.indexOf(resId);
             if (index > -1){
                 this.resources.splice(index, 1);
@@ -101,7 +101,6 @@ angular.module('cgradminApp.controllers', [])
         this.resId = $routeParams.res_id;
         var ctrl = this;
 
-        this.result = '';
         if(this.resId){
             resFactory.getResource('GetTPTiming', {TimingId: this.resId}).success(function(data) {ctrl.res = data;});
         } else {
@@ -109,7 +108,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPTiming', this.res).success(function(data){ctrl.result = data;});
+            resFactory.setResource('SetTPTiming', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -118,7 +117,6 @@ angular.module('cgradminApp.controllers', [])
         this.resId = $routeParams.res_id;
         var ctrl = this;
 
-        this.result = '';
         if(this.resId){
             resFactory.getResource('GetTPDestination', {DestinationId: this.resId}).success(function(data) {ctrl.res = data;});
         } else {
@@ -129,7 +127,7 @@ angular.module('cgradminApp.controllers', [])
             if(angular.isString(this.res.Prefixes)) {
                 this.res.Prefixes = this.res.Prefixes.split(",");
             }
-            resFactory.setResource('SetTPDestination', this.res).success(function(data){resFactory.result.message = data;});
+            resFactory.setResource('SetTPDestination', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -138,7 +136,6 @@ angular.module('cgradminApp.controllers', [])
         this.resId = $routeParams.res_id;
         var ctrl = this;
 
-        this.result = '';
         if(this.resId){
             resFactory.getResource('GetTPRate', {RateId: this.resId}).success(function(data) {ctrl.res = data;});
         } else {
@@ -146,7 +143,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPRate', this.res).success(function(data){ctrl.result = data;});
+            resFactory.setResource('SetTPRate', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -161,7 +158,6 @@ angular.module('cgradminApp.controllers', [])
         resFactory.getResourceIds('GetTPDestinationIds', {ItemsPerPage:10, SearchTerm:ctrl.destSearchTerm}).success(function(data) {ctrl.destIds.push.apply(ctrl.destIds, data);});
         resFactory.getResourceIds('GetTPRateIds', {ItemsPerPage:10, SearchTerm:ctrl.rateSearchTerm}).success(function(data) {ctrl.rateIds = data;});
 
-        this.result = '';
         if(this.resId){
             resFactory.getResource('GetTPDestinationRate', {DestinationRateId: this.resId}).success(function(data) {ctrl.res = data;});
         } else {
@@ -169,7 +165,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPDestinationRate', this.res).success(function(data){resFactory.result.message = data;});
+            resFactory.setResource('SetTPDestinationRate', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -191,7 +187,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPRatingPlan', this.res).success(function(data){resFactory.info.message = data;});
+            resFactory.setResource('SetTPRatingPlan', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -209,7 +205,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPRatingProfile', this.res).success(function(data){resFactory.info.message = data;});
+            resFactory.setResource('SetTPRatingProfile', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -229,7 +225,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPCdrStats', this.res).success(function(data){resFactory.info.message = data;});
+            resFactory.setResource('SetTPCdrStats', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -245,7 +241,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPActions', this.res).success(function(data){resFactory.info.message = data;});
+            resFactory.setResource('SetTPActions', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -267,7 +263,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPActionPlan', this.res).success(function(data){resFactory.info.message = data;});
+            resFactory.setResource('SetTPActionPlan', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -286,7 +282,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPActionTriggers', this.res).success(function(data){resFactory.info.message = data;});
+            resFactory.setResource('SetTPActionTriggers', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -306,7 +302,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPAccountActions', this.res).success(function(data){resFactory.info.message = data;});
+            resFactory.setResource('SetTPAccountActions', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -322,7 +318,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPSharedGroups', this.res).success(function(data){resFactory.info.message = data;});
+            resFactory.setResource('SetTPSharedGroups', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     })
@@ -338,7 +334,7 @@ angular.module('cgradminApp.controllers', [])
         }
 
         this.saveResource = function(){
-            resFactory.setResource('SetTPDerivedChargers', this.res).success(function(data){resFactory.info.message = data;});
+            resFactory.setResource('SetTPDerivedChargers', this.res).success(function(data){resFactory.setMessage(data);});
             history.back();
         };
     });

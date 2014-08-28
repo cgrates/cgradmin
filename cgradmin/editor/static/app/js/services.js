@@ -43,7 +43,7 @@ angular.module('cgradminApp.services', [])
          };
          return factory;
        })
-       .factory('resFactory', function($http, $cookieStore) {
+       .factory('resFactory', function($http, $cookieStore, $timeout) {
          var factory = {};
          factory.info = {message: ''};
          var param = {TPid : $cookieStore.get('tpid')};
@@ -63,5 +63,9 @@ angular.module('cgradminApp.services', [])
            angular.extend(finalParam, param);
            return $http.post('/call/ApierV1.' + func, finalParam);
          };
+         factory.setMessage = function(mes){
+            factory.info.message = mes;
+            $timeout(function(){factory.info.message='';},5000);
+         }
          return factory;
        });

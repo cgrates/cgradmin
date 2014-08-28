@@ -15,9 +15,7 @@ angular.module('cgradminApp.directives', [])
            replace: true,
            template: '<a href="" class="btn btn-default pull-right"><span class="glyphicon glyphicon-remove"></span> Cancel</a>',
            link: function(scope, element) {
-             $(element).on('click', function() {
-               history.back();
-             });
+                element.bind('click', function(){history.back();});
            }
          };
        });
