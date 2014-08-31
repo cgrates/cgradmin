@@ -344,6 +344,6 @@ angular.module('cgradminApp.controllers', [])
        .controller('ImportCtrl', function($routeParams, $location, resFactory){
          if ($routeParams.message) {
            $location.path('/import');
-           resFactory.setMessage($routeParams.message);
+           resFactory.setMessage(atob($routeParams.message));
          }
        });
