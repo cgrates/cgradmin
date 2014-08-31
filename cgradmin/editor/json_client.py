@@ -47,15 +47,13 @@ class CGRConnector(object):
         try:
             self.lock.acquire()
             return self.rpc.call(method, param)
-        except BrokenPipeError as inst:
+        except Exception as e:
+           print("ERROR: ", type(e), e)
            self.connect()
            try:
               return self.rpc.call(method, param)
            except Exception as e:
               return "ERROR: %s" % e
-        except Exception as e:
-           print("ERROR: ", type(e), e)
-           return "ERROR: %s" % e
         finally:
            self.lock.release()
         
