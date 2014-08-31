@@ -62,7 +62,7 @@ angular.module('cgradminApp.controllers', [])
          var ctrl = this;
          breadcrumbs.options = { 'Stock Detail': $routeParams.res + ' Details' };
          ctrl.breadcrumbs = breadcrumbs;
-         console.log(breadcrumbs.get());
+         //console.log(breadcrumbs.get());
          ctrl.res = $routeParams.res;
          ctrl.resources = [];
          ctrl.page = 0;
@@ -78,7 +78,9 @@ angular.module('cgradminApp.controllers', [])
          }
          ctrl.itemsPerPage = 30;
          resFactory.getResourceIds(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).success(function(data) {
-           ctrl.resources = data;
+           if (angular.isArray(data)){
+             ctrl.resources = data;
+           }
          });
          this.deleteResource = function(resId){
            if (!confirm("Are you sure you want to delete this resource?")) {
@@ -95,7 +97,11 @@ angular.module('cgradminApp.controllers', [])
          this.getPage = function(page){
            ctrl.page = page;
            resFactory.getResourceIds(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).success(function(data) {
-             ctrl.resources = data;
+             if (angular.isArray(data)){
+               ctrl.resources = data;
+             } else {
+               ctrl.resources = [];
+             }
            });
          }
        })
@@ -344,6 +350,11 @@ angular.module('cgradminApp.controllers', [])
        .controller('ImportCtrl', function($routeParams, $location, resFactory){
          if ($routeParams.message) {
            $location.path('/import');
+           resFactory.setMessage(atob($routeParams.message));
+         }
+       }).controller('ExportCtrl', function($routeParams, $location, resFactory){
+         if ($routeParams.message) {
+           $location.path('/export');
            resFactory.setMessage(atob($routeParams.message));
          }
        });

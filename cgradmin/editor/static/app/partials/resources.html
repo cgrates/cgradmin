@@ -8,19 +8,21 @@
   <p><a class="btn btn-primary pull-right" href="#/{{resCtrl.res|lowercase}}">New {{resCtrl.res}}</a></p>
 
   <h3>{{resCtrl.res}}</h3>
-  <form class="form-inline" role="form">
+  <form class="form-inline" role="form" ng-submit="resCtrl.getPage(resCtrl.page)">
     <div id="main-search" class="input-append">
       <input type="search" class="form-control" placeholder="Search resource" ng-model="resCtrl.searchTerm"/>
       <a href class="btn btn-default" ng-click="resCtrl.getPage(resCtrl.page)"><span class="glyphicon glyphicon-search"></span> Search</a>
     </div>
   </form>
   <div>
-    <span ng-repeat="rId in resCtrl.resources|filter:search_term">
+    <span ng-repeat="rId in filteredRes = (resCtrl.resources|filter:resCtrl.searchTerm)">
       <div class="resource-button btn-group">
         <a class="btn btn-default btn-xs" href="#/{{resCtrl.res|lowercase}}/{{rId}}">{{rId}}</a>
         <a class="btn btn-danger btn-xs" href ng-click="resCtrl.deleteResource(rId)"><span class="glyphicon glyphicon-trash"></span></a>
       </div>
     </span>
+    <h4 class="text-muted" ng-hide="filteredRes.length || !resCtrl.resources.length">Hit search button for getting more results from server!</h4>
+    <h4 class="text-muted" ng-hide="resCtrl.resources.length">No results matching searched term!</h4>
   </div>
 </div>
 

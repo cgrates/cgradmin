@@ -1,10 +1,12 @@
 import json
+from base64 import b64encode, b64decode
+from urllib import quote_plus
+import cStringIO as StringIO
+from editor.json_client import CGRConnector
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
-from editor.json_client import CGRConnector
-from base64 import b64encode
-from urllib import quote_plus
 from django.shortcuts import redirect
+from django.core.servers.basehttp import FileWrapper
 
 connector = CGRConnector()
 
@@ -23,3 +25,11 @@ def imports(request):
    response = connector.call('ApierV1.ImportTPZipFile', param)
    return redirect('/static/app/index.html#/import/%s' % quote_plus(b64encode(response)))
     
+@require_POST
+def exports(request):
+   myfile = StringIO.StringIO()
+   response = connector.call('ApierV1.ExportCdrsToZip', param)
+   myfile.write(b64decode(response["content"]))
+   response = HttpResponse(myfile.getvalue(), content_type='application/x-zip-compressed')
+   response['Content-Disposition'] = 'attachment; filename=cdrs.zip'
+   return response
