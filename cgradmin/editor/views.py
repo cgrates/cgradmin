@@ -29,6 +29,9 @@ def imports(request):
 def exports(request):
    myfile = StringIO.StringIO()
    param = request.POST.dict()
+   if param['FieldSeparator'] == '':
+      param['FieldSeparator'] = ','
+   param['FieldSeparator'] = ord(param['FieldSeparator'])
    param['CgrIds'] = param['CgrIds'].split(",")
    param['MediationRunIds'] = param['MediationRunIds'].split(",")
    param['TORs'] = param['TORs'].split(",")
@@ -50,10 +53,20 @@ def exports(request):
    param['MaskLength'] = int(param['MaskLength'])
    param['OrderIdStart'] = int(param['OrderIdStart'])
    param['OrderIdEnd'] = int(param['OrderIdEnd'])
-   param['SkipErrors'] = bool(param['SkipErrors'])
-   param['SkipRated'] = bool(param['SkipRated'])
-   param['SuppressCgrIds'] = bool(param['SuppressCgrIds'])
-   print(param)
+   if 'SkipErrors' not in param:
+      param['SkipErrors'] = False
+   else:
+      param['SkipErrors'] = bool(param['SkipErrors'])
+   if 'SkipRated' not in param:
+      param['SkipRated'] = False
+   else:
+      param['SkipRated'] = bool(param['SkipRated'])
+   if 'SuppressCgrIds' not in param:
+      param['SuppressCgrIds'] = False
+   else:
+      param['SuppressCgrIds'] = bool(param['SuppressCgrIds'])
+   for key, value in param.items():
+      print(key,value)
    response = connector.call('ApierV1.ExportCdrsToZipString', param)
    if response.startswith("ERROR"):
       return redirect('/static/app/index.html#/export/%s' % quote_plus(b64encode(response)))
