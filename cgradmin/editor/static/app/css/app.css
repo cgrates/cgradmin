@@ -31,6 +31,15 @@ body {
     display: block;
 }
 
+.slow-show-hide {
+    -webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+}
+
+.slow-show-hide.ng-hide {
+    opacity:0;
+}
+
 .resource-button {
     margin-right: 5px;
     margin-bottom: 5px;

@@ -47,25 +47,13 @@ angular.module('cgradminApp.services', [])
          var factory = {};
          factory.info = {message: ''};
          var param = {TPid : $cookieStore.get('tpid')};
-         factory.getResourceIds = function(func, finalParam){
-           angular.extend(finalParam, param);
-           return $http.post('/call/ApierV1.' + func, finalParam);
-         };
-         factory.getResource = function(func, finalParam){
-           angular.extend(finalParam, param);
-           return $http.post('/call/ApierV1.' + func, finalParam);
-         };
-         factory.setResource = function(func, finalParam){
-           angular.extend(finalParam, param);
-           return $http.post('/call/ApierV1.' + func, finalParam);
-         };
-         factory.delResource = function(func, finalParam){
+         factory.call = function(func, finalParam){
            angular.extend(finalParam, param);
            return $http.post('/call/ApierV1.' + func, finalParam);
          };
          factory.setMessage = function(mes){
             factory.info.message = mes;
-            $timeout(function(){factory.info.message='';},5000);
+            $timeout(function(){factory.info.message='';}, 10000);
          }
          return factory;
        });

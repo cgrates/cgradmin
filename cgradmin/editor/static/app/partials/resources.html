@@ -8,10 +8,10 @@
   <p><a class="btn btn-primary pull-right" href="#/{{resCtrl.res|lowercase}}">New {{resCtrl.res}}</a></p>
 
   <h3>{{resCtrl.res}}</h3>
-  <form class="form-inline" role="form" ng-submit="resCtrl.getPage(resCtrl.page)">
+  <form class="form-inline" role="form" ng-submit="resCtrl.getPage()">
     <div id="main-search" class="input-append">
       <input type="search" class="form-control" placeholder="Search resource" ng-model="resCtrl.searchTerm"/>
-      <a href class="btn btn-default" ng-click="resCtrl.getPage(resCtrl.page)"><span class="glyphicon glyphicon-search"></span> Search</a>
+      <a href class="btn btn-default" ng-click="resCtrl.getPage()"><span class="glyphicon glyphicon-search"></span> Search</a>
     </div>
   </form>
   <div>
@@ -27,8 +27,8 @@
 </div>
 
 <ul class="pager">
-  <li><a ng-hide="resCtrl.page<=0" ng-click="resCtrl.getPage(resCtrl.page - 1)" href>Previous</a></li>
+  <li><a ng-hide="resCtrl.page<=0" ng-click="resCtrl.getPage(-1)" href>Previous</a></li>
   <li><a ng-hide="(resCtrl.page<=0) && (resCtrl.resources.length < resCtrl.itemsPerPage)" href="#/resource/{{resCtrl.res}}/{{resCtrl.page+1}}">{{resCtrl.page+1}}</a></li>
   <!-- li><input type="number" class="input-sm" placeholder="Items per page" ng-model="resCtrl.itemsPerPage"/></li-->
-  <li><a ng-hide="resCtrl.resources.length < resCtrl.itemsPerPage" ng-click="resCtrl.getPage(resCtrl.page + 1)" href>Next</a></li>
+  <li><a ng-hide="resCtrl.resources.length < resCtrl.itemsPerPage" ng-click="resCtrl.getPage(1)" href>Next</a></li>
 </ul>

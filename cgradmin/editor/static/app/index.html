@@ -72,6 +72,16 @@
                 <li><a href="#/export">Export CDRs</a></li>
               </ul>
             </li>
+            <li class="dropdown">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown">Activate <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#/activate/rp">Rating Plans</a></li>
+                <li><a href="#/activate/rpf">Rating Profiles</a></li>
+                <li><a href="#/activate/aa">Account Actions</a></li>
+                <li class="divider"></li>
+                <li><a href="#/activate/all">All</a></li>
+              </ul>
+            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown" ng-controller="TpIdsCtrl as tiCtrl">
@@ -85,7 +95,7 @@
       </div>
     </div>
     <div ng-controller="NotificationCtrl as notifCtrl" id="main-alert">
-      <div ng-show="notifCtrl.notification.message" class="alert alert-dismissible" ng-class="notifCtrl.getClass()" role="alert">
+      <div ng-show="notifCtrl.notification.message" class="slow-show-hide alert alert-dismissible" ng-class="notifCtrl.getClass()" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         {{notifCtrl.notification.message}}
       </div>

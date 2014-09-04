@@ -31,5 +31,6 @@ angular.module('cgradminApp', [
          $routeProvider.when('/cdrstats/:res_id?', {templateUrl: 'partials/cdr_stat.html', controller: 'CdrStatsCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/import/:message?', {templateUrl: 'partials/import.html', controller: 'ImportCtrl', controllerAs: 'impCtrl'});
          $routeProvider.when('/export/:message?', {templateUrl: 'partials/export.html', controller: 'ExportCtrl', controllerAs: 'expCtrl'});
+         $routeProvider.when('/activate/:res', {templateUrl: 'partials/activate.html', controller: 'ActivationCtrl', controllerAs: 'actCtrl'});
          $routeProvider.otherwise({redirectTo: '/resource/Timing'});
        }]);
