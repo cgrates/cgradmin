@@ -9,7 +9,7 @@ angular.module('cgradminApp.controllers', [])
          ctrl.tpids = [];
          tpidsFactory.getTpIds().success(function(data) {
            ctrl.tpids = data;
-           if(!ctrl.tpid || ctrl.tpid==='"'){ // TODO: find from where does single quote comes from
+           if((!ctrl.tpid || ctrl.tpid==='"') && angular.isArray(data)){ // TODO: find from where does single quote comes from
              ctrl.tpid = data[0];
              $cookieStore.put('tpid', ctrl.tpid);
              $window.location.reload();
@@ -363,7 +363,12 @@ angular.module('cgradminApp.controllers', [])
        })
        .controller('ActivationCtrl', function($routeParams, resFactory){
          this.res = $routeParams.res;
+         this.resId = $routeParams.res_id;
+         if (!this.resId){}
          switch (this.res) {
+           case "dt":
+             resFactory.call('LoadDestination', {DestinationId:"*any"}).success(function(data){resFactory.setMessage(data);});
+             break;
            case "rp":
              resFactory.call('LoadRatingPlan', {RatingPlanId:"*any"}).success(function(data){resFactory.setMessage(data);});
              break;
