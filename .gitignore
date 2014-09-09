@@ -10,3 +10,4 @@ dist
 .tmp
 .sass-cache
 bower_components
+db.sqlite3
