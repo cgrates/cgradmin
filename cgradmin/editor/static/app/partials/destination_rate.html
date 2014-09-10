@@ -29,14 +29,20 @@
           <div class="col-sm-4">
             <select id="destid" class="form-control" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId" ng-options="dId for dId in resCtrl.destIds"></select>
           </div>
-          <a class="btn btn-primary btn-sm col-sm-2" href="#/destination">New Destination</a>
+          <div class="resource-button btn-group">
+            <a ng-hide="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId=='*any'" class="btn btn-primary btn-sm" href="#/destination/{{resCtrl.res.DestinationRates[panelCtrl.index].DestinationId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+            <a class="btn btn-primary btn-sm" href="#/destination"><span class="glyphicon glyphicon-star"></span> New</a>
+          </div>
         </div>
         <div class="form-group">
           <label for="rateid" class="col-sm-2 control-label">Rate Id</label>
           <div class="col-sm-4">
             <select id="rateid" class="form-control" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RateId" ng-options="rId for rId in resCtrl.rateIds"></select>
           </div>
-          <a class="btn btn-primary btn-sm col-sm-2" href="#/rate">New Rate</a>
+          <div class="resource-button btn-group">
+            <a class="btn btn-primary btn-sm" href="#/rate/{{resCtrl.res.DestinationRates[panelCtrl.index].RateId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+            <a class="btn btn-primary btn-sm" href="#/rate"><span class="glyphicon glyphicon-star"></span> New</a>
+          </div>
         </div>
         <div class="form-group">
           <label for="roundingmethod" class="col-sm-2 control-label">Rounding Method</label>

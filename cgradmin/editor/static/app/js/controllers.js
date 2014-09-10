@@ -237,7 +237,7 @@ angular.module('cgradminApp.controllers', [])
          resFactory.call('GetTPRatingPlanIds', {ItemsPerPage:10, SearchTerm:ctrl.rpSearchTerm}).success(function(data) {ctrl.rPlans = data;});
 
          if(this.resId){
-           resFactory.call('GetTPRatingProfiles', {RatingProfilesId: this.resId}).success(function(data) {ctrl.res = data;});
+           resFactory.call('GetTPRatingProfile', {RatingProfileId: this.resId}).success(function(data) {ctrl.res = data;});
          } else {
            this.showId = true;
          }
@@ -270,8 +270,10 @@ angular.module('cgradminApp.controllers', [])
        .controller('ActionsCtrl', function($routeParams, resFactory) {
          this.res = {Actions:[{}]};
          this.resId = $routeParams.res_id;
+         this.destIds = ['*any'];
          var ctrl = this;
-
+         
+         resFactory.call('GetTPDestinationIds', {ItemsPerPage:10, SearchTerm:ctrl.destSearchTerm}).success(function(data) {ctrl.destIds.push.apply(ctrl.destIds, data);});
          if(this.resId){
            resFactory.call('GetTPActions', {ActionsId: this.resId}).success(function(data) {ctrl.res = data;});
          } else {
@@ -309,8 +311,10 @@ angular.module('cgradminApp.controllers', [])
          this.res = {ActionTriggers:[{}]};
          this.resId = $routeParams.res_id;
          this.actIds = [];
+         this.destIds = ['*any'];
          this.actSearchTerm = '';
          var ctrl = this;
+         resFactory.call('GetTPDestinationIds', {ItemsPerPage:10, SearchTerm:ctrl.destSearchTerm}).success(function(data) {ctrl.destIds.push.apply(ctrl.destIds, data);});
          resFactory.call('GetTPActionIds', {ItemsPerPage:10, SearchTerm:ctrl.actSearchTerm}).success(function(data) {ctrl.actIds = data;});
 
          if(this.resId){
@@ -391,25 +395,26 @@ angular.module('cgradminApp.controllers', [])
        .controller('ActivationCtrl', function($routeParams, resFactory){
          this.res = $routeParams.res;
          this.resId = $routeParams.res_id;
+         var EMPTY = "_empty_";
          if (!this.resId){}
          switch (this.res) {
            case "dt":
-             resFactory.call('LoadDestination', {DestinationId:"*any"}).success(function(data){resFactory.setMessage(data);});
+             resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){resFactory.setMessage(data);});
              break;
            case "rp":
-             resFactory.call('LoadRatingPlan', {RatingPlanId:"*any"}).success(function(data){resFactory.setMessage(data);});
+             resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){resFactory.setMessage(data);});
              break;
            case "rpf":
-             resFactory.call('LoadRatingProfile', {LoadId: "*any", Tenant: "*any", Category: "*any", Direction: "*any", Subject: "*any"}).success(function(data){resFactory.setMessage(data);});
+             resFactory.call('LoadRatingProfile', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Subject: EMPTY}).success(function(data){resFactory.setMessage(data);});
              break;
            case "aa":
-             resFactory.call('LoadAccountActions', {LoadId: "*any", Tenant: "*any", Account: "*any", Direction: "*any"}).success(function(data){resFactory.setMessage(data);});
+             resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){resFactory.setMessage(data);});
              break;
            case "all":
              var combinedMessage = "";
-             resFactory.call('LoadRatingPlan', {RatingPlanId:"*any"}).success(function(data){combinedMessage += data});
-             resFactory.call('LoadRatingProfile', {LoadId: "*any", Tenant: "*any", Category: "*any", Direction: "*any", Subject: "*any"}).success(function(data){combinedMessage += "<br>\n" + data});
-             resFactory.call('LoadAccountActions', {LoadId: "*any", Tenant: "*any", Account: "*any", Direction: "*any"}).success(function(data){
+             resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){combinedMessage += data});
+             resFactory.call('LoadRatingProfile', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Subject: EMPTY}).success(function(data){combinedMessage += "<br>\n" + data});
+             resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){
                combinedMessage += "<br>\n" + data;
                resFactory.setMessage(combinedMessage);
              });

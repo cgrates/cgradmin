@@ -31,14 +31,20 @@
         <select id="actionplan" class="form-control" ng-model="resCtrl.res.ActionPlanId" ng-options="id for id in resCtrl.actPlans"></select>
         <p class="help-block">Example block-level help text here.</p>
       </div>
-      <a class="btn btn-primary btn-sm col-sm-2" href="#/action">New Action Plan</a>
+      <div class="resource-button btn-group">
+        <a class="btn btn-primary btn-sm" href="#/actionplan/{{resCtrl.res.ActionPlanId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+        <a class="btn btn-primary btn-sm" href="#/actionplan"><span class="glyphicon glyphicon-star"></span> New</a>
+      </div>
     </div>
     <div class="form-group">
       <label for="actrid" class="col-sm-2 control-label">Action Triggers Id</label>
       <div class="col-sm-2">
         <select id="actrid" class="form-control" ng-model="resCtrl.res.ActionTriggersId" ng-options="id for id in resCtrl.actTriggers"></select>
       </div>
-      <a class="btn btn-primary btn-sm col-sm-2" href="#/timing">New Timing</a>
+      <div class="resource-button btn-group">
+        <a class="btn btn-primary btn-sm" href="#/actiontrigger/{{resCtrl.res.ActionTriggersId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+        <a class="btn btn-primary btn-sm" href="#/actiontrigger"><span class="glyphicon glyphicon-star"></span> New</a>
+      </div>
     </div>
     <div class="btn-group">
       <a class="btn btn-success" ng-click="resCtrl.saveResource()"><span class="glyphicon glyphicon-ok"></span> Save</a>

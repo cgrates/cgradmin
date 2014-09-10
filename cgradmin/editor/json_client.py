@@ -15,14 +15,12 @@ class JSONClient(object):
                     method=name)
         self.socket.sendall(json.dumps(request).encode())
         # This must loop if resp is bigger than 4K
-        #response = self.socket.recv(4096)
         buffer = ''
         data = True
         while data:
             data = self.socket.recv(4096)
             buffer += data
-            if len(data) < 4096:
-                break
+            if len(data) < 4096: break
         response = json.loads(buffer.decode())
         if response.get('id') != request.get('id'):
             raise Exception("expected id=%s, received id=%s: %s"

@@ -26,14 +26,20 @@
         <div class="col-sm-2">
           <select id="destRateId" class="form-control" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].DestinationRatesId" ng-options="drId for drId in resCtrl.destRatesIds"></select>
         </div>
-        <a class="btn btn-primary btn-sm col-sm-2" href="#/destinationrate">New Destination Rate</a>
+        <div class="resource-button btn-group">
+          <a class="btn btn-primary btn-sm" href="#/destinationrate/{{resCtrl.res.RatingPlanBindings[panelCtrl.index].DestinationRatesId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+          <a class="btn btn-primary btn-sm" href="#/destinationrate"><span class="glyphicon glyphicon-star"></span> New</a>
+        </div>
       </div>
       <div class="form-group">
         <label for="tmid" class="col-sm-2 control-label">Timing Id</label>
         <div class="col-sm-2">
           <select id="tmid" class="form-control" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].TimingId" ng-options="tmId for tmId in resCtrl.tmIds"></select>
         </div>
-        <a class="btn btn-primary btn-sm col-sm-2" href="#/timing">New Timing</a>
+        <div class="resource-button btn-group">
+          <a class="btn btn-primary btn-sm" href="#/timing/{{resCtrl.res.RatingPlanBindings[panelCtrl.index].TimingId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+          <a class="btn btn-primary btn-sm" href="#/timing"><span class="glyphicon glyphicon-star"></span> New</a>
+        </div>
       </div>
       <div class="form-group">
         <label for="weight" class="col-sm-2 control-label">Weight</label>

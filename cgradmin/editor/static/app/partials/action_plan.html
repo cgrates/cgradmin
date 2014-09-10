@@ -1,11 +1,11 @@
 <div id="detail-view">
-  <h4>Action Plan {{resCtrl.res.ActionPlanId}}</h4>
+  <h4>Action Plan {{resCtrl.res.Id}}</h4>
   <form class="form-horizontal" role="form">
     <div class="form-group">
       <div ng-show="resCtrl.showId">
-        <label for="res_id" class="col-sm-2 control-label">ActionPlanId</label>
+        <label for="res_id" class="col-sm-2 control-label">Id</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.ActionPlanId"/>
+          <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.Id"/>
         </div>
       </div>
     </div>
@@ -26,14 +26,20 @@
         <div class="col-sm-2">
           <select id="actionId" class="form-control" ng-model="resCtrl.res.ActionPlan[panelCtrl.index].ActionsId" ng-options="drId for drId in resCtrl.actIds"></select>
         </div>
-        <a class="btn btn-primary btn-sm col-sm-2" href="#/action">New Action</a>
+        <div class="resource-button btn-group">
+          <a class="btn btn-primary btn-sm" href="#/action/{{resCtrl.res.ActionPlan[panelCtrl.index].ActionsId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+          <a class="btn btn-primary btn-sm" href="#/action"><span class="glyphicon glyphicon-star"></span> New</a>
+        </div>
       </div>
       <div class="form-group">
         <label for="tmid" class="col-sm-2 control-label">Timing Id</label>
         <div class="col-sm-2">
           <select id="tmid" class="form-control" ng-model="resCtrl.res.ActionPlan[panelCtrl.index].TimingId" ng-options="tmId for tmId in resCtrl.tmIds"></select>
         </div>
-        <a class="btn btn-primary btn-sm col-sm-2" href="#/timing">New Timing</a>
+        <div class="resource-button btn-group">
+          <a class="btn btn-primary btn-sm" href="#/timing/{{resCtrl.res.ActionPlan[panelCtrl.index].TimingId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+          <a class="btn btn-primary btn-sm" href="#/timing"><span class="glyphicon glyphicon-star"></span> New</a>
+        </div>
       </div>
       <div class="form-group">
         <label for="weight" class="col-sm-2 control-label">Weight</label>
