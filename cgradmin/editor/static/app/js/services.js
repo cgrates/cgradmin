@@ -22,6 +22,10 @@ angular.module('cgradminApp.services', [])
          "SharedGroup": "GetTPSharedGroupIds",
          "DerivedCharger": "GetTPDerivedChargerIds",
        })
+       .value('hasActivateArray',
+              ["Destination", "RatingPlan", "RatingProfile", "CdrStats", "Action",
+               "ActionPlan", "AccountAction", "SharedGroup", "DerivedCharger"]
+       )
        .factory('metricsFactory', function($http){
          var factory = {};
          factory.getMetrics = function(param){
@@ -52,8 +56,8 @@ angular.module('cgradminApp.services', [])
            return $http.post('/call/ApierV1.' + func, finalParam);
          };
          factory.setMessage = function(mes){
-            factory.info.message = mes;
-            $timeout(function(){factory.info.message='';}, 10000);
+           factory.info.message = mes;
+           $timeout(function(){factory.info.message='';}, 10000);
          }
          return factory;
        });

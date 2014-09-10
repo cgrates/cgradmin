@@ -59,7 +59,7 @@ angular.module('cgradminApp.controllers', [])
            return this.index === i;
          }
        })
-       .controller('ResourcesCtrl', function($routeParams, resFactory, idMethods, breadcrumbs){
+       .controller('ResourcesCtrl', function($routeParams, resFactory, idMethods, hasActivateArray, breadcrumbs){
          var ctrl = this;
          breadcrumbs.options = { 'Stock Detail': $routeParams.res + ' Details' };
          ctrl.breadcrumbs = breadcrumbs;
@@ -126,16 +126,30 @@ angular.module('cgradminApp.controllers', [])
            this.selectedResources = [];
          };
          this.hasActivate = function(){
-           var hasActivateArray = ["Destination", "RatingPlan", "RatingProfile", "CdrStats", "Action", "ActionPlan", "AccountAction", "SharedGroup", "DerivedCharger"];
            return hasActivateArray.indexOf(this.res) > -1;
          };
        })
-       .controller('ResActCtrl', function(resFactory){
-         this.activate = function(resId){
-           console.log(resId);
+       .controller('ResActCtrl', function(resFactory, hasActivateArray){
+         this.init = function(res, resId){
+           this.res = res;
+           this.resId = resId;
+         }
+         this.activate = function(){
+           param[this.res + 'Id'] = this.resId;
+           resFactory.call('Load' + this.res, param).success(function(data){resFactory.setMessage(data);});
            history.back();
          };
-         this.delete = function(resId){
+         this.delete = function(){
+           if (!confirm("Are you sure you want to delete this resource?")) {
+             return;
+           }
+           var param = {};
+           param[this.res + 'Id'] = this.resId;
+           resFactory.call('RemTP' + this.res, param).success(function(data){resFactory.setMessage(data);});
+           history.back();
+         };
+         this.hasActivate = function(){
+           return hasActivateArray.indexOf(this.res) > -1;
          };
        })
        .controller('TimingsCtrl', function($routeParams, resFactory) {

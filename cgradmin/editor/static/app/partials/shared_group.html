@@ -1,4 +1,8 @@
 <div id="detail-view">
+  <div class="resource-button btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init('SharedGroup', resCtrl.resId)">
+    <a ng-show="actCtrl.hasActivate()" class="btn btn-primary" href ng-click="actCtrl.activate()"><span class="glyphicon glyphicon-plane"></span> Activate</a>
+    <a class="btn btn-danger" href ng-click="actCtrl.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+  </div>
   <h4>Shared Groups {{resCtrl.res.SharedGroupsId}}</h4>
   <form class="form-horizontal" role="form">
     <div class="form-group">
