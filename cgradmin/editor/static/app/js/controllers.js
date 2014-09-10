@@ -113,7 +113,15 @@ angular.module('cgradminApp.controllers', [])
            }
          };
          this.activateSelected = function(){
-           console.log("Activate: ", this.selectedResources);
+           if (!confirm("Are you sure you want to delete this resource(s)?")) {
+             return;
+           }
+           for (var index = 0; index < this.selectedResources.length; index++) {
+             console.log(this.res);
+             var param = {};
+             param[this.res + 'Id'] = this.selectedResources[index];
+             resFactory.call('Load' + this.res, param).success(function(data){resFactory.setMessage(data);});
+           }
            this.selectedResources = [];
          };
          this.deleteSelected = function(){
@@ -135,6 +143,7 @@ angular.module('cgradminApp.controllers', [])
            this.resId = resId;
          }
          this.activate = function(){
+           var param = {};
            param[this.res + 'Id'] = this.resId;
            resFactory.call('Load' + this.res, param).success(function(data){resFactory.setMessage(data);});
            history.back();

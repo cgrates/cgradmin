@@ -1,5 +1,5 @@
 <div id="detail-view">
-  <div class="resource-button btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init('ActionTrigger', resCtrl.resId)">
+  <div ng-hide="resCtrl.showId" class="btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init('ActionTrigger', resCtrl.resId)">
     <a ng-show="actCtrl.hasActivate()" class="btn btn-primary" href ng-click="actCtrl.activate()"><span class="glyphicon glyphicon-plane"></span> Activate</a>
     <a class="btn btn-danger" href ng-click="actCtrl.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
   </div>
@@ -60,7 +60,7 @@
         <div class="col-sm-2">
           <select id="destid" class="form-control" ng-model="resCtrl.res.ActionTriggers[panelCtrl.index].DestinationId" ng-options="dId for dId in resCtrl.destIds"></select>
         </div>
-        <div class="resource-button btn-group">
+        <div class="btn-group">
           <a ng-hide="resCtrl.res.ActionTriggers[panelCtrl.index].DestinationId=='*any'" class="btn btn-primary btn-sm" href="#/destination/{{resCtrl.res.ActionTriggers[panelCtrl.index].DestinationId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
           <a class="btn btn-primary btn-sm" href="#/destination"><span class="glyphicon glyphicon-star"></span> New</a>
         </div>
@@ -94,7 +94,7 @@
         <div class="col-sm-2">
           <select id="actionId" class="form-control" ng-model="resCtrl.res.ActionTriggers[panelCtrl.index].ActionsId" ng-options="drId for drId in resCtrl.actIds"></select>
         </div>
-        <div class="resource-button btn-group">
+        <div class="btn-group">
           <a class="btn btn-primary btn-sm" href="#/action/{{resCtrl.res.ActionTriggers[panelCtrl.index].ActionsId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
           <a class="btn btn-primary btn-sm" href="#/action"><span class="glyphicon glyphicon-star"></span> New</a>
         </div>

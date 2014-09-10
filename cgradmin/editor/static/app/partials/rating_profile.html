@@ -1,5 +1,5 @@
 <div id="detail-view">
-  <div class="resource-button btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init('RatingProfile', resCtrl.resId)">
+  <div ng-hide="resCtrl.showId" class="btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init('RatingProfile', resCtrl.resId)">
     <a ng-show="actCtrl.hasActivate()" class="btn btn-primary" href ng-click="actCtrl.activate()"><span class="glyphicon glyphicon-plane"></span> Activate</a>
     <a class="btn btn-danger" href ng-click="actCtrl.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
   </div>
@@ -61,7 +61,7 @@
         <select id="ratingplan" class="form-control" ng-model="resCtrl.res.RatingPlanActivations[panelCtrl.index].RatingPlanId" ng-options="id for id in resCtrl.rPlans"></select>
         <p class="help-block">Example block-level help text here.</p>
       </div>
-      <div class="resource-button btn-group">
+      <div class="btn-group">
           <a class="btn btn-primary btn-sm" href="#/ratingplan/{{resCtrl.res.RatingPlanActivations[panelCtrl.index].RatingPlanId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
           <a class="btn btn-primary btn-sm" href="#/ratingplan"><span class="glyphicon glyphicon-star"></span> New</a>
         </div>
