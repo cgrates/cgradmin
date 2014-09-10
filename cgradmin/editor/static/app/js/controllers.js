@@ -66,6 +66,7 @@ angular.module('cgradminApp.controllers', [])
          //console.log(breadcrumbs.get());
          ctrl.res = $routeParams.res;
          ctrl.resources = [];
+         ctrl.selectedResources = [];
          ctrl.page = 0;
          ctrl.searchTerm = "";
          if ($routeParams.page){
@@ -84,12 +85,9 @@ angular.module('cgradminApp.controllers', [])
            }
          });
          this.deleteResource = function(resId){
-           if (!confirm("Are you sure you want to delete this resource?")) {
-             return;
-           }
            var param = {};
-           param[ctrl.res + 'sId'] = resId;
-           resFactory.call('RemTP' + ctrl.res + 's', param).success(function(data){resFactory.setMessage(data);});
+           param[ctrl.res + 'Id'] = resId;
+           resFactory.call('RemTP' + ctrl.res, param).success(function(data){resFactory.setMessage(data);});
            var index = this.resources.indexOf(resId);
            if (index > -1){
              this.resources.splice(index, 1);
@@ -105,6 +103,35 @@ angular.module('cgradminApp.controllers', [])
                ctrl.resources = [];
              }
            });
+         };
+         this.toggleSelectedState = function(resId){
+           var index = this.selectedResources.indexOf(resId);
+           if (index > -1) {
+             this.selectedResources.splice(index, 1);
+           } else {
+             this.selectedResources.push(resId);
+           }
+         };
+         this.activateSelected = function(){
+           console.log("Activate: ", this.selectedResources);
+           this.selectedResources = [];
+         };
+         this.deleteSelected = function(){
+           if (!confirm("Are you sure you want to delete this resource(s)?")) {
+             return;
+           }
+           for (var index = 0; index < this.selectedResources.length; index++) {
+             this.deleteResource(this.selectedResources[index]);
+           }
+           this.selectedResources = [];
+         };
+       })
+       .controller('ResActCtrl', function(resFactory){
+         this.activate = function(resId){
+           console.log(resId);
+           history.back();
+         };
+         this.delete = function(resId){
          };
        })
        .controller('TimingsCtrl', function($routeParams, resFactory) {
