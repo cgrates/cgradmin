@@ -113,7 +113,7 @@ angular.module('cgradminApp.controllers', [])
            }
          };
          this.activateSelected = function(){
-           if (!confirm("Are you sure you want to delete this resource(s)?")) {
+           if (!confirm("Are you sure you want to activate this resource(s)?")) {
              return;
            }
            for (var index = 0; index < this.selectedResources.length; index++) {
@@ -143,6 +143,9 @@ angular.module('cgradminApp.controllers', [])
            this.resId = resId;
          }
          this.activate = function(){
+           if (!confirm("Are you sure you want to activate this resource?")) {
+             return;
+           }
            var param = {};
            param[this.res + 'Id'] = this.resId;
            resFactory.call('Load' + this.res, param).success(function(data){resFactory.setMessage(data);});
