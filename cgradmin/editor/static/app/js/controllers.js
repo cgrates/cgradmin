@@ -125,6 +125,10 @@ angular.module('cgradminApp.controllers', [])
            }
            this.selectedResources = [];
          };
+         this.hasActivate = function(){
+           var hasActivateArray = ["Destination", "RatingPlan", "RatingProfile", "CdrStats", "Action", "ActionPlan", "AccountAction", "SharedGroup", "DerivedCharger"];
+           return hasActivateArray.indexOf(this.res) > -1;
+         };
        })
        .controller('ResActCtrl', function(resFactory){
          this.activate = function(resId){
