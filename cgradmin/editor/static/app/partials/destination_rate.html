@@ -30,18 +30,21 @@
       <div class="col-md-9">
         <div class="form-group">
           <label for="destid" class="col-sm-2 control-label">Destination Id</label>
-          <div class="col-sm-4">
-            <select id="destid" class="form-control" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId" ng-options="dId for dId in resCtrl.destIds"></select>
+          <div class="col-sm-4" ng-controller="TypeaheadCtrl as tyaCtrl">
+            <input id="destid" type="text" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId" typeahead="id for id in tyaCtrl.getIds('Destination', $viewValue)" typeahead-loading="loadingDestinationIds" class="form-control" typeahead-wait-ms="500">
+            <i ng-show="loadingDestinationIds" class="glyphicon glyphicon-refresh"></i>
           </div>
           <div class="btn-group">
             <a ng-hide="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId=='*any'" class="btn btn-primary btn-sm" href="#/destination/{{resCtrl.res.DestinationRates[panelCtrl.index].DestinationId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
             <a class="btn btn-primary btn-sm" href="#/destination"><span class="glyphicon glyphicon-star"></span> New</a>
           </div>
         </div>
+
         <div class="form-group">
           <label for="rateid" class="col-sm-2 control-label">Rate Id</label>
-          <div class="col-sm-4">
-            <select id="rateid" class="form-control" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RateId" ng-options="rId for rId in resCtrl.rateIds"></select>
+          <div class="col-sm-4" ng-controller="TypeaheadCtrl as tyaCtrl">
+            <input id="rateid" type="text" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RateId" typeahead="id for id in tyaCtrl.getIds('Rate', $viewValue)" typeahead-loading="loadingRateIds" class="form-control" typeahead-wait-ms="500">
+            <i ng-show="loadingRateIds" class="glyphicon glyphicon-refresh"></i>
           </div>
           <div class="btn-group">
             <a class="btn btn-primary btn-sm" href="#/rate/{{resCtrl.res.DestinationRates[panelCtrl.index].RateId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>

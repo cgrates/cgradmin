@@ -49,15 +49,20 @@ angular.module('cgradminApp.services', [])
        })
        .factory('resFactory', function($http, $cookieStore, $timeout) {
          var factory = {};
-         factory.info = {message: ''};
+         factory.alerts = [];
          var param = {TPid : $cookieStore.get('tpid')};
          factory.call = function(func, finalParam){
            angular.extend(finalParam, param);
            return $http.post('/call/ApierV1.' + func, finalParam);
          };
-         factory.setMessage = function(mes){
-           factory.info.message = mes;
-           $timeout(function(){factory.info.message='';}, 10000);
-         }
+         factory.addAlert = function(message) {
+           factory.alerts.push({
+             type: message.indexOf('ERROR') > -1 ? 'danger' : 'success',
+             msg: message
+           });
+           $timeout(function(){
+             factory.alerts.splice(0, 1);
+           }, 7000);
+         };
          return factory;
        });

@@ -21,17 +21,11 @@ angular.module('cgradminApp.controllers', [])
            $window.location.reload();
          };
        })
-       .controller('NotificationCtrl', function(resFactory){
-         this.notification = resFactory.info;
-         this.getClass = function(){
-           if (this.notification.message.indexOf('OK') > -1){
-             return 'alert-success';
-           }
-           if (this.notification.message.indexOf('ERROR') > -1){
-             return 'alert-danger';
-           }
-           return 'alert-info';
-         }
+       .controller('AlertCtrl', function(resFactory){
+         this.alerts = resFactory.alerts
+         this.closeAlert = function(index) {
+           this.alerts.splice(index, 1);
+         };
        })
        .controller('PanelCtrl', function(){
          this.init = function(){
@@ -84,7 +78,7 @@ angular.module('cgradminApp.controllers', [])
          this.deleteResource = function(resId){
            var param = {};
            param[ctrl.res + 'Id'] = resId;
-           resFactory.call('RemTP' + ctrl.res, param).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('RemTP' + ctrl.res, param).success(function(data){resFactory.addAlert(data);});
            var index = this.resources.indexOf(resId);
            if (index > -1){
              this.resources.splice(index, 1);
@@ -94,11 +88,7 @@ angular.module('cgradminApp.controllers', [])
            if(typeof(page)==='undefined') page = 0;
            ctrl.page += page;
            resFactory.call(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).success(function(data) {
-             if (angular.isArray(data)){
-               ctrl.resources = data;
-             } else {
-               ctrl.resources = [];
-             }
+             ctrl.resources = angular.isArray(data) ? data : [];
            });
          };
          this.toggleSelectedState = function(resId){
@@ -114,10 +104,9 @@ angular.module('cgradminApp.controllers', [])
              return;
            }
            for (var index = 0; index < this.selectedResources.length; index++) {
-             console.log(this.res);
              var param = {};
              param[this.res + 'Id'] = this.selectedResources[index];
-             resFactory.call('Load' + this.res, param).success(function(data){resFactory.setMessage(data);});
+             resFactory.call('Load' + this.res, param).success(function(data){resFactory.addAlert(data);});
            }
            this.selectedResources = [];
          };
@@ -145,7 +134,7 @@ angular.module('cgradminApp.controllers', [])
            }
            var param = {};
            param[this.res + 'Id'] = this.resId;
-           resFactory.call('Load' + this.res, param).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('Load' + this.res, param).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
          this.delete = function(){
@@ -154,11 +143,18 @@ angular.module('cgradminApp.controllers', [])
            }
            var param = {};
            param[this.res + 'Id'] = this.resId;
-           resFactory.call('RemTP' + this.res, param).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('RemTP' + this.res, param).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
          this.hasActivate = function(){
            return hasActivateArray.indexOf(this.res) > -1;
+         };
+       })
+       .controller('TypeaheadCtrl', function(idMethods, resFactory){
+         this.getIds = function(res, term){
+           return resFactory.call(idMethods[res], {Page:0, ItemsPerPage:40, SearchTerm:term}).then(function(res) {
+             return angular.isArray(res.data) ? res.data : [];
+           });
          };
        })
        .controller('TimingsCtrl', function($routeParams, resFactory) {
@@ -173,7 +169,7 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPTiming', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPTiming', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
@@ -192,7 +188,7 @@ angular.module('cgradminApp.controllers', [])
            if(angular.isString(this.res.Prefixes)) {
              this.res.Prefixes = this.res.Prefixes.split(",");
            }
-           resFactory.call('SetTPDestination', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPDestination', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
@@ -208,21 +204,14 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPRate', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPRate', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
        .controller('DestinationRatesCtrl', function($routeParams, resFactory) {
          this.res = {DestinationRates:[{}]};
          this.resId = $routeParams.res_id;
-         this.destIds = ['*any'];
-         this.rateIds = [];
-         this.destSearchTerm = '';
-         this.rateSearchTerm = '';
          var ctrl = this;
-         resFactory.call('GetTPDestinationIds', {ItemsPerPage:10, SearchTerm:ctrl.destSearchTerm}).success(function(data) {ctrl.destIds.push.apply(ctrl.destIds, data);});
-         resFactory.call('GetTPRateIds', {ItemsPerPage:10, SearchTerm:ctrl.rateSearchTerm}).success(function(data) {ctrl.rateIds = data;});
-
          if(this.resId){
            resFactory.call('GetTPDestinationRate', {DestinationRateId: this.resId}).success(function(data) {ctrl.res = data;});
          } else {
@@ -230,21 +219,14 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPDestinationRate', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPDestinationRate', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
        .controller('RatingPlansCtrl', function($routeParams, resFactory) {
          this.res = {RatingPlanBindings: [{}]};
          this.resId = $routeParams.res_id;
-         this.destRatesIds = [];
-         this.tmIds = [];
-         this.destRateSearchTerm = '';
-         this.timingSearchTerm = '';
          var ctrl = this;
-         resFactory.call('GetTPDestinationRateIds', {ItemsPerPage:10, SearchTerm:ctrl.destRateSearchTerm}).success(function(data) {ctrl.destRatesIds = data;});
-         resFactory.call('GetTPTimingIds', {ItemsPerPage:10, SearchTerm:ctrl.timingSearchTerm}).success(function(data) {ctrl.tmIds = data;});
-
          if(this.resId){
            resFactory.call('GetTPRatingPlan', {RatingPlanId: this.resId}).success(function(data) {ctrl.res = data;});
          } else {
@@ -252,16 +234,14 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPRatingPlan', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPRatingPlan', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
        .controller('RatingProfilesCtrl', function($routeParams, resFactory) {
          this.res = {RatingPlanActivations:[{}]};
          this.resId = $routeParams.res_id;
-         this.rpSearchTerm = '';
          var ctrl = this;
-         resFactory.call('GetTPRatingPlanIds', {ItemsPerPage:10, SearchTerm:ctrl.rpSearchTerm}).success(function(data) {ctrl.rPlans = data;});
 
          if(this.resId){
            resFactory.call('GetTPRatingProfile', {RatingProfileId: this.resId}).success(function(data) {ctrl.res = data;});
@@ -270,7 +250,7 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPRatingProfile', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPRatingProfile', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
@@ -290,7 +270,7 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPCdrStats', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPCdrStats', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
@@ -300,7 +280,6 @@ angular.module('cgradminApp.controllers', [])
          this.destIds = ['*any'];
          var ctrl = this;
 
-         resFactory.call('GetTPDestinationIds', {ItemsPerPage:10, SearchTerm:ctrl.destSearchTerm}).success(function(data) {ctrl.destIds.push.apply(ctrl.destIds, data);});
          if(this.resId){
            resFactory.call('GetTPActions', {ActionsId: this.resId}).success(function(data) {ctrl.res = data;});
          } else {
@@ -308,20 +287,14 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPActions', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPActions', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
        .controller('ActionPlansCtrl', function($routeParams, resFactory) {
          this.res = {ActionPlan:[{}]};
          this.resId = $routeParams.res_id;
-         this.actIds = [];
-         this.tmIds = [];
-         this.actSearchTerm = '';
-         this.timingSearchTerm = '';
          var ctrl = this;
-         resFactory.call('GetTPActionIds', {ItemsPerPage:10, SearchTerm:ctrl.actSearchTerm}).success(function(data) {ctrl.actIds = data;});
-         resFactory.call('GetTPTimingIds', {ItemsPerPage:10, SearchTerm:ctrl.timingSearchTerm}).success(function(data) {ctrl.tmIds = data;});
 
          if(this.resId){
            resFactory.call('GetTPActionPlan', {Id: this.resId}).success(function(data) {ctrl.res = data;});
@@ -330,19 +303,14 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPActionPlan', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPActionPlan', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
        .controller('ActionTriggersCtrl', function($routeParams, resFactory) {
          this.res = {ActionTriggers:[{}]};
          this.resId = $routeParams.res_id;
-         this.actIds = [];
-         this.destIds = ['*any'];
-         this.actSearchTerm = '';
          var ctrl = this;
-         resFactory.call('GetTPDestinationIds', {ItemsPerPage:10, SearchTerm:ctrl.destSearchTerm}).success(function(data) {ctrl.destIds.push.apply(ctrl.destIds, data);});
-         resFactory.call('GetTPActionIds', {ItemsPerPage:10, SearchTerm:ctrl.actSearchTerm}).success(function(data) {ctrl.actIds = data;});
 
          if(this.resId){
            resFactory.call('GetTPActionTriggers', {ActionTriggersId: this.resId}).success(function(data) {ctrl.res = data;});
@@ -351,18 +319,14 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPActionTriggers', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPActionTriggers', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
        .controller('AccountActionsCtrl', function($routeParams, resFactory) {
          this.res = {};
          this.resId = $routeParams.res_id;
-         this.actSearchTerm = '';
-         this.actTrigSearchTerm = '';
          var ctrl = this;
-         resFactory.call('GetTPActionPlanIds', {ItemsPerPage:10, SearchTerm:ctrl.actSearchTerm}).success(function(data) {ctrl.actPlans = data;});
-         resFactory.call('GetTPActionTriggerIds', {ItemsPerPage:10, SearchTerm:ctrl.actTrigSearchTerm}).success(function(data) {ctrl.actTriggers = data;});
 
          if(this.resId){
            resFactory.call('GetTPAccountActions', {AccountActionsId: this.resId}).success(function(data) {ctrl.res = data;});
@@ -371,7 +335,7 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPAccountActions', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPAccountActions', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
@@ -387,7 +351,7 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPSharedGroups', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPSharedGroups', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
@@ -403,20 +367,20 @@ angular.module('cgradminApp.controllers', [])
          }
 
          this.saveResource = function(){
-           resFactory.call('SetTPDerivedChargers', this.res).success(function(data){resFactory.setMessage(data);});
+           resFactory.call('SetTPDerivedChargers', this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
        .controller('ImportCtrl', function($routeParams, $location, resFactory){
          if ($routeParams.message) {
            $location.path('/import');
-           resFactory.setMessage(atob($routeParams.message));
+           resFactory.addAlert(atob($routeParams.message));
          }
        })
        .controller('ExportCtrl', function($routeParams, $location, resFactory){
          if ($routeParams.message) {
            $location.path('/export');
-           resFactory.setMessage(atob($routeParams.message));
+           resFactory.addAlert(atob($routeParams.message));
          }
        })
        .controller('ActivationCtrl', function($routeParams, resFactory){
@@ -426,16 +390,16 @@ angular.module('cgradminApp.controllers', [])
          if (!this.resId){}
          switch (this.res) {
            case "dt":
-             resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){resFactory.setMessage(data);});
+             resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
            case "rp":
-             resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){resFactory.setMessage(data);});
+             resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
            case "rpf":
-             resFactory.call('LoadRatingProfile', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Subject: EMPTY}).success(function(data){resFactory.setMessage(data);});
+             resFactory.call('LoadRatingProfile', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Subject: EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
            case "aa":
-             resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){resFactory.setMessage(data);});
+             resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
            case "all":
              var combinedMessage = "";
@@ -443,7 +407,7 @@ angular.module('cgradminApp.controllers', [])
              resFactory.call('LoadRatingProfile', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Subject: EMPTY}).success(function(data){combinedMessage += "<br>\n" + data});
              resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){
                combinedMessage += "<br>\n" + data;
-               resFactory.setMessage(combinedMessage);
+               resFactory.addAlert(combinedMessage);
              });
              break;
          }

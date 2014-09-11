@@ -57,8 +57,9 @@
       </div>
       <div class="form-group">
         <label for="destid" class="col-sm-2 control-label">Destination Id</label>
-        <div class="col-sm-2">
-          <select id="destid" class="form-control" ng-model="resCtrl.res.ActionTriggers[panelCtrl.index].DestinationId" ng-options="dId for dId in resCtrl.destIds"></select>
+        <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+          <input id="destid" type="text" ng-model="resCtrl.res.ActionTriggers[panelCtrl.index].DestinationId" typeahead="id for id in tyaCtrl.getIds('Destination', $viewValue)" typeahead-loading="loadingDestinationIds" class="form-control" typeahead-wait-ms="500">
+          <i ng-show="loadingDestinationIds" class="glyphicon glyphicon-refresh"></i>
         </div>
         <div class="btn-group">
           <a ng-hide="resCtrl.res.ActionTriggers[panelCtrl.index].DestinationId=='*any'" class="btn btn-primary btn-sm" href="#/destination/{{resCtrl.res.ActionTriggers[panelCtrl.index].DestinationId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
@@ -91,8 +92,9 @@
       </div>
       <div class="form-group">
         <label for="actionId" class="col-sm-2 control-label">Actions Id</label>
-        <div class="col-sm-2">
-          <select id="actionId" class="form-control" ng-model="resCtrl.res.ActionTriggers[panelCtrl.index].ActionsId" ng-options="drId for drId in resCtrl.actIds"></select>
+        <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+          <input id="actionId" type="text" ng-model="resCtrl.res.ActionTriggers[panelCtrl.index].ActionsId" typeahead="id for id in tyaCtrl.getIds('Action', $viewValue)" typeahead-loading="loadingActionIds" class="form-control" typeahead-wait-ms="500">
+          <i ng-show="loadingActionIds" class="glyphicon glyphicon-refresh"></i>
         </div>
         <div class="btn-group">
           <a class="btn btn-primary btn-sm" href="#/action/{{resCtrl.res.ActionTriggers[panelCtrl.index].ActionsId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>

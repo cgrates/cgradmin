@@ -26,9 +26,10 @@
         </li>
       </ul>
       <div class="form-group">
-        <label for="destRateId" class="col-sm-2 control-label">Destination Id</label>
-        <div class="col-sm-2">
-          <select id="destRateId" class="form-control" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].DestinationRatesId" ng-options="drId for drId in resCtrl.destRatesIds"></select>
+        <label for="destRateId" class="col-sm-2 control-label">DestinationRate Id</label>
+        <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+          <input id="destRateId" type="text" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].DestinationRatesId" typeahead="id for id in tyaCtrl.getIds('DestinationRate', $viewValue)" typeahead-loading="loadingDestinationRateIds" class="form-control" typeahead-wait-ms="500">
+          <i ng-show="loadingDestinationRateIds" class="glyphicon glyphicon-refresh"></i>
         </div>
         <div class="btn-group">
           <a class="btn btn-primary btn-sm" href="#/destination/{{resCtrl.res.RatingPlanBindings[panelCtrl.index].DestinationRatesId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
@@ -37,8 +38,9 @@
       </div>
       <div class="form-group">
         <label for="tmid" class="col-sm-2 control-label">Timing Id</label>
-        <div class="col-sm-2">
-          <select id="tmid" class="form-control" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].TimingId" ng-options="tmId for tmId in resCtrl.tmIds"></select>
+        <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+          <input id="tmid" type="text" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].TimingId" typeahead="id for id in tyaCtrl.getIds('Timing', $viewValue)" typeahead-loading="loadingTimingIds" class="form-control" typeahead-wait-ms="500">
+          <i ng-show="loadingTimingIds" class="glyphicon glyphicon-refresh"></i>
         </div>
         <div class="btn-group">
           <a class="btn btn-primary btn-sm" href="#/timing/{{resCtrl.res.RatingPlanBindings[panelCtrl.index].TimingId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>

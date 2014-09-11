@@ -39,8 +39,9 @@
       </div>
       <div class="form-group">
         <label for="destid" class="col-sm-2 control-label">Destination Id</label>
-        <div class="col-sm-2">
-          <select id="destid" class="form-control" ng-model="resCtrl.res.Actions[panelCtrl.index].DestinationId" ng-options="dId for dId in resCtrl.destIds"></select>
+        <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+          <input id="destid" type="text" ng-model="resCtrl.res.Actions[panelCtrl.index].DestinationId" typeahead="id for id in tyaCtrl.getIds('Destination', $viewValue)" typeahead-loading="loadingDestinationIds" class="form-control" typeahead-wait-ms="500">
+          <i ng-show="loadingDestinationIds" class="glyphicon glyphicon-refresh"></i>
         </div>
         <div class="btn-group">
           <a ng-hide="resCtrl.res.Actions[panelCtrl.index].DestinationId=='*any'" class="btn btn-primary btn-sm" href="#/destination/{{resCtrl.res.Actions[panelCtrl.index].DestinationId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
@@ -85,8 +86,13 @@
       </div>
       <div class="form-group">
         <label for="sharedgroup" class="col-sm-2 control-label">SharedGroup</label>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="sharedgroup" ng-model="resCtrl.res.Actions[panelCtrl.index].SharedGroup"/>
+        <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+          <input id="sharedgroup" type="text" ng-model="resCtrl.res.Actions[panelCtrl.index].SharedGroupId" typeahead="id for id in tyaCtrl.getIds('SharedGroup', $viewValue)" typeahead-loading="loadingSharedGroupIds" class="form-control" typeahead-wait-ms="500">
+          <i ng-show="loadingSharedGroupIds" class="glyphicon glyphicon-refresh"></i>
+        </div>
+        <div class="btn-group">
+          <a ng-hide="resCtrl.res.Actions[panelCtrl.index].SharedGroupId==''" class="btn btn-primary btn-sm" href="#/sharedgroup/{{resCtrl.res.Actions[panelCtrl.index].SharedGroupId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+          <a class="btn btn-primary btn-sm" href="#/sharedgroup"><span class="glyphicon glyphicon-star"></span> New</a>
         </div>
       </div>
       <div class="form-group">

@@ -31,9 +31,9 @@
     </div>
     <div class="form-group">
       <label for="actionplan" class="col-sm-2 control-label">Action Plan Id</label>
-      <div class="col-sm-2">
-        <select id="actionplan" class="form-control" ng-model="resCtrl.res.ActionPlanId" ng-options="id for id in resCtrl.actPlans"></select>
-        <p class="help-block">Example block-level help text here.</p>
+      <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+        <input id="actionplan" type="text" ng-model="resCtrl.res.ActionPlanId" typeahead="id for id in tyaCtrl.getIds('ActionPlan}', $viewValue)" typeahead-loading="loadingActionPlanIds" class="form-control" typeahead-wait-ms="500">
+        <i ng-show="loadingActionPlanIds" class="glyphicon glyphicon-refresh"></i>
       </div>
       <div class="btn-group">
         <a class="btn btn-primary btn-sm" href="#/actionplan/{{resCtrl.res.ActionPlanId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
@@ -42,8 +42,9 @@
     </div>
     <div class="form-group">
       <label for="actrid" class="col-sm-2 control-label">Action Triggers Id</label>
-      <div class="col-sm-2">
-        <select id="actrid" class="form-control" ng-model="resCtrl.res.ActionTriggersId" ng-options="id for id in resCtrl.actTriggers"></select>
+      <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+        <input id="actrid" type="text" ng-model="resCtrl.res.ActionTriggersId" typeahead="id for id in tyaCtrl.getIds('ActionTrigger', $viewValue)" typeahead-loading="loadingActionTriggerIds" class="form-control" typeahead-wait-ms="500">
+        <i ng-show="loadingActionTriggerIds" class="glyphicon glyphicon-refresh"></i>
       </div>
       <div class="btn-group">
         <a class="btn btn-primary btn-sm" href="#/actiontrigger/{{resCtrl.res.ActionTriggersId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
