@@ -29,6 +29,8 @@ body {
     top: 12px;
     right: 12px;
     display: block;
+    min-width: 100px;
+    text-align: center;
 }
 
 .slow-show-hide {

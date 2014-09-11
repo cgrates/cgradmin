@@ -22,7 +22,7 @@ angular.module('cgradminApp.controllers', [])
          };
        })
        .controller('AlertCtrl', function(resFactory){
-         this.alerts = resFactory.alerts
+         this.alerts = resFactory.alerts;
          this.closeAlert = function(index) {
            this.alerts.splice(index, 1);
          };
@@ -152,7 +152,7 @@ angular.module('cgradminApp.controllers', [])
        })
        .controller('TypeaheadCtrl', function(idMethods, resFactory){
          this.getIds = function(res, term){
-           return resFactory.call(idMethods[res], {Page:0, ItemsPerPage:40, SearchTerm:term}).then(function(res) {
+           return resFactory.call(idMethods[res], {Page:0, ItemsPerPage:30, SearchTerm:term}).then(function(res) {
              return angular.isArray(res.data) ? res.data : [];
            });
          };

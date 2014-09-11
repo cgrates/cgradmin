@@ -58,11 +58,11 @@ angular.module('cgradminApp.services', [])
          factory.addAlert = function(message) {
            factory.alerts.push({
              type: message.indexOf('ERROR') > -1 ? 'danger' : 'success',
-             msg: message
+             msg: JSON.parse(message)
            });
            $timeout(function(){
              factory.alerts.splice(0, 1);
-           }, 7000);
+           }, 70000);
          };
          return factory;
        });
