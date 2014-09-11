@@ -59,11 +59,8 @@ angular.module('cgradminApp.controllers', [])
            return this.index === i;
          }
        })
-       .controller('ResourcesCtrl', function($routeParams, resFactory, idMethods, hasActivateArray, breadcrumbs){
+       .controller('ResourcesCtrl', function($routeParams, resFactory, idMethods, hasActivateArray){
          var ctrl = this;
-         breadcrumbs.options = { 'Stock Detail': $routeParams.res + ' Details' };
-         ctrl.breadcrumbs = breadcrumbs;
-         //console.log(breadcrumbs.get());
          ctrl.res = $routeParams.res;
          ctrl.resources = [];
          ctrl.selectedResources = [];
@@ -302,7 +299,7 @@ angular.module('cgradminApp.controllers', [])
          this.resId = $routeParams.res_id;
          this.destIds = ['*any'];
          var ctrl = this;
-         
+
          resFactory.call('GetTPDestinationIds', {ItemsPerPage:10, SearchTerm:ctrl.destSearchTerm}).success(function(data) {ctrl.destIds.push.apply(ctrl.destIds, data);});
          if(this.resId){
            resFactory.call('GetTPActions', {ActionsId: this.resId}).success(function(data) {ctrl.res = data;});
