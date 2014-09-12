@@ -27,9 +27,6 @@ angular.module('cgradminApp.controllers', [])
            this.alerts.splice(index, 1);
          };
        })
-       .controller('BreadcrumbsCtrl', function($location,$routeParams,breadcrumbs){
-         console.log($location);
-       })
        .controller('PanelCtrl', function(){
          this.init = function(){
            this.index = 0;
@@ -382,7 +379,6 @@ angular.module('cgradminApp.controllers', [])
        })
        .controller('ExportCtrl', function($routeParams, $location, resFactory){
          if ($routeParams.message) {
-           console.log("MESSS");
            $location.path('/export');
            resFactory.addAlert(atob($routeParams.message));
          }
@@ -406,12 +402,11 @@ angular.module('cgradminApp.controllers', [])
              resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
            case "all":
-             var combinedMessage = "";
-             resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){combinedMessage += data});
-             resFactory.call('LoadRatingProfile', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Subject: EMPTY}).success(function(data){combinedMessage += "<br>\n" + data});
+             resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){resFactory.addAlert(data);});
+             resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){resFactory.addAlert(data);});
+             resFactory.call('LoadRatingProfile', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Subject: EMPTY}).success(function(data){resFactory.addAlert(data);});
              resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){
-               combinedMessage += "<br>\n" + data;
-               resFactory.addAlert(combinedMessage);
+               resFactory.addAlert(data);
              });
              break;
          }
