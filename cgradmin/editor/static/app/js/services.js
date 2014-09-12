@@ -52,6 +52,8 @@ angular.module('cgradminApp.services', [])
            return $http.post('/call/ApierV1.' + func, finalParam);
          };
          factory.addAlert = function(message) {
+           console.log("mes: ", message);
+           console.log("type: ", message.indexOf('ERROR') > -1 ? 'danger' : 'success');
            factory.alerts.push({
              type: message.indexOf('ERROR') > -1 ? 'danger' : 'success',
              msg: JSON.parse(message)

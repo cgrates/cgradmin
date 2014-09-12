@@ -19,10 +19,12 @@ def call(request, method):
 @require_POST
 def imports(request):
    if 'file' not in request.FILES or 'tpid' not in request.POST or not request.POST['tpid']:
-      return redirect('/static/app/index.html#/import/%s' % quote_plus(b64encode('Invalid data')))
+      response = json.dumps('ERROR: Invalid data')
+      return redirect('/static/app/index.html#/import/%s' % quote_plus(b64encode(response)))
    param = {'TPid': request.POST['tpid']}
    param['File'] = b64encode(request.FILES['file'].read()).decode('utf-8')
    response = connector.call('ApierV1.ImportTPZipFile', param)
+   response = json.dumps(response)
    return redirect('/static/app/index.html#/import/%s' % quote_plus(b64encode(response)))
     
 @require_POST
@@ -69,8 +71,10 @@ def exports(request):
       print(key,value)
    response = connector.call('ApierV1.ExportCdrsToZipString', param)
    if response.startswith("ERROR"):
+      response = json.dumps(response)
       return redirect('/static/app/index.html#/export/%s' % quote_plus(b64encode(response)))
    myfile.write(b64decode(response))
+   print("ZIP: ", myfile.getvalue())
    response = HttpResponse(myfile.getvalue(), content_type='application/x-zip-compressed')
    response['Content-Disposition'] = 'attachment; filename=cdrs.zip'
    return response

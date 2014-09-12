@@ -382,6 +382,7 @@ angular.module('cgradminApp.controllers', [])
        })
        .controller('ExportCtrl', function($routeParams, $location, resFactory){
          if ($routeParams.message) {
+           console.log("MESSS");
            $location.path('/export');
            resFactory.addAlert(atob($routeParams.message));
          }
