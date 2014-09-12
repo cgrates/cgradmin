@@ -62,7 +62,7 @@ angular.module('cgradminApp.services', [])
            });
            $timeout(function(){
              factory.alerts.splice(0, 1);
-           }, 70000);
+           }, 7000);
          };
          return factory;
        });
