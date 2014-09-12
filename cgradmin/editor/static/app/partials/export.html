@@ -1,137 +1,142 @@
 <h3>Export CDRs</h3>
-<form role="form" method="POST" action="/export/">
-  <div class="form-group">
-    <label for="CdrFormat">Cdr Format</label>
-    <input type="text" class="form-control" name="CdrFormat" id="CdrFormat">
-  </div>
-  <div class="form-group">
-    <label for="FieldSeparator">Field Separator</label>
-    <input type="text" class="form-control" name="FieldSeparator" id="FieldSeparator">
-  </div>
-  <div class="form-group">
-    <label for="ExportId">Export Id</label>
-    <input type="text" class="form-control" name="ExportId" id="ExportId">
-  </div>
-  <div class="form-group">
-    <label for="ExportDir">Export Dir</label>
-    <input type="text" class="form-control" name="ExportDir" id="ExportDir">
-  </div>
-  <div class="form-group">
-    <label for="ExportFileName">Export File Name</label>
-    <input type="text" class="form-control" name="ExportFileName" id="ExportFileName">
-  </div>
-  <div class="form-group">
-    <label for="ExportTemplate">Export Template</label>
-    <input type="text" class="form-control" name="ExportTemplate" id="ExportTemplate">
-  </div>
-  <div class="form-group">
-    <label for="DataUsageMultiplyFactor">Data Usage Multiply Factor</label>
-    <input type="number" class="form-control" name="DataUsageMultiplyFactor" id="DataUsageMultiplyFactor" value="0">
-  </div>
-  <div class="form-group">
-    <label for="CostMultiplyFactor">Cost Multiply Factor</label>
-    <input type="number" class="form-control" name="CostMultiplyFactor" id="CostMultiplyFactor" value="0">
-  </div>
-  <div class="form-group">
-    <label for="CostShiftDigits">Cost Shift Digits</label>
-    <input type="number" class="form-control" name="CostShiftDigits" id="CostShiftDigits" value="0">
-  </div>
-  <div class="form-group">
-    <label for="RoundDecimals">round Decimals</label>
-    <input type="number" class="form-control" name="RoundDecimals" id="RoundDecimals" value="0">
-  </div>
-  <div class="form-group">
-    <label for="MaskDestinationId">Mask Destination Id</label>
-    <input type="text" class="form-control" name="MaskDestinationId" id="MaskDestinationId">
-  </div>
-  <div class="form-group">
-    <label for="MaskLength">Mask Length</label>
-    <input type="number" class="form-control" name="MaskLength" id="MaskLength" value="0">
-  </div>
-  <div class="form-group">
-    <label for="CgrIds">CgrIds</label>
-    <input type="text" class="form-control" name="CgrIds" id="CgrIds">
-  </div>
-  <div class="form-group">
-    <label for="MediationRunIds">Mediation Run Ids</label>
-    <input type="text" class="form-control" name="MediationRunIds" id="MediationRunIds">
-  </div>
-  <div class="form-group">
-    <label for="TORs">TORs</label>
-    <input type="text" class="form-control" name="TORs" id="TORs">
-  </div>
-  <div class="form-group">
-    <label for="CdrHosts">Cdr Hosts</label>
-    <input type="text" class="form-control" name="CdrHosts" id="CdrHosts">
-  </div>
-  <div class="form-group">
-    <label for="CdrSources">Cdr Sources</label>
-    <input type="text" class="form-control" name="CdrSources" id="CdrSources">
-  </div>
-  <div class="form-group">
-    <label for="ReqTypes">ReqTypes</label>
-    <input type="text" class="form-control" name="ReqTypes" id="ReqTypes">
-  </div>
-  <div class="form-group">
-    <label for="Directions">Directions</label>
-    <input type="text" class="form-control" name="Directions" id="Directions">
-  </div>
-  <div class="form-group">
-    <label for="Tenants">Tenants</label>
-    <input type="text" class="form-control" name="Tenants" id="Tenants">
-  </div>
-  <div class="form-group">
-    <label for="Categories">Categories</label>
-    <input type="text" class="form-control" name="Categories" id="Categories">
-  </div>
-  <div class="form-group">
-    <label for="Accounts">Accounts</label>
-    <input type="text" class="form-control" name="Accounts" id="Accounts">
-  </div>
-  <div class="form-group">
-    <label for="Subjects">Subjects</label>
-    <input type="text" class="form-control" name="Subjects" id="Subjects">
-  </div>
-  <div class="form-group">
-    <label for="DestinationPrefixes">Destination Prefixes</label>
-    <input type="text" class="form-control" name="DestinationPrefixes" id="DestinationPrefixes">
-  </div>
-  <div class="form-group">
-    <label for="RatedAccounts">Rated Accounts</label>
-    <input type="text" class="form-control" name="RatedAccounts" id="RatedAccounts">
-  </div>
-  <div class="form-group">
-    <label for="RatedSubjects">Rated Subjects</label>
-    <input type="text" class="form-control" name="RatedSubjects" id="RatedSubjects">
-  </div>
-  <div class="form-group">
-    <label for="OrderIdStart">Order Id Start</label>
-    <input type="number" class="form-control" name="OrderIdStart" id="OrderIdStart" value="0">
-  </div>
-  <div class="form-group">
-    <label for="OrderIdEnd">Order Id End</label>
-    <input type="number" class="form-control" name="OrderIdEnd" id="OrderIdEnd" value="0">
-  </div>
-  <div class="form-group">
-    <label for="TimeStart">Time Start</label>
-    <input type="text" class="form-control" name="TimeStart" id="TimeStart">
-  </div>
-  <div class="form-group">
-    <label for="TimeEnd">Time End</label>
-    <input type="text" class="form-control" name="TimeEnd" id="TimeEnd">
-  </div>
-  <div class="form-group">
-    <label for="SkipErrors">Skip Errors</label>
-    <input type="checkbox" class="form-control" name="SkipErrors" id="SkipErrors">
-  </div>
-  <div class="form-group">
-    <label for="SkipRated">Skip Rated</label>
-    <input type="checkbox" class="form-control" name="SkipRated" id="SkipRated">
-  </div>
-  <div class="form-group">
-    <label for="SuppressCgrIds">Suppress Cgr Ids</label>
-    <input type="checkbox" class="form-control" name="SuppressCgrIds" id="SuppressCgrIds">
-  </div>
-  <button type="submit" class="btn btn-default">Submit</button>
-</form>
 
+
+<form class="form" role="form" method="POST" action="/export/">
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="CdrFormat">Cdr Format</label>
+    <div class="col-sm-3"> <input type="text" class="form-control" name="CdrFormat" id="CdrFormat"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="FieldSeparator">Field Separator</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="FieldSeparator" id="FieldSeparator"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="ExportId">Export Id</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="ExportId" id="ExportId"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="ExportDir">Export Dir</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="ExportDir" id="ExportDir"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="ExportFileName">Export File Name</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="ExportFileName" id="ExportFileName"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="ExportTemplate">Export Template</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="ExportTemplate" id="ExportTemplate"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="DataUsageMultiplyFactor">Data Usage Multiply Factor</label>
+    <div class="col-sm-3"><input type="number" class="form-control" name="DataUsageMultiplyFactor" id="DataUsageMultiplyFactor" value="0"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="CostMultiplyFactor">Cost Multiply Factor</label>
+    <div class="col-sm-3"><input type="number" class="form-control" name="CostMultiplyFactor" id="CostMultiplyFactor" value="0"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="CostShiftDigits">Cost Shift Digits</label>
+    <div class="col-sm-3"><input type="number" class="form-control" name="CostShiftDigits" id="CostShiftDigits" value="0"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="RoundDecimals">Round Decimals</label>
+    <div class="col-sm-3"><input type="number" class="form-control" name="RoundDecimals" id="RoundDecimals" value="0"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="MaskDestinationId">Mask Destination Id</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="MaskDestinationId" id="MaskDestinationId"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="MaskLength">Mask Length</label>
+    <div class="col-sm-3"><input type="number" class="form-control" name="MaskLength" id="MaskLength" value="0"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="CgrIds">CgrIds</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="CgrIds" id="CgrIds"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="MediationRunIds">Mediation Run Ids</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="MediationRunIds" id="MediationRunIds"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="TORs">TORs</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="TORs" id="TORs"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="CdrHosts">Cdr Hosts</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="CdrHosts" id="CdrHosts"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="CdrSources">Cdr Sources</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="CdrSources" id="CdrSources"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="ReqTypes">ReqTypes</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="ReqTypes" id="ReqTypes"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="Directions">Directions</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="Directions" id="Directions"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="Tenants">Tenants</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="Tenants" id="Tenants"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="Categories">Categories</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="Categories" id="Categories"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="Accounts">Accounts</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="Accounts" id="Accounts"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="Subjects">Subjects</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="Subjects" id="Subjects"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="DestinationPrefixes">Destination Prefixes</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="DestinationPrefixes" id="DestinationPrefixes"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="RatedAccounts">Rated Accounts</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="RatedAccounts" id="RatedAccounts"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="RatedSubjects">Rated Subjects</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="RatedSubjects" id="RatedSubjects"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="OrderIdStart">Order Id Start</label>
+    <div class="col-sm-3"><input type="number" class="form-control" name="OrderIdStart" id="OrderIdStart" value="0"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="OrderIdEnd">Order Id End</label>
+    <div class="col-sm-3"><input type="number" class="form-control" name="OrderIdEnd" id="OrderIdEnd" value="0"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="TimeStart">Time Start</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="TimeStart" id="TimeStart"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="TimeEnd">Time End</label>
+    <div class="col-sm-3"><input type="text" class="form-control" name="TimeEnd" id="TimeEnd"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="SkipErrors">Skip Errors</label>
+    <div class="col-sm-3"><input type="checkbox" class="form-control" name="SkipErrors" id="SkipErrors"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="SkipRated">Skip Rated</label>
+    <div class="col-sm-3"><input type="checkbox" class="form-control" name="SkipRated" id="SkipRated"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" for="SuppressCgrIds">Suppress Cgr Ids</label>
+    <div class="col-sm-3"><input type="checkbox" class="form-control" name="SuppressCgrIds" id="SuppressCgrIds"></div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Sign in</button>
+    </div>
+  </div>
+</form>
