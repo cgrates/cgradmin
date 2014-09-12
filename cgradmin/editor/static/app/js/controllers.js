@@ -3,11 +3,11 @@
 /* Controllers */
 
 angular.module('cgradminApp.controllers', [])
-       .controller('TpIdsCtrl', function($cookieStore, $window, tpidsFactory) {
+       .controller('TpIdsCtrl', function($cookieStore, $window, resFactory) {
          this.tpid = $cookieStore.get('tpid');
          var ctrl = this;
          ctrl.tpids = [];
-         tpidsFactory.getTpIds().success(function(data) {
+         resFactory.call('GetTPIds', {}).success(function(data) {
            ctrl.tpids = data;
            if((!ctrl.tpid || ctrl.tpid==='"') && angular.isArray(data)){ // TODO: find from where does single quote comes from
              ctrl.tpid = data[0];
@@ -26,6 +26,9 @@ angular.module('cgradminApp.controllers', [])
          this.closeAlert = function(index) {
            this.alerts.splice(index, 1);
          };
+       })
+       .controller('BreadcrumbsCtrl', function($location,$routeParams,breadcrumbs){
+         console.log($location);
        })
        .controller('PanelCtrl', function(){
          this.init = function(){

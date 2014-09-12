@@ -26,25 +26,21 @@ angular.module('cgradminApp.services', [])
               ["Destination", "RatingPlan", "RatingProfile", "CdrStats", "Action",
                "ActionPlan", "AccountAction", "SharedGroup", "DerivedCharger"]
        )
-       .factory('metricsFactory', function($http){
+       .factory('breadcrumbsFactory', function(){
          var factory = {};
-         factory.getMetrics = function(param){
-           return $http.post('/call/CDRStatsV1.GetMetrics', param);
+         factory.crumbs = [];
+         factory.add = function(crumb){
+           crumb = JSON.stringify(crumb);
+           var index = factory.crumbs.indexOf(crumb);
+           if(index > -1){
+             factory.crumbs.splice(index + 1, factory.crumbs.length - index);
+           } else {
+             factory.crumbs.push(crumb);
+           }
          };
-         return factory;
-       })
-       .factory('statusFactory', function($http){
-         var factory = {};
-         factory.getStatus = function(){
-           return $http.post('/call/Responder.Status');
-         };
-         return factory;
-       })
-       .factory('tpidsFactory', function($http){
-         var factory = {};
-         factory.getTpIds = function(){
-           return $http.post('/call/ApierV1.GetTPIds', {});
-         };
+         factory.reset = function(){
+           factory.crumbs = [];
+         }
          return factory;
        })
        .factory('resFactory', function($http, $cookieStore, $timeout) {
