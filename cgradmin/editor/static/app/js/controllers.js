@@ -404,6 +404,9 @@ angular.module('cgradminApp.controllers', [])
            case "aa":
              resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
+           case "dc":
+             resFactory.call('LoadDerivedChargers', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Account: EMPTY, Subject: EMPTY}).success(function(data){resFactory.addAlert(data);});
+             break
            case "all":
              resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){resFactory.addAlert(data);});
              resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){resFactory.addAlert(data);});
@@ -411,6 +414,7 @@ angular.module('cgradminApp.controllers', [])
              resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){
                resFactory.addAlert(data);
              });
+             resFactory.call('LoadDerivedChargers', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Account: EMPTY, Subject: EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
          }
          history.back();
