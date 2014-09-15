@@ -9,6 +9,9 @@ angular.module('cgradminApp.controllers', [])
          ctrl.tpids = [];
          resFactory.call('GetTPIds', {}).success(function(data) {
            ctrl.tpids = data;
+           if (ctrl.tpid && ctrl.tpids.indexOf(ctrl.tpid) === -1){
+             ctrl.tpids.push(ctrl.tpid);
+           }
            if((!ctrl.tpid || ctrl.tpid==='"') && angular.isArray(data)){ // TODO: find from where does single quote comes from
              ctrl.tpid = data[0];
              $cookieStore.put('tpid', ctrl.tpid);
@@ -19,7 +22,7 @@ angular.module('cgradminApp.controllers', [])
            this.tpid = tpid;
            $cookieStore.put('tpid', tpid);
            $window.location.reload();
-         };         
+         };
        })
        .controller('AlertCtrl', function(resFactory){
          this.alerts = resFactory.alerts;
