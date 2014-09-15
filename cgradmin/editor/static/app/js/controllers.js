@@ -19,7 +19,7 @@ angular.module('cgradminApp.controllers', [])
            this.tpid = tpid;
            $cookieStore.put('tpid', tpid);
            $window.location.reload();
-         };
+         };         
        })
        .controller('AlertCtrl', function(resFactory){
          this.alerts = resFactory.alerts;

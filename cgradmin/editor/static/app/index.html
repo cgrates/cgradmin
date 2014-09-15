@@ -73,15 +73,15 @@
               </ul>
             </li>
             <!-- li class="dropdown">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown">Activate <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#/activate/dt">Destinations</a></li>
-                <li><a href="#/activate/rp">Rating Plans</a></li>
-                <li><a href="#/activate/rpf">Rating Profiles</a></li>
-                <li><a href="#/activate/aa">Account Actions</a></li>
-                <li class="divider"></li>
-                <li><a href="#/activate/all">All</a></li>
-              </ul>
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">Activate <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+            <li><a href="#/activate/dt">Destinations</a></li>
+            <li><a href="#/activate/rp">Rating Plans</a></li>
+            <li><a href="#/activate/rpf">Rating Profiles</a></li>
+            <li><a href="#/activate/aa">Account Actions</a></li>
+            <li class="divider"></li>
+            <li><a href="#/activate/all">All</a></li>
+            </ul>
             </li -->
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -91,7 +91,7 @@
               <ul class="dropdown-menu" role="menu">
                 <li ng-repeat="ti in tiCtrl.tpids"><a href ng-click="tiCtrl.setTpId(ti)">{{ti}}</a></li>
                 <li class="divider"></li>
-            <li><a href="">New Tpid</a></li>
+                <li><a href="#/tpid/new">New Tpid</a></li>
               </ul>
             </li>
           </ul>
@@ -112,7 +112,7 @@
     <!-- In production use:
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
     -->
-    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
