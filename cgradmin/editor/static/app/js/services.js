@@ -23,8 +23,8 @@ angular.module('cgradminApp.services', [])
          "DerivedCharger": "GetTPDerivedChargerIds",
        })
        .value('hasActivateArray',
-              ["Destination", "RatingPlan", "RatingProfile", "CdrStats", "Action",
-               "ActionPlan", "AccountAction", "SharedGroup", "DerivedCharger"]
+              ["Destination", "RatingPlan", "RatingProfile", "CdrStats",
+               "ActionPlan", "AccountActions", "SharedGroup", "DerivedChargers"]
        )
        .factory('breadcrumbsFactory', function(){
          var factory = {};
@@ -47,9 +47,10 @@ angular.module('cgradminApp.services', [])
          var factory = {};
          factory.alerts = [];
          var param = {TPid : $cookieStore.get('tpid')};
-         factory.call = function(func, finalParam){
+         factory.call = function(func, finalParam, version){
+           if(typeof(version)==='undefined') version = 'V2';
            angular.extend(finalParam, param);
-           return $http.post('/call/ApierV1.' + func, finalParam);
+           return $http.post('/call/Apier' + version + '.' + func, finalParam);
          };
          factory.addAlert = function(message) {
            factory.alerts.push({

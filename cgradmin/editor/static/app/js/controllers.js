@@ -399,13 +399,13 @@ angular.module('cgradminApp.controllers', [])
              resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
            case "rpf":
-             resFactory.call('LoadRatingProfile', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Subject: EMPTY}).success(function(data){resFactory.addAlert(data);});
+             resFactory.call('LoadRatingProfile', {RatingProfileId:EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
            case "aa":
-             resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){resFactory.addAlert(data);});
+             resFactory.call('LoadAccountActions', {AccountActionsId: EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
            case "dc":
-             resFactory.call('LoadDerivedChargers', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Account: EMPTY, Subject: EMPTY}).success(function(data){resFactory.addAlert(data);});
+             resFactory.call('LoadDerivedChargers', {DerivedChargersId: EMPTY}).success(function(data){resFactory.addAlert(data);});
              break
            case "sg":
              resFactory.call('LoadSharedGroup', {SharedGroupId:EMPTY}).success(function(data){resFactory.addAlert(data);});
@@ -416,11 +416,9 @@ angular.module('cgradminApp.controllers', [])
            case "all":
              resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){resFactory.addAlert(data);});
              resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){resFactory.addAlert(data);});
-             resFactory.call('LoadRatingProfile', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Subject: EMPTY}).success(function(data){resFactory.addAlert(data);});
-             resFactory.call('LoadAccountActions', {LoadId: EMPTY, Tenant: EMPTY, Account: EMPTY, Direction: EMPTY}).success(function(data){
-               resFactory.addAlert(data);
-             });
-             resFactory.call('LoadDerivedChargers', {LoadId: EMPTY, Tenant: EMPTY, Category: EMPTY, Direction: EMPTY, Account: EMPTY, Subject: EMPTY}).success(function(data){resFactory.addAlert(data);});
+             resFactory.call('LoadRatingProfile', {RatingProfileId:EMPTY}).success(function(data){resFactory.addAlert(data);});
+             resFactory.call('LoadAccountActions', {AccountActionsId: EMPTY}).success(function(data){resFactory.addAlert(data);});
+             resFactory.call('LoadDerivedChargers', {DerivedChargersId: EMPTY}).success(function(data){resFactory.addAlert(data);});
              resFactory.call('LoadSharedGroup', {SharedGroupId:EMPTY}).success(function(data){resFactory.addAlert(data);});
              resFactory.call('LoadCdrStats', {CdrStatsId:EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
