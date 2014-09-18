@@ -49,7 +49,7 @@ angular.module('cgradminApp.services', [])
          var param = {TPid : $cookieStore.get('tpid')};
          factory.call = function(func, finalParam){
            angular.extend(finalParam, param);
-           return $http.post('/call/Apier' + version + '.' + func, finalParam);
+           return $http.post('/call/ApierV2.' + func, finalParam);
          };
          factory.addAlert = function(message, prefix) {
            if(typeof(prefix)==='undefined') prefix = '';
