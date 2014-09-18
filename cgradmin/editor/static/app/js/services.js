@@ -47,15 +47,15 @@ angular.module('cgradminApp.services', [])
          var factory = {};
          factory.alerts = [];
          var param = {TPid : $cookieStore.get('tpid')};
-         factory.call = function(func, finalParam, version){
-           if(typeof(version)==='undefined') version = 'V2';
+         factory.call = function(func, finalParam){
            angular.extend(finalParam, param);
            return $http.post('/call/Apier' + version + '.' + func, finalParam);
          };
-         factory.addAlert = function(message) {
+         factory.addAlert = function(message, prefix) {
+           if(typeof(prefix)==='undefined') prefix = '';
            factory.alerts.push({
              type: message.indexOf('ERROR') > -1 ? 'danger' : 'success',
-             msg: JSON.parse(message)
+             msg: prefix + ': ' + JSON.parse(message)
            });
            $timeout(function(){
              factory.alerts.splice(0, 1);

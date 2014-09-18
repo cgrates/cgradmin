@@ -414,13 +414,13 @@ angular.module('cgradminApp.controllers', [])
              resFactory.call('LoadCdrStats', {CdrStatsId:EMPTY}).success(function(data){resFactory.addAlert(data);});
              break;
            case "all":
-             resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){resFactory.addAlert(data);});
-             resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){resFactory.addAlert(data);});
-             resFactory.call('LoadRatingProfile', {RatingProfileId:EMPTY}).success(function(data){resFactory.addAlert(data);});
-             resFactory.call('LoadAccountActions', {AccountActionsId: EMPTY}).success(function(data){resFactory.addAlert(data);});
-             resFactory.call('LoadDerivedChargers', {DerivedChargersId: EMPTY}).success(function(data){resFactory.addAlert(data);});
-             resFactory.call('LoadSharedGroup', {SharedGroupId:EMPTY}).success(function(data){resFactory.addAlert(data);});
-             resFactory.call('LoadCdrStats', {CdrStatsId:EMPTY}).success(function(data){resFactory.addAlert(data);});
+             resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){resFactory.addAlert(data, 'Destinations');});
+             resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){resFactory.addAlert(data, 'RatingPlans');});
+             resFactory.call('LoadRatingProfile', {RatingProfileId:EMPTY}).success(function(data){resFactory.addAlert(data, 'RatingProfiles');});
+             resFactory.call('LoadAccountActions', {AccountActionsId: EMPTY}).success(function(data){resFactory.addAlert(data, 'AccountActions');});
+             resFactory.call('LoadDerivedChargers', {DerivedChargersId: EMPTY}).success(function(data){resFactory.addAlert(data, 'DerivedChargers');});
+             resFactory.call('LoadSharedGroup', {SharedGroupId:EMPTY}).success(function(data){resFactory.addAlert(data, 'SharedGroups');});
+             resFactory.call('LoadCdrStats', {CdrStatsId:EMPTY}).success(function(data){resFactory.addAlert(data, 'CdrStats');});
              break;
          }
          history.back();
