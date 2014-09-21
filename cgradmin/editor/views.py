@@ -5,17 +5,20 @@ import cStringIO as StringIO
 from editor.json_client import CGRConnector
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.core.servers.basehttp import FileWrapper
 
 connector = CGRConnector()
 
+@login_required
 @require_POST
 def call(request, method):
    param = json.loads(request.body) if request.body else ''
    response = connector.call(method, param)
    return HttpResponse(json.dumps(response), content_type='application/json')
-   
+
+@login_required
 @require_POST
 def imports(request):
    if 'file' not in request.FILES or 'tpid' not in request.POST or not request.POST['tpid']:
@@ -27,6 +30,7 @@ def imports(request):
    response = json.dumps(response)
    return redirect('/static/app/index.html#/import/%s' % quote_plus(b64encode(response)))
     
+@login_required
 @require_POST
 def exports(request):
    myfile = StringIO.StringIO()
