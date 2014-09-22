@@ -38,27 +38,90 @@ def exports(request):
    param = request.POST.dict()
    if param['FieldSeparator'] == '': param['FieldSeparator'] = ','
    param['FieldSeparator'] = ord(param['FieldSeparator'])
-   if param['CgrIds']: param['CgrIds'] = param['CgrIds'].split(",")
-   if param['MediationRunIds']: param['MediationRunIds'] = param['MediationRunIds'].split(",") 
-   if param['TORs']: param['TORs'] = param['TORs'].split(",")
-   if param['CdrHosts']: param['CdrHosts'] = param['CdrHosts'].split(",")
-   if param['CdrSources']: param['CdrSources'] = param['CdrSources'].split(",")
-   if param['ReqTypes']: param['ReqTypes'] = param['ReqTypes'].split(",")
-   if param['Directions']: param['Directions'] = param['Directions'].split(",")
-   if param['Tenants']: param['Tenants'] = param['Tenants'].split(",")
-   if param['Categories']: param['Categories'] = param['Categories'].split(",")
-   if param['Accounts']: param['Accounts'] = param['Accounts'].split(",")
-   if param['Subjects']: param['Subjects'] = param['Subjects'].split(",")
-   if param['DestinationPrefixes']: param['DestinationPrefixes'] = param['DestinationPrefixes'].split(",")
-   if param['RatedAccounts']: param['RatedAccounts'] = param['RatedAccounts'].split(",")
-   if param['RatedSubjects']: param['RatedSubjects'] = param['RatedSubjects'].split(",")
-   if param['DataUsageMultiplyFactor']: param['DataUsageMultiplyFactor'] = float(param['DataUsageMultiplyFactor'])
-   if param['CostMultiplyFactor']: param['CostMultiplyFactor'] = float(param['CostMultiplyFactor'])
-   if param['CostShiftDigits']: param['CostShiftDigits'] = int(param['CostShiftDigits'])
-   if param['RoundDecimals']: param['RoundDecimals'] = int(param['RoundDecimals'])
-   if param['MaskLength']: param['MaskLength'] = int(param['MaskLength'])
-   if param['OrderIdStart']: param['OrderIdStart'] = int(param['OrderIdStart'])
-   if param['OrderIdEnd']: param['OrderIdEnd'] = int(param['OrderIdEnd'])
+   if param['CgrIds']:
+      param['CgrIds'] = param['CgrIds'].split(",")
+   else:
+      del param['CgrIds']
+   if param['MediationRunIds']:
+      param['MediationRunIds'] = param['MediationRunIds'].split(",") 
+   else:
+      del param['MediationRunIds']
+   if param['TORs']:
+      param['TORs'] = param['TORs'].split(",")
+   else:
+      del param['TORs']
+   if param['CdrHosts']:
+      param['CdrHosts'] = param['CdrHosts'].split(",")
+   else:
+      del param['CdrHosts']
+   if param['CdrSources']:
+      param['CdrSources'] = param['CdrSources'].split(",")
+   else:
+      del param['CdrSources']
+   if param['ReqTypes']:
+      param['ReqTypes'] = param['ReqTypes'].split(",")
+   else:
+      del param['ReqTypes']
+   if param['Directions']:
+      param['Directions'] = param['Directions'].split(",")
+   else:
+      del param['Directions']
+   if param['Tenants']:
+      param['Tenants'] = param['Tenants'].split(",")
+   else:
+      del param['Tenants']
+   if param['Categories']:
+      param['Categories'] = param['Categories'].split(",")
+   else:
+      del param['Categories']
+   if param['Accounts']:
+      param['Accounts'] = param['Accounts'].split(",")
+   else:
+      del param['Accounts']
+   if param['Subjects']:
+      param['Subjects'] = param['Subjects'].split(",")
+   else:
+      del param['Subjects']
+   if param['DestinationPrefixes']:
+      param['DestinationPrefixes'] = param['DestinationPrefixes'].split(",")
+   else:
+      del param['DestinationPrefixes']
+   if param['RatedAccounts']:
+      param['RatedAccounts'] = param['RatedAccounts'].split(",")
+   else:
+      del param['RatedAccounts']
+   if param['RatedSubjects']:
+      param['RatedSubjects'] = param['RatedSubjects'].split(",")
+   else:
+      del param['RatedSubjects']
+   if param['DataUsageMultiplyFactor']:
+      param['DataUsageMultiplyFactor'] = float(param['DataUsageMultiplyFactor'])
+   else:
+      del param['DataUsageMultiplyFactor']
+   if param['CostMultiplyFactor']:
+      param['CostMultiplyFactor'] = float(param['CostMultiplyFactor'])
+   else:
+      del param['CostMultiplyFactor']
+   if param['CostShiftDigits']: 
+      param['CostShiftDigits'] = int(param['CostShiftDigits'])
+   else:
+      del param['CostShiftDigits']
+   if param['RoundDecimals']:
+      param['RoundDecimals'] = int(param['RoundDecimals'])
+   else:
+      del param['RoundDecimals']
+   if param['MaskLength']:
+      param['MaskLength'] = int(param['MaskLength'])
+   else:
+      del param['MaskLength']
+   if param['OrderIdStart']:
+      param['OrderIdStart'] = int(param['OrderIdStart'])
+   else:
+      del param['OrderIdStart']
+   if param['OrderIdStart']:
+      param['OrderIdEnd'] = int(param['OrderIdEnd'])
+   else:
+      del param['OrderIdEnd']
    if 'SkipErrors' not in param:
       param['SkipErrors'] = False
    else:
