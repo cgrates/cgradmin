@@ -43,13 +43,19 @@ angular.module('cgradminApp.services', [])
          }
          return factory;
        })
-       .factory('resFactory', function($http, $cookieStore, $timeout) {
+       .factory('resFactory', function($http, $cookieStore, $timeout, $location, $window) {
          var factory = {};
          factory.alerts = [];
          var param = {TPid : $cookieStore.get('tpid')};
          factory.call = function(func, finalParam){
            angular.extend(finalParam, param);
-           return $http.post('/call/ApierV2.' + func, finalParam);
+           var promise = $http.post('/call/ApierV2.' + func, finalParam);
+           promise.error(function(data, status, headers, config) {
+             if (data.error === 'not_autenticated') {               
+               $window.location = '/accounts/login/?next=/static/app/index.html' + $window.location.hash;
+             }
+           });
+           return promise;
          };
          factory.addAlert = function(message, prefix) {
            if(typeof(prefix)==='undefined') prefix = '';

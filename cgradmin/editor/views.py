@@ -3,7 +3,7 @@ from base64 import b64encode, b64decode
 from urllib import quote_plus
 import cStringIO as StringIO
 from editor.json_client import CGRConnector
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
@@ -11,9 +11,10 @@ from django.core.servers.basehttp import FileWrapper
 
 connector = CGRConnector()
 
-@login_required
 @require_POST
 def call(request, method):
+   if not request.user.is_authenticated():
+      return HttpResponseForbidden(json.dumps({"error":"not_autenticated"}), content_type='application/json')
    param = json.loads(request.body) if request.body else ''
    response = connector.call(method, param)
    return HttpResponse(json.dumps(response), content_type='application/json')
