@@ -118,7 +118,7 @@ def exports(request):
       param['OrderIdStart'] = int(param['OrderIdStart'])
    else:
       del param['OrderIdStart']
-   if param['OrderIdStart']:
+   if param['OrderIdEnd']:
       param['OrderIdEnd'] = int(param['OrderIdEnd'])
    else:
       del param['OrderIdEnd']
