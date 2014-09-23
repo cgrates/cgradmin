@@ -134,8 +134,6 @@ def exports(request):
       param['SuppressCgrIds'] = False
    else:
       param['SuppressCgrIds'] = bool(param['SuppressCgrIds'])
-   for key, value in param.items():
-      print(key,value)
    response = connector.call('ApierV1.ExportCdrsToZipString', param)
    if response.startswith("ERROR"):
       response = json.dumps(response)
