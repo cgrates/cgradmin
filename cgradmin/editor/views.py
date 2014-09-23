@@ -36,8 +36,9 @@ def imports(request):
 def exports(request):
    myfile = StringIO.StringIO()
    param = request.POST.dict()
-   if param['FieldSeparator'] == '': param['FieldSeparator'] = ','
-   param['FieldSeparator'] = ord(param['FieldSeparator'])
+   if param['FieldSeparator'] == '':
+      param['FieldSeparator'] = ','
+   param['FieldSeparator'] = param['FieldSeparator']
    if param['CgrIds']:
       param['CgrIds'] = param['CgrIds'].split(",")
    else:
