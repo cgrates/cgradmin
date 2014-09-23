@@ -141,5 +141,5 @@ def exports(request):
    myfile.write(b64decode(response))
    print("ZIP: ", myfile.getvalue())
    response = HttpResponse(myfile.getvalue(), content_type='application/x-zip-compressed')
-   response['Content-Disposition'] = 'attachment; filename=cdrs.zip'
+   response['Content-Disposition'] = 'attachment; filename=cgr_cdrs_export.zip'
    return response
