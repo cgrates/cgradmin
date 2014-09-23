@@ -130,10 +130,6 @@ def exports(request):
       param['SkipRated'] = False
    else:
       param['SkipRated'] = bool(param['SkipRated'])
-   if 'SuppressCgrIds' not in param:
-      param['SuppressCgrIds'] = False
-   else:
-      param['SuppressCgrIds'] = bool(param['SuppressCgrIds'])
    for key, value in param.items():
       print(key,value)
    response = connector.call('ApierV1.ExportCdrsToZipString', param)
