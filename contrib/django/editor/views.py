@@ -27,7 +27,7 @@ def imports(request):
       return redirect('/static/app/index.html#/import/%s' % quote_plus(b64encode(response)))
    param = {'TPid': request.POST['tpid']}
    param['File'] = b64encode(request.FILES['file'].read()).decode('utf-8')
-   response = connector.call('ApierV1.ImportTPZipFile', param)
+   response = connector.call('ApierV2.ImportTPZipFile', param)
    response = json.dumps(response)
    return redirect('/static/app/index.html#/import/%s' % quote_plus(b64encode(response)))
     
@@ -134,12 +134,11 @@ def exports(request):
       param['SuppressCgrIds'] = False
    else:
       param['SuppressCgrIds'] = bool(param['SuppressCgrIds'])
-   response = connector.call('ApierV1.ExportCdrsToZipString', param)
+   response = connector.call('ApierV2.ExportCdrsToZipString', param)
    if response.startswith("ERROR"):
       response = json.dumps(response)
-      return redirect('/static/app/index.html#/export/%s' % quote_plus(b64encode(response)))
+      return redirect('/static/app/index.html#/exportcdrs/%s' % quote_plus(b64encode(response)))
    myfile.write(b64decode(response))
-   print("ZIP: ", myfile.getvalue())
    response = HttpResponse(myfile.getvalue(), content_type='application/x-zip-compressed')
    response['Content-Disposition'] = 'attachment; filename=cgr_cdrs_export.zip'
    return response

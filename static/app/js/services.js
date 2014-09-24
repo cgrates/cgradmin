@@ -51,17 +51,21 @@ angular.module('cgradminApp.services', [])
            angular.extend(finalParam, param);
            var promise = $http.post('/call/ApierV2.' + func, finalParam);
            promise.error(function(data, status, headers, config) {
-             if (data.error === 'not_autenticated') {               
+             if (data.error === 'not_autenticated') {
                $window.location = '/accounts/login/?next=/static/app/index.html' + $window.location.hash;
              }
            });
            return promise;
          };
          factory.addAlert = function(message, prefix) {
-           if(typeof(prefix)==='undefined') prefix = '';
+           if(typeof(prefix)==='undefined') {
+             prefix = '';
+           } else{
+             prefix += ": ";
+           }
            factory.alerts.push({
              type: message.indexOf('ERROR') > -1 ? 'danger' : 'success',
-             msg: prefix + ': ' + JSON.parse(message)
+             msg: prefix + JSON.parse(message)
            });
            $timeout(function(){
              factory.alerts.splice(0, 1);
