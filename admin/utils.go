@@ -10,16 +10,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	LOGIN_COOKIE = "sessionid"
+	LOGIN_PATH   = "/accounts/login/"
+)
+
 func SessionAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		cookie, err := c.Request.Cookie("sessionid")
-		if err != nil || cookie == nil {
-			c.Redirect(301, "/accounts/login/")
-			c.Abort(-1)
-			return
-		}
-		if _, ok := sessionsMap[cookie.Value]; !ok {
-			c.Redirect(301, "/accounts/login/")
+		if !IsAuthenticated(c.Request) {
+			c.Redirect(301, "LOGIN_PATH")
 			c.Abort(-1)
 			return
 		}
@@ -28,7 +27,7 @@ func SessionAuth() gin.HandlerFunc {
 }
 
 func IsAuthenticated(r *http.Request) bool {
-	cookie, err := r.Cookie("sessionid")
+	cookie, err := r.Cookie(LOGIN_COOKIE)
 	if err != nil || cookie == nil {
 		return false
 	}

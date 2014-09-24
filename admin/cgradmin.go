@@ -19,11 +19,11 @@ func Start(c *rpc.Client) *gin.Engine {
 	router.LoadHTMLGlob("./templates/*.tmpl")
 
 	router.POST("/call/:method", callPost)
-	router.GET("/accounts/login/", loginGet)
-	router.POST("/accounts/login/", loginPost)
+	router.GET(LOGIN_PATH, loginGet)
+	router.POST(LOGIN_PATH, loginPost)
 	authorized := router.Group("/")
 	authorized.Use(SessionAuth())
-	authorized.Static("/a/", "static/app")
+	authorized.Static("/a/", "./static/app")
 	authorized.GET("/", func(c *gin.Context) {
 		c.Redirect(301, "/a/")
 	})
