@@ -1,18 +1,17 @@
 package admin
 
-import (
-	"net/rpc"
-
-	"github.com/gin-gonic/gin"
-)
+import "github.com/gin-gonic/gin"
 
 var (
-	client      *rpc.Client
-	sessionsMap = make(map[string]bool)
+	connector          *CGRConnector
+	sessionsMap        = make(map[string]bool)
+	username, password string
 )
 
-func Start(c *rpc.Client) *gin.Engine {
-	client = c
+func Start(conn *CGRConnector, user, pass string) *gin.Engine {
+	connector = conn
+	username = user
+	password = pass
 
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()

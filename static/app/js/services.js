@@ -52,7 +52,7 @@ angular.module('cgradminApp.services', [])
            var promise = $http.post('/call/ApierV2.' + func, finalParam);
            promise.error(function(data, status, headers, config) {
              if (data.error === 'not_autenticated') {
-               $window.location = '/accounts/login/?next=/static/app/index.html' + $window.location.hash;
+               $window.location = '/accounts/login/?next=/' + $window.location.hash;
              }
            });
            return promise;

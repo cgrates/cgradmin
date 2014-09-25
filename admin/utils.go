@@ -18,7 +18,7 @@ const (
 func SessionAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if !IsAuthenticated(c.Request) {
-			c.Redirect(301, "LOGIN_PATH")
+			c.Redirect(301, LOGIN_PATH+"?next="+c.Request.URL.Path)
 			c.Abort(-1)
 			return
 		}

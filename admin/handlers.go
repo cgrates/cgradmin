@@ -4,10 +4,10 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -22,13 +22,23 @@ func callPost(c *gin.Context) {
 	var param gin.H
 	c.Bind(&param)
 	var response interface{}
-	if err := client.Call(method, param, &response); err != nil {
+	if err := connector.call(method, param, &response); err != nil {
 		c.JSON(200, map[string]string{"ERROR": err.Error()})
 	}
 	c.JSON(200, response)
 }
 
 func loginGet(c *gin.Context) {
+	if IsAuthenticated(c.Request) {
+		next := c.Request.FormValue("next")
+		if next != "" {
+			c.Redirect(301, next)
+			return
+		} else {
+			c.Redirect(301, "/a/")
+			return
+		}
+	}
 	obj := gin.H{"title": "Main website"} // not used
 	c.HTML(200, "login.tmpl", obj)
 }
@@ -36,22 +46,35 @@ func loginGet(c *gin.Context) {
 type LoginForm struct {
 	User     string `form:"user" binding:"required"`
 	Password string `form:"password" binding:"required"`
+	Remember string `form:"remember" binding:"required"`
 }
 
 func loginPost(c *gin.Context) {
 	var form LoginForm
 
-	c.BindWith(&form, binding.Form) // You can also specify which binder to use. We support binding.Form, binding.JSON and binding.XML.
-	if form.User == "manu" && form.Password == "123" {
+	c.BindWith(&form, binding.Form)
+	if form.User == username && form.Password == password {
 		uuid := GenUUID()
 		sessionsMap[uuid] = true
-		http.SetCookie(c.Writer, &http.Cookie{
+		cookie := &http.Cookie{
 			Name:   "sessionid",
 			Value:  uuid,
 			Domain: c.Request.URL.Host,
 			Path:   "/",
-		})
-		log.Print("Sessions: ", sessionsMap)
+		}
+		if form.Remember == "on" {
+			oneMonth, _ := time.ParseDuration("720h")
+			cookie.Expires = time.Now().Add(oneMonth)
+		}
+		http.SetCookie(c.Writer, cookie)
+		next := c.Request.FormValue("next")
+		if next != "" {
+			c.Redirect(301, next)
+			return
+		} else {
+			c.Redirect(301, "/a/")
+			return
+		}
 	} else {
 		c.JSON(401, gin.H{"status": "unauthorized"})
 	}
@@ -77,7 +100,7 @@ func importPost(c *gin.Context) {
 	content, err := ioutil.ReadAll(file)
 	param["File"] = base64.StdEncoding.EncodeToString(content)
 	var response interface{}
-	if err = client.Call("ApierV2.ImportTPZipFile", param, &response); err != nil {
+	if err = connector.call("ApierV2.ImportTPZipFile", param, &response); err != nil {
 		msg, _ := json.Marshal("ERROR: " + err.Error())
 		c.Redirect(301, "/#/import/"+base64.StdEncoding.EncodeToString(msg))
 	}
@@ -195,7 +218,7 @@ func exportCdrsPost(c *gin.Context) {
 		}
 	}
 	var response interface{}
-	if err = client.Call("ApierV2.ExportCdrsToZipString", param, &response); err != nil {
+	if err = connector.call("ApierV2.ExportCdrsToZipString", param, &response); err != nil {
 		msg, _ := json.Marshal("ERROR: " + err.Error())
 		c.Redirect(301, "/#/import/"+base64.StdEncoding.EncodeToString(msg))
 	}
