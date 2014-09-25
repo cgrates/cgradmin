@@ -39,8 +39,7 @@ func loginGet(c *gin.Context) {
 			return
 		}
 	}
-	obj := gin.H{"title": "Main website"} // not used
-	c.HTML(200, "login.tmpl", obj)
+	c.HTML(200, "login.tmpl", nil)
 }
 
 type LoginForm struct {
@@ -57,7 +56,7 @@ func loginPost(c *gin.Context) {
 		uuid := GenUUID()
 		sessionsMap[uuid] = true
 		cookie := &http.Cookie{
-			Name:   "sessionid",
+			Name:   LOGIN_COOKIE,
 			Value:  uuid,
 			Domain: c.Request.URL.Host,
 			Path:   "/",
