@@ -20,12 +20,12 @@ func Start(conn *CGRConnector, user, pass string) *gin.Engine {
 	router.POST("/call/:method", callPost)
 	router.GET(LOGIN_PATH, loginGet)
 	router.POST(LOGIN_PATH, loginPost)
-	authorized := router.Group("/")
-	authorized.Use(SessionAuth())
-	authorized.Static("/a/", "./static/app")
-	authorized.GET("/", func(c *gin.Context) {
+	router.Static("/a/", "./static/app")
+	router.GET("/", func(c *gin.Context) {
 		c.Redirect(301, "/a/")
 	})
+	authorized := router.Group("/")
+	authorized.Use(SessionAuth())
 	authorized.POST("/import/", importPost)
 	authorized.POST("/exportcdrs/", exportCdrsPost)
 

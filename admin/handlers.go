@@ -84,13 +84,13 @@ func importPost(c *gin.Context) {
 	param := make(map[string]string)
 	if param["TPid"] == "" {
 		msg, _ := json.Marshal("ERROR: Please enter a tpid")
-		c.Redirect(301, "/#/import/"+base64.StdEncoding.EncodeToString(msg))
+		c.Redirect(301, "/a/#/import/"+base64.StdEncoding.EncodeToString(msg))
 		return
 	}
 	file, _, err := c.Request.FormFile("file")
 	if err != nil {
 		msg, _ := json.Marshal("ERROR: Please select a file")
-		c.Redirect(301, "/#/import/"+base64.StdEncoding.EncodeToString(msg))
+		c.Redirect(301, "/a/#/import/"+base64.StdEncoding.EncodeToString(msg))
 		return
 	}
 	if file != nil {
@@ -102,14 +102,17 @@ func importPost(c *gin.Context) {
 	var response interface{}
 	if err = connector.call("ApierV2.ImportTPZipFile", param, &response); err != nil {
 		msg, _ := json.Marshal("ERROR: " + err.Error())
-		c.Redirect(301, "/#/import/"+base64.StdEncoding.EncodeToString(msg))
+		c.Redirect(301, "/a/#/import/"+base64.StdEncoding.EncodeToString(msg))
 	}
 	msg, _ := json.Marshal(response)
-	c.Redirect(301, "/#/import/"+base64.StdEncoding.EncodeToString(msg))
+	c.Redirect(301, "/a/#/import/"+base64.StdEncoding.EncodeToString(msg))
 }
 
 func exportCdrsPost(c *gin.Context) {
 	param := make(map[string]interface{})
+	if tmp := c.Request.FormValue("CdrFormat"); len(tmp) > 0 {
+		param["CdrFormat"] = tmp
+	}
 	if tmp := c.Request.FormValue("FieldSeparator"); len(tmp) > 0 {
 		param["FieldSeparator"] = tmp
 	}
@@ -159,74 +162,74 @@ func exportCdrsPost(c *gin.Context) {
 	if tmp := c.Request.FormValue("RatedSubjects"); len(tmp) > 0 {
 		if param["RatedSubjects"], err = strconv.ParseFloat(tmp, 64); err != nil {
 			msg, _ := json.Marshal("Error: " + err.Error())
-			c.Redirect(301, "/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 
 		}
 	}
 	if tmp := c.Request.FormValue("CostMultiplyFactor"); len(tmp) > 0 {
 		if param["CostMultiplyFactor"], err = strconv.ParseFloat(tmp, 64); err != nil {
 			msg, _ := json.Marshal("Error: " + err.Error())
-			c.Redirect(301, "/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 		}
 	}
 	if tmp := c.Request.FormValue("CostShiftDigits"); len(tmp) > 0 {
 		if param["CostShiftDigits"], err = strconv.ParseInt(tmp, 10, 64); err != nil {
 			msg, _ := json.Marshal("Error: " + err.Error())
-			c.Redirect(301, "/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 		}
 	}
 	if tmp := c.Request.FormValue("RoundDecimals"); len(tmp) > 0 {
 		if param["RoundDecimals"], err = strconv.ParseInt(tmp, 10, 64); err != nil {
 			msg, _ := json.Marshal("Error: " + err.Error())
-			c.Redirect(301, "/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 		}
 	}
 	if tmp := c.Request.FormValue("MaskLength"); len(tmp) > 0 {
 		if param["MaskLength"], err = strconv.ParseInt(tmp, 10, 64); err != nil {
 			msg, _ := json.Marshal("Error: " + err.Error())
-			c.Redirect(301, "/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 		}
 	}
 	if tmp := c.Request.FormValue("OrderIdStart"); len(tmp) > 0 {
 		if param["OrderIdStart"], err = strconv.ParseInt(tmp, 10, 64); err != nil {
 			msg, _ := json.Marshal("Error: " + err.Error())
-			c.Redirect(301, "/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 		}
 	}
 	if tmp := c.Request.FormValue("OrderIdEnd"); len(tmp) > 0 {
 		if param["OrderIdEnd"], err = strconv.ParseInt(tmp, 10, 64); err != nil {
 			msg, _ := json.Marshal("Error: " + err.Error())
-			c.Redirect(301, "/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 		}
 	}
 	if tmp := c.Request.FormValue("SkipErrors"); len(tmp) > 0 {
 		if param["SkipErrors"], err = strconv.ParseBool(tmp); err != nil {
 			msg, _ := json.Marshal("Error: " + err.Error())
-			c.Redirect(301, "/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 		}
 	}
 	if tmp := c.Request.FormValue("SkipRated"); len(tmp) > 0 {
 		if param["SkipRated"], err = strconv.ParseBool(tmp); err != nil {
 			msg, _ := json.Marshal("Error: " + err.Error())
-			c.Redirect(301, "/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 		}
 	}
 	if tmp := c.Request.FormValue("SuppressCgrIds"); len(tmp) > 0 {
 		if param["SuppressCgrIds"], err = strconv.ParseBool(tmp); err != nil {
 			msg, _ := json.Marshal("Error: " + err.Error())
-			c.Redirect(301, "/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 		}
 	}
 	var response interface{}
 	if err = connector.call("ApierV2.ExportCdrsToZipString", param, &response); err != nil {
 		msg, _ := json.Marshal("ERROR: " + err.Error())
-		c.Redirect(301, "/#/import/"+base64.StdEncoding.EncodeToString(msg))
+		c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 	}
 	if response != nil {
 		buf, err := base64.StdEncoding.DecodeString(response.(string))
 		if err != nil {
 			msg, _ := json.Marshal("ERROR: " + err.Error())
-			c.Redirect(301, "/#/import/"+base64.StdEncoding.EncodeToString(msg))
+			c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 		}
 		c.Writer.Header().Set("Content-Type", "application/x-zip-compressed")
 		c.Writer.Header().Set("Content-Disposition", "attachment; filename=cgr_cdrs_export.zip")
@@ -234,6 +237,6 @@ func exportCdrsPost(c *gin.Context) {
 		c.Writer.Flush()
 	} else {
 		msg, _ := json.Marshal("ERROR: no CDRs found!")
-		c.Redirect(301, "/#/import/"+base64.StdEncoding.EncodeToString(msg))
+		c.Redirect(301, "/a/#/exportcdrs/"+base64.StdEncoding.EncodeToString(msg))
 	}
 }

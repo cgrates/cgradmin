@@ -36,6 +36,8 @@ def imports(request):
 def exports(request):
    myfile = StringIO.StringIO()
    param = request.POST.dict()
+   if not param['CdrFormat']:
+      del param['CdrFormat']
    if not param['FieldSeparator']:
       del param['FieldSeparator']
    if param['CgrIds']:
