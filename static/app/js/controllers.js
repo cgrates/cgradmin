@@ -425,58 +425,82 @@ angular.module('cgradminApp.controllers', [])
          }
          history.back();
        })
-       .controller('DashboardCtrl', function(resFactory){
+       .controller('DashboardCtrl', function($interval, resFactory){
          var ctrl = this;
          ctrl.memstats = {};
          ctrl.statscache = {};
-         var tv = 1000;
+         var memStatData = [];
+         var memFootprintData = [];
+         var memPlot = $.plot("#memChart", [
+           {
+             data: memStatData,
+             lines: {show: true,  fill: true}
+           },
+           {
+             data: memFootprintData,
+             lines: {show: true}
+           }
+         ],
+                              {
+                                series: {
+                                  shadowSize: 0   // Drawing is faster without shadows
+                                },
+                                yaxis: {
+                                  min: 0,
+                                },
+                                xaxis: {
+                                  show: false
+                                }
+                              });
 
-         ctrl.memGraph = new Rickshaw.Graph({
-           element: document.querySelector("#mem_chart"),
-           width: "240",
-           height: "100",
-           renderer: "area",
-           series: new Rickshaw.Series.FixedDuration([
-             {name: 'memstat', color: 'steelblue'},
-             {name: 'footprint', color: 'lightblue'}
-           ], undefined, {
-             timeInterval: tv,
-             maxDataPoints: 100,
-           })
-         });
+         var cacheData = [[0, 3], [4, 8], [8, 5], [9, 13]];
+         var cachePlot = $.plot("#cacheChart", [
+           {
+             data: cacheData,
+             bars: { show: true }
+           }
+         ]);
 
-         setInterval(function () {
+         resFactory.call('Status', '', 'Responder').success(function(data){ctrl.memstats = data});
+
+         var x = 0;
+         $interval(function() {
            resFactory.call('Status', '', 'Responder').success(function(data){
              ctrl.memstats = data;
-             ctrl.memGraph.series.addData({
-               memstat: data.memstat,
-               footprint: data.footprint
-             });
-             ctrl.memGraph.update();
+             if (memStatData.length > 100) {
+               memStatData = memStatData.slice(1);
+               memFootprintData = memFootprintData.slice(1);
+             }
+             memStatData.push([x, data.memstat]);
+             memFootprintData.push([x, data.footprint]);
+             memPlot.setData([memStatData, memFootprintData]);
+             memPlot.setupGrid();
+             memPlot.draw();
            });
-         }, tv);
+           x += 1;
+         }, 5000);
 
-
-         ctrl.cacheGraph = new Rickshaw.Graph({
-           element: document.querySelector("#cache_chart"),
-           width: "240",
-           height: "200",
-           renderer: "bar",
-           series: [{
-             name: 'Series 1',
-             color: 'gold',
-             data: [{x: 0, y: 230}, {x: 1, y: 300}, {x: 2, y: 590}, {x: 3, y: 310}, {x: 4, y: 600}]
-           }]
+         resFactory.call('GetCacheStats', {}).success(function(data){
+           ctrl.cachestats = data;
+           cacheData = [
+             ["Actions",  data.Actions],
+             ["AccountAliases",  data.AccountAliases],
+             ["DerivedChargers",  data.DerivedChargers],
+             ["Destinations",  data.Destinations],
+             ["RatingAliases",  data.RatingAliases],
+             ["RatingPlans",  data.RatingPlans],
+             ["RatingProfiles",  data.RatingProfiles],
+             ["SharedGroups",  data.SharedGroups]
+           ];
+           cachePlot.setData([cacheData]);
+           cachePlot.setupGrid();
+           cachePlot.draw();
          });
-         ctrl.cacheGraph.render();
-
-         resFactory.call('Status', '', 'Responder').success(function(data){ctrl.memstats = data;});
-         resFactory.call('GetCacheStats', '').success(function(data){ctrl.cachestats = data;});
 
          ctrl.reloadCache = function(){
-           resFactory.call('ReloadCache', '').success(function(data){resFactory.addAlert(data, 'CacheReload')});
+           resFactory.call('ReloadCache', {}).success(function(data){resFactory.addAlert(data, 'CacheReload')});
          };
          ctrl.reloadScheduler = function(){
-           resFactory.call('ReloadScheduler', '').success(function(data){resFactory.addAlert(data, 'SchedulerReload')});
+           resFactory.call('ReloadScheduler', {}).success(function(data){resFactory.addAlert(data, 'SchedulerReload')});
          };
        });
