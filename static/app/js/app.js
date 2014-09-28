@@ -13,8 +13,9 @@ angular.module('cgradminApp', [
   'cgradminApp.controllers'
 ])
        .config(['$routeProvider', function($routeProvider) {
-         $routeProvider.when('/resource/:res/:page?', {templateUrl: 'partials/resources.html', controller: 'ResourcesCtrl', controllerAs: 'resCtrl', label: 'Home page'});
-         $routeProvider.when('/timing/:res_id?', {templateUrl: 'partials/timing.html', controller: 'TimingsCtrl', controllerAs: 'resCtrl', label: "Timings"});
+         $routeProvider.when('/dashboard', {templateUrl: 'partials/dashboard.html', controller: 'DashboardCtrl', controllerAs: 'dashCtrl'});
+         $routeProvider.when('/resource/:res/:page?', {templateUrl: 'partials/resources.html', controller: 'ResourcesCtrl', controllerAs: 'resCtrl'});
+         $routeProvider.when('/timing/:res_id?', {templateUrl: 'partials/timing.html', controller: 'TimingsCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/destination/:res_id?', {templateUrl: 'partials/destination.html', controller: 'DestinationsCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/rate/:res_id?', {templateUrl: 'partials/rate.html', controller: 'RatesCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/destinationrate/:res_id?', {templateUrl: 'partials/destination_rate.html', controller: 'DestinationRatesCtrl', controllerAs: 'resCtrl'});
@@ -33,5 +34,5 @@ angular.module('cgradminApp', [
          $routeProvider.when('/exportcdrs/:message?', {templateUrl: 'partials/export_cdrs.html', controller: 'ExportCtrl', controllerAs: 'expCtrl'});
          $routeProvider.when('/activate/:res/:res_id?', {templateUrl: 'partials/activate.html', controller: 'ActivationCtrl', controllerAs: 'actCtrl'});
          $routeProvider.when('/tpid/new', {templateUrl: 'partials/tpid.html', controller: 'TpIdsCtrl', controllerAs: 'tpCtrl'});
-         $routeProvider.otherwise({redirectTo: '/resource/RatingProfile'});
+         $routeProvider.otherwise({redirectTo: '/dashboard'});
        }]);

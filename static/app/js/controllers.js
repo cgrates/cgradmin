@@ -424,4 +424,59 @@ angular.module('cgradminApp.controllers', [])
              break;
          }
          history.back();
+       })
+       .controller('DashboardCtrl', function(resFactory){
+         var ctrl = this;
+         ctrl.memstats = {};
+         ctrl.statscache = {};
+         var tv = 1000;
+
+         ctrl.memGraph = new Rickshaw.Graph({
+           element: document.querySelector("#mem_chart"),
+           width: "240",
+           height: "100",
+           renderer: "area",
+           series: new Rickshaw.Series.FixedDuration([
+             {name: 'memstat', color: 'steelblue'},
+             {name: 'footprint', color: 'lightblue'}
+           ], undefined, {
+             timeInterval: tv,
+             maxDataPoints: 100,
+           })
+         });
+
+         setInterval(function () {
+           resFactory.call('Status', '', 'Responder').success(function(data){
+             ctrl.memstats = data;
+             ctrl.memGraph.series.addData({
+               memstat: data.memstat,
+               footprint: data.footprint
+             });
+             ctrl.memGraph.update();
+           });
+         }, tv);
+
+
+         ctrl.cacheGraph = new Rickshaw.Graph({
+           element: document.querySelector("#cache_chart"),
+           width: "240",
+           height: "200",
+           renderer: "bar",
+           series: [{
+             name: 'Series 1',
+             color: 'gold',
+             data: [{x: 0, y: 230}, {x: 1, y: 300}, {x: 2, y: 590}, {x: 3, y: 310}, {x: 4, y: 600}]
+           }]
+         });
+         ctrl.cacheGraph.render();
+
+         resFactory.call('Status', '', 'Responder').success(function(data){ctrl.memstats = data;});
+         resFactory.call('GetCacheStats', '').success(function(data){ctrl.cachestats = data;});
+
+         ctrl.reloadCache = function(){
+           resFactory.call('ReloadCache', '').success(function(data){resFactory.addAlert(data, 'CacheReload')});
+         };
+         ctrl.reloadScheduler = function(){
+           resFactory.call('ReloadScheduler', '').success(function(data){resFactory.addAlert(data, 'SchedulerReload')});
+         };
        });

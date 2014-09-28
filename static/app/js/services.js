@@ -47,9 +47,10 @@ angular.module('cgradminApp.services', [])
          var factory = {};
          factory.alerts = [];
          var param = {TPid : $cookieStore.get('tpid')};
-         factory.call = function(func, finalParam){
+         factory.call = function(func, finalParam, obj){
+           if (typeof(obj) === "undefined") obj = "ApierV2";
            angular.extend(finalParam, param);
-           var promise = $http.post('/call/ApierV2.' + func, finalParam);
+           var promise = $http.post('/call/' + obj + '.' + func, finalParam);
            promise.error(function(data, status, headers, config) {
              if (data.error === 'not_autenticated') {
                $window.location = '/accounts/login/?next=/' + $window.location.hash;
