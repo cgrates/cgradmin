@@ -453,13 +453,10 @@ angular.module('cgradminApp.controllers', [])
                                 }
                               });
 
-         var cacheData = [[0, 3], [4, 8], [8, 5], [9, 13]];
-         var cachePlot = $.plot("#cacheChart", [
-           {
-             data: cacheData,
-             bars: { show: true }
-           }
-         ]);
+         var cacheData = [];
+         var cachePlot = $.plot("#cacheChart", [cacheData],{
+           bars: { show: true }
+         });
 
          resFactory.call('Status', '', 'Responder').success(function(data){ctrl.memstats = data});
 
@@ -483,14 +480,14 @@ angular.module('cgradminApp.controllers', [])
          resFactory.call('GetCacheStats', {}).success(function(data){
            ctrl.cachestats = data;
            cacheData = [
-             ["Actions",  data.Actions],
-             ["AccountAliases",  data.AccountAliases],
-             ["DerivedChargers",  data.DerivedChargers],
-             ["Destinations",  data.Destinations],
-             ["RatingAliases",  data.RatingAliases],
-             ["RatingPlans",  data.RatingPlans],
-             ["RatingProfiles",  data.RatingProfiles],
-             ["SharedGroups",  data.SharedGroups]
+             [0,  data.Actions],
+             [1,  data.AccountAliases],
+             [2,  data.DerivedChargers],
+             [3,  data.Destinations],
+             [4,  data.RatingAliases],
+             [5,  data.RatingPlans],
+             [6,  data.RatingProfiles],
+             [7,  data.SharedGroups]
            ];
            cachePlot.setData([cacheData]);
            cachePlot.setupGrid();
