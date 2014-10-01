@@ -429,16 +429,21 @@ angular.module('cgradminApp.controllers', [])
          var ctrl = this;
          ctrl.memstats = {};
          ctrl.statscache = {};
+         ctrl.resources = [];
+         ctrl.page = 0;
+         ctrl.itemsPerPage = 30;
          var memStatData = [];
          var memFootprintData = [];
          var memPlot = $.plot("#memChart", [
            {
              data: memStatData,
-             lines: {show: true,  fill: true}
+             lines: {show: true,  fill: true},
+             color: "rgb(255, 100, 123)"
            },
            {
              data: memFootprintData,
-             lines: {show: true}
+             lines: {show: true},
+             color: "#ADD8E6"
            }
          ],
                               {
@@ -453,12 +458,21 @@ angular.module('cgradminApp.controllers', [])
                                 }
                               });
 
-         var cacheData = [];
+         var cacheData =  [];
          var cachePlot = $.plot("#cacheChart", [cacheData],{
-           bars: { show: true }
+           series: {
+             bars: {
+               show: true,
+               barWidth: 0.6,
+               align: "center"
+             }
+           },
+           xaxis: {
+             mode: "categories",
+             tickLength: 0,
+           }
          });
 
-         resFactory.call('Status', '', 'Responder').success(function(data){ctrl.memstats = data});
 
          var x = 0;
          $interval(function() {
@@ -480,19 +494,31 @@ angular.module('cgradminApp.controllers', [])
          resFactory.call('GetCacheStats', {}).success(function(data){
            ctrl.cachestats = data;
            cacheData = [
-             [0,  data.Actions],
-             [1,  data.AccountAliases],
-             [2,  data.DerivedChargers],
-             [3,  data.Destinations],
-             [4,  data.RatingAliases],
-             [5,  data.RatingPlans],
-             [6,  data.RatingProfiles],
-             [7,  data.SharedGroups]
+             ["Actions",  data.Actions],
+             ["AccountActions",  data.AccountAliases],
+             ["DerivedChargers",  data.DerivedChargers],
+             ["Destinations",  data.Destinations],
+             ["RatingAliases",  data.RatingAliases],
+             ["RatingPlans",  data.RatingPlans],
+             ["RatingProfiles",  data.RatingProfiles],
+             ["SharedGroups",  data.SharedGroups]
            ];
            cachePlot.setData([cacheData]);
            cachePlot.setupGrid();
            cachePlot.draw();
-         });
+         });        
+
+         ctrl.getPage = function(func, page){
+           if(typeof(page)==='undefined') {
+             ctrl.resources = [];
+             ctrl.page = 0;
+             page = 0;
+           }
+           ctrl.page += page;
+           resFactory.call(func, {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage}).success(function(data){
+             ctrl.resources = data;
+           });
+         };
 
          ctrl.reloadCache = function(){
            resFactory.call('ReloadCache', {}).success(function(data){resFactory.addAlert(data, 'CacheReload')});

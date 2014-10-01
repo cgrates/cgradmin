@@ -1,26 +1,26 @@
 <div class="row">
   <div class="col-sm-3">
-    <div class="panel panel-info">
+    <div class="panel panel-success">
       <div class="panel-heading">
         <h3 class="panel-title">Mem Stats</h3>
       </div>
       <div class="panel-body">
         <table class="table table-condensed">
           <tr>
-            <td style="color:steelblue">Current</td>
+            <td style="color:gold">Current</td>
             <td>{{dashCtrl.memstats.memstat}} Kb</td>
-          </tr> 
+          </tr>
           <tr>
             <td style="color:lightblue">Footprint</td>
             <td>{{dashCtrl.memstats.footprint}} Kb</td>
-          </tr> 
-          </table>              
-          <div id="memChart" style="width:100%;height:200px"></div>
+          </tr>
+        </table>
+        <div id="memChart" style="width:100%;height:200px"></div>
       </div>
     </div>
   </div>
   <div class="col-sm-6">
-    <div class="panel panel-info">
+    <div class="panel panel-success">
       <div class="panel-heading">
         <h3 class="panel-title">Cache Stats</h3>
       </div>
@@ -29,49 +29,126 @@
           <tr>
             <td>Actions</td>
             <td>{{dashCtrl.cachestats.Actions}}</td>
-          </tr>    
+          </tr>
           <tr>
             <td>AccountAliases</td>
             <td>{{dashCtrl.cachestats.AccountAliases}}</td>
-          </tr> 
+          </tr>
           <tr>
             <td>DerivedChargers</td>
             <td>{{dashCtrl.cachestats.DerivedChargers}}</td>
-          </tr> 
+          </tr>
           <tr>
             <td>Destinations</td>
             <td>{{dashCtrl.cachestats.Destinations}}</td>
-          </tr> 
+          </tr>
           <tr>
             <td>RatingAliases</td>
             <td>{{dashCtrl.cachestats.RatingAliases}}</td>
-          </tr> 
+          </tr>
           <tr>
             <td>RatingPlans</td>
             <td>{{dashCtrl.cachestats.RatingPlans}}</td>
-          </tr> 
+          </tr>
           <tr>
             <td>RatingProfiles</td>
             <td>{{dashCtrl.cachestats.RatingProfiles}}</td>
-          </tr> 
+          </tr>
           <tr>
             <td>SharedGroups</td>
             <td>{{dashCtrl.cachestats.SharedGroups}}</td>
-          </tr> 
-          </table>
-          <div id="cacheChart" style="width:100%;height:100px"></div>          
+          </tr>
+        </table>
+        <div id="cacheChart" style="width:100%;height:100px"></div>
       </div>
     </div>
   </div>
   <div class="col-sm-3">
-    <div class="panel panel-info">
+    <div class="panel panel-success">
       <div class="panel-heading">
-        <h3 class="panel-title">Actions</h3>
+        <h3 class="panel-title">Quick Actions</h3>
       </div>
       <div class="panel-body">
         <a class="btn btn-link" href ng-click="dashCtrl.reloadCache()"><span class="glyphicon glyphicon-refresh"></span> Reload cache</a>
         <a class="btn btn-link" href ng-click="dashCtrl.reloadScheduler()"><span class="glyphicon glyphicon-time"></span> Reload scheduler</a>
       </div>
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <tabset justified="true">
+      <tab heading="Scheduled Actions" select="dashCtrl.getPage('GetScheduledActions')">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>ActionPlanId</th>
+              <th>ActionsId</th>
+              <th>NextRunTime</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="ap in dashCtrl.resources">
+              <td>{{ap.ActionPlanId}}</td>
+              <td>{{ap.ActionsId}}</td>
+              <td>{{ap.NextRunTime| date:'medium'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <ul class="pager">
+            <li><a ng-hide="dashCtrl.page<=0" ng-click="dashCtrl.getPage('GetScheduledActions', -1)" href>Previous</a></li>
+            <li><a ng-hide="dashCtrl.resources.length < dashCtrl.itemsPerPage" ng-click="dashCtrl.getPage('GetScheduledActions', 1)" href>Next</a></li>
+          </ul>
+        </div>
+      </tab>
+      <tab heading="CDRs" select="dashCtrl.getPage('GetCdrs')">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <td>AccId</td>
+              <td>Account</td>
+              <td>AnswerTime</td>
+              <td>Category</td>
+              <td>CdrHost</td>
+              <td>CdrSource</td>
+              <td>Destination</td>
+              <td>Cost</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="cdr in dashCtrl.resources">
+              <td>{{cdr.AccId}}</td>
+              <td>{{cdr.Account}}</td>
+              <td>{{cdr.AnswerTime| date:'medium'}}</td>
+              <td>{{cdr.Category}}</td>
+              <td>{{cdr.CdrHost}}</td>
+              <td>{{cdr.CdrSource}}</td>
+              <td>{{cdr.Destination}}</td>
+              <td>{{cdr.Cost}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <ul class="pager">
+            <li><a ng-hide="dashCtrl.page<=0" ng-click="dashCtrl.getPage('GetCdrs', -1)" href>Previous</a></li>
+            <li><a ng-hide="dashCtrl.resources.length < dashCtrl.itemsPerPage" ng-click="dashCtrl.getPage('GetCdrs', 1)" href>Next</a></li>
+          </ul>
+        </div>
+      </tab>
+      <tab heading="Accounts">
+        Accounts
+      </tab>
+      <tab heading="Account aliases">
+        Account aliases
+      </tab>
+      <tab heading="RatingProfiles Aliases">
+        RatingProfiles Aliases
+      </tab>
+      <tab heading="Derived chargers">
+        Derived chargers
+      </tab>
+    </tabset>
+
   </div>
 </div>

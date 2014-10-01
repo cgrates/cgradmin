@@ -24,6 +24,7 @@ func callPost(c *gin.Context) {
 	var response interface{}
 	if err := connector.call(method, param, &response); err != nil {
 		c.JSON(200, map[string]string{"ERROR": err.Error()})
+		return
 	}
 	c.JSON(200, response)
 }

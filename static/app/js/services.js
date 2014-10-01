@@ -24,7 +24,7 @@ angular.module('cgradminApp.services', [])
        })
        .value('hasActivateArray',
               ["Destination", "RatingPlan", "RatingProfile", "CdrStats",
-               "ActionPlan", "AccountActions", "SharedGroup", "DerivedChargers"]
+                "AccountActions", "SharedGroup", "DerivedChargers"]
        )
        .factory('breadcrumbsFactory', function(){
          var factory = {};
@@ -64,9 +64,17 @@ angular.module('cgradminApp.services', [])
            } else{
              prefix += ": ";
            }
+           if (angular.isString(message)) {
+             message = JSON.parse(message);
+           }
+           var error = false;
+           if (message['ERROR']) {
+             error = true;
+             message = message['ERROR'];
+           }
            factory.alerts.push({
-             type: message.indexOf('ERROR') > -1 ? 'danger' : 'success',
-             msg: prefix + JSON.parse(message)
+             type: error ? 'danger' : 'success',
+             msg: prefix + message
            });
            $timeout(function(){
              factory.alerts.splice(0, 1);

@@ -46,3 +46,19 @@ body {
     margin-right: 5px;
     margin-bottom: 5px;
 }
+
+.flot-x-axis div.flot-tick-label {
+    /* Rotate Axis Labels */
+    transform: translateX(10%) rotate(10deg); /* CSS3 */
+    transform-origin: 0 0;
+
+    -ms-transform: translateX(10%) rotate(10deg); /* IE */
+    -ms-transform-origin: 0 0;
+
+    -moz-transform: translateX(10%) rotate(10deg); /* Firefox */
+    -moz-transform-origin: 0 0;
+
+    -webkit-transform: translateX(10%) rotate(10deg); /* Safari and Chrome */
+    -webkit-transform-origin: 0 0;
+
+}
