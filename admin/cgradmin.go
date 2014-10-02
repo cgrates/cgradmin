@@ -1,33 +1,35 @@
 package admin
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
+	"text/template"
+
+	"github.com/zenazn/goji"
+	"github.com/zenazn/goji/web"
+)
 
 var (
 	connector          *CGRConnector
 	sessionsMap        = make(map[string]bool)
 	username, password string
+	templates          *template.Template
 )
 
-func Start(conn *CGRConnector, user, pass string) *gin.Engine {
+func Start(conn *CGRConnector, user, pass string) {
 	connector = conn
 	username = user
 	password = pass
+	templates = template.Must(template.ParseGlob("templates/*.tmpl"))
 
-	gin.SetMode(gin.ReleaseMode)
-	router := gin.Default()
-	router.LoadHTMLGlob("./templates/*.tmpl")
+	goji.Get(LOGIN_PATH, loginGet)
+	goji.Post(LOGIN_PATH, loginPost)
+	goji.Post("/call/:method", callPost)
+	goji.Get("/app/*", http.FileServer(http.Dir("./static")))
 
-	router.POST("/call/:method", callPost)
-	router.GET(LOGIN_PATH, loginGet)
-	router.POST(LOGIN_PATH, loginPost)
-	router.Static("/a/", "./static/app")
-	router.GET("/", func(c *gin.Context) {
-		c.Redirect(301, "/a/")
-	})
-	authorized := router.Group("/")
-	authorized.Use(SessionAuth())
-	authorized.POST("/import/", importPost)
-	authorized.POST("/exportcdrs/", exportCdrsPost)
-
-	return router
+	auth := web.New()
+	goji.Handle("/*", auth)
+	auth.Use(SessionAuth)
+	auth.Post("/import/", importPost)
+	auth.Post("/exportcdrs/", exportCdrsPost)
+	auth.Get("/", http.RedirectHandler("/app/", 301))
 }

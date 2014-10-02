@@ -3,11 +3,12 @@ package admin
 import (
 	"crypto/rand"
 	"encoding/hex"
+	"encoding/json"
 	"net/http"
 	"strconv"
 	"time"
 
-	"github.com/gin-gonic/gin"
+	"github.com/zenazn/goji/web"
 )
 
 const (
@@ -15,15 +16,15 @@ const (
 	LOGIN_PATH   = "/accounts/login/"
 )
 
-func SessionAuth() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		if !IsAuthenticated(c.Request) {
-			c.Redirect(301, LOGIN_PATH+"?next="+c.Request.URL.Path)
-			c.Abort(-1)
+func SessionAuth(c *web.C, h http.Handler) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		if !IsAuthenticated(r) {
+			http.Redirect(w, r, LOGIN_PATH+"?next="+r.URL.Path, 301)
 			return
 		}
-		c.Next()
+		h.ServeHTTP(w, r)
 	}
+	return http.HandlerFunc(fn)
 }
 
 func IsAuthenticated(r *http.Request) bool {
@@ -48,4 +49,11 @@ func GenUUID() string {
 	uuid[4] = 0x40 // version 4 Pseudo Random, see page 7
 
 	return hex.EncodeToString(uuid)
+}
+
+func writeJSON(w http.ResponseWriter, code int, data interface{}) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	encoder := json.NewEncoder(w)
+	return encoder.Encode(data)
 }
