@@ -10,7 +10,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/zenazn/goji/web"
 )
 
@@ -74,7 +73,7 @@ func loginPost(c web.C, w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	} else {
-		writeJSON(w, 401, gin.H{"status": "unauthorized"})
+		writeJSON(w, 401, map[string]string{"error": "not_autenticated"})
 	}
 }
 
