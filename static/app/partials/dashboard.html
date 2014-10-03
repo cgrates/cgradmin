@@ -79,6 +79,7 @@
   <div class="col-sm-12">
     <tabset justified="true">
       <tab heading="Scheduled Actions" select="dashCtrl.getPage('GetScheduledActions')">
+        <input type="search" class="form-control" placeholder="Search resource" ng-model="dashCtrl.searchTerm"/>
         <table class="table table-condensed">
           <thead>
             <tr>
@@ -88,7 +89,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="ap in dashCtrl.resources">
+            <tr ng-repeat="ap in dashCtrl.resources|filter: dashCtrl.searchTerm">
               <td>{{ap.ActionPlanId}}</td>
               <td>{{ap.ActionsId}}</td>
               <td>{{ap.NextRunTime| date:'medium'}}</td>
@@ -103,6 +104,7 @@
         </div>
       </tab>
       <tab heading="CDRs" select="dashCtrl.getPage('GetCdrs')">
+        <input type="search" class="form-control" placeholder="Search resource" ng-model="dashCtrl.searchTerm"/>
         <table class="table table-condensed">
           <thead>
             <tr>
@@ -117,7 +119,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="cdr in dashCtrl.resources">
+            <tr ng-repeat="cdr in dashCtrl.resources|filter: dashCtrl.searchTerm">
               <td>{{cdr.AccId}}</td>
               <td>{{cdr.Account}}</td>
               <td>{{cdr.AnswerTime| date:'medium'}}</td>
@@ -137,6 +139,7 @@
         </div>
       </tab>
       <tab heading="Accounts" select="dashCtrl.getPage('GetAccounts')">
+        <input id="tab-search" type="search" class="form-control" placeholder="Search resource" ng-model="dashCtrl.searchTerm"/>
         <table class="table table-condensed">
           <thead>
             <tr>
@@ -144,7 +147,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="accId in dashCtrl.resources">
+            <tr ng-repeat="accId in dashCtrl.resources|filter: dashCtrl.searchTerm">
               <td>{{accId}}</td>
             </tr>
           </tbody>
