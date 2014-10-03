@@ -79,7 +79,7 @@
   <div class="col-sm-12">
     <tabset justified="true">
       <tab heading="Scheduled Actions" select="dashCtrl.getPage('GetScheduledActions')">
-        <input type="search" class="form-control" placeholder="Search resource" ng-model="dashCtrl.searchTerm"/>
+        <input type="search" class="form-control" placeholder="Search scheduled actions" ng-model="dashCtrl.searchTerm" ng-keypress="dashCtrl.keydown($event, 'GetScheduledActions')"/>
         <table class="table table-condensed">
           <thead>
             <tr>
@@ -104,7 +104,7 @@
         </div>
       </tab>
       <tab heading="CDRs" select="dashCtrl.getPage('GetCdrs')">
-        <input type="search" class="form-control" placeholder="Search resource" ng-model="dashCtrl.searchTerm"/>
+        <input type="search" class="form-control" placeholder="Search resource" ng-model="dashCtrl.searchTerm" ng-keypress="dashCtrl.keydown($event, 'GetCdrs')"/>
         <table class="table table-condensed">
           <thead>
             <tr>
@@ -139,7 +139,7 @@
         </div>
       </tab>
       <tab heading="Accounts" select="dashCtrl.getPage('GetAccounts')">
-        <input id="tab-search" type="search" class="form-control" placeholder="Search resource" ng-model="dashCtrl.searchTerm"/>
+        <input id="tab-search" type="search" class="form-control" placeholder="Search resource" ng-model="dashCtrl.searchTerm" ng-keypress="dashCtrl.keydown($event, 'GetAccounts')"/>
         <table class="table table-condensed">
           <thead>
             <tr>

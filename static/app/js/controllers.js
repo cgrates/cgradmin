@@ -513,14 +513,22 @@ angular.module('cgradminApp.controllers', [])
             if(typeof(page)==='undefined') {
                 ctrl.resources = [];
                 ctrl.page = 0;
-                ctrl.searchTerm = '';
                 page = 0;
             }
             ctrl.page += page;
             resFactory.call(func, {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm: ctrl.searchTerm}).success(function(data){
                 ctrl.resources = data;
             });
+            if(typeof(page)==='undefined') {
+                ctrl.searchTerm = '';
+            }
         };
+
+        ctrl.keydown = function(event, method){
+            if(event.which === 13){
+                ctrl.getPage(method);
+            }
+        }
 
         ctrl.reloadCache = function(){
             resFactory.call('ReloadCache', {}).success(function(data){resFactory.addAlert(data, 'CacheReload')});

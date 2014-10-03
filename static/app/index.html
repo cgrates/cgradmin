@@ -23,7 +23,7 @@
   <body role="document">
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -35,31 +35,8 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown">TP Rating <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#/resource/Timing">Timings</a></li>
-                <li><a href="#/resource/Destination">Destinations</a></li>
-                <li><a href="#/resource/Rate">Rates</a></li>
-                <li><a href="#/resource/DestinationRate">Destination Rates</a></li>
-                <li><a href="#/resource/RatingPlan">Rating Plans</a></li>
-                <li><a href="#/resource/RatingProfile">Rating Profiles</a></li>
-                <!-- <li><a href="#/resource/RpAlias">Rating Profile Aliases</a></li> -->
-                <!-- <li><a href="#/resource/LcrRule">Lcr Rules</a></li> -->
-                <li><a href="#/resource/CdrStats">Cdr Stats</a></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown">TP Accounting <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#/resource/Action">Actions</a></li>
-                <li><a href="#/resource/ActionPlan">Action Plans</a></li>
-                <li><a href="#/resource/ActionTrigger">Action Triggers</a></li>
-                <li><a href="#/resource/AccountAction">Account Actions</a></li>
-                <li><a href="#/resource/SharedGroup">Shared Groups</a></li>
-                <li><a href="#/resource/DerivedCharger">Derived Chargers</a></li>
-              </ul>
-            </li>
+            <li><a href="#/dashboard">Dashboard</a></li>
+            <li><a href="#/resource/RatingProfile">TP Editor</a></li>
             <li class="dropdown">
               <a href="" class="dropdown-toggle" data-toggle="dropdown">Import <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -72,17 +49,6 @@
                 <li><a href="#/exportcdrs">Export CDRs</a></li>
               </ul>
             </li>
-            <!-- li class="dropdown">
-            <a href="" class="dropdown-toggle" data-toggle="dropdown">Activate <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-            <li><a href="#/activate/dt">Destinations</a></li>
-            <li><a href="#/activate/rp">Rating Plans</a></li>
-            <li><a href="#/activate/rpf">Rating Profiles</a></li>
-            <li><a href="#/activate/aa">Account Actions</a></li>
-            <li class="divider"></li>
-            <li><a href="#/activate/all">All</a></li>
-            </ul>
-            </li -->
           </ul>
           <ul class="nav navbar-nav navbar-right" ng-controller="TpIdsCtrl as tiCtrl">
             <li ng-show="tiCtrl.tpid"><a href="#/activate/all">Activate</a></li>
@@ -102,11 +68,35 @@
       <alert ng-repeat="alert in alCtrl.alerts" type="{{alert.type}}" close="alCtrl.closeAlert($index)">{{alert.msg}}</alert>
     </div>
 
-    <div class="container" role="main">
+    <div class="container-fluid" role="main">
       <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
-      <div ng-view class="slide-animate_disabled"></div>
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#/dashboard">Dashboard</a></li>
+            <li><a href="#/resource/Timing">Timings</a></li>
+            <li><a href="#/resource/Destination">Destinations</a></li>
+            <li><a href="#/resource/Rate">Rates</a></li>
+            <li><a href="#/resource/DestinationRate">Destination Rates</a></li>
+            <li><a href="#/resource/RatingPlan">Rating Plans</a></li>
+            <li><a href="#/resource/RatingProfile">Rating Profiles</a></li>
+            <!-- <li><a href="#/resource/RpAlias">Rating Profile Aliases</a></li> -->
+            <!-- <li><a href="#/resource/LcrRule">Lcr Rules</a></li> -->
+            <li><a href="#/resource/CdrStats">Cdr Stats</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="#/resource/Action">Actions</a></li>
+            <li><a href="#/resource/ActionPlan">Action Plans</a></li>
+            <li><a href="#/resource/ActionTrigger">Action Triggers</a></li>
+            <li><a href="#/resource/AccountAction">Account Actions</a></li>
+            <li><a href="#/resource/SharedGroup">Shared Groups</a></li>
+            <li><a href="#/resource/DerivedCharger">Derived Chargers</a></li>
+          </ul>
+        </div>
+        <div ng-view class="slide-animate_disabled col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"></div>
+      </div>
     </div>
 
     <!-- In production use:
