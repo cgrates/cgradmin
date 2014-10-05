@@ -1,6 +1,7 @@
+<div ng-init="resCtrl.init({Actions:[{}]}, 'Actions', '')"></div>
 <breadcrumbs label="resCtrl.resId"></breadcrumbs>
 <div id="detail-view">
-  <div ng-hide="resCtrl.showId" class="btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init('Action', resCtrl.resId)">
+  <div ng-hide="resCtrl.showId" class="btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init(resCtrl.name, resCtrl.resId)">
     <a ng-show="actCtrl.hasActivate()" class="btn btn-primary" href ng-click="actCtrl.activate()"><span class="glyphicon glyphicon-plane"></span> Activate</a>
     <a class="btn btn-danger" href ng-click="actCtrl.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
   </div>
@@ -26,6 +27,12 @@
           <a href ng-click="panelCtrl.add(resCtrl.res.Actions)">+</a>
         </li>
       </ul>
+      <div class="form-group">
+        <label for="identifier" class="col-sm-2 control-label">Identifier</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="identifier" ng-model="resCtrl.res.Actions[panelCtrl.index].Identifier"/>
+        </div>
+      </div>
       <div class="form-group">
         <label for="balancetype" class="col-sm-2 control-label">BalanceType</label>
         <div class="col-sm-2">
@@ -65,12 +72,6 @@
         <label for="extraparameters" class="col-sm-2 control-label">ExtraParameters</label>
         <div class="col-sm-2">
           <input type="text" class="form-control" id="extraparameters" ng-model="resCtrl.res.Actions[panelCtrl.index].ExtraParameters"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="identifier" class="col-sm-2 control-label">Identifier</label>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="identifier" ng-model="resCtrl.res.Actions[panelCtrl.index].Identifier"/>
         </div>
       </div>
       <div class="form-group">

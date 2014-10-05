@@ -41,7 +41,7 @@ angular.module('cgradminApp.controllers', [])
         this.add = function(resources){
             resources.push({});
             this.index = resources.length-1;
-            n}
+            }
         this.remove = function(resources, i, event){
             event.preventDefault();
             if (!confirm("Are you sure you want to delete this resource?")) {
@@ -160,217 +160,35 @@ angular.module('cgradminApp.controllers', [])
             });
         };
     })
-    .controller('TimingsCtrl', function($routeParams, resFactory) {
-        this.res = {};
+    .controller('ResourceCtrl', function($routeParams, resFactory) {
         this.resId = $routeParams.res_id;
-        var ctrl = this;
+        this.init = function(res, name, idName){
+            this.res = res;
+            this.name = name;
+            if(typeof(idName)==='undefined') {
+                idName = this.name;
+            }
+            this.idName = idName;
+            var ctrl = this;
 
-        if(this.resId){
-            resFactory.call('GetTPTiming', {TimingId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
+            if(this.resId){
+                var idName = {};
+                idName[this.idName + 'Id'] = this.resId;
+                resFactory.call('GetTP' + this.name, idName).success(function(data) {ctrl.res = data;});
+            } else {
+                this.showId = true;
+            }
         }
 
-        this.saveResource = function(){
-            resFactory.call('SetTPTiming', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('DestinationsCtrl', function($routeParams, resFactory) {
-        this.res = {};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-
-        if(this.resId){
-            resFactory.call('GetTPDestination', {DestinationId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
+        this.validate = function(){ // used for destinations only (TODO: find a better solution)
             if(angular.isString(this.res.Prefixes)) {
                 this.res.Prefixes = this.res.Prefixes.split(",");
             }
-            resFactory.call('SetTPDestination', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('RatesCtrl', function($routeParams, resFactory) {
-        this.res = {RateSlots:[{}]};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-
-        if(this.resId){
-            resFactory.call('GetTPRate', {RateId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
         }
 
         this.saveResource = function(){
-            resFactory.call('SetTPRate', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('DestinationRatesCtrl', function($routeParams, resFactory) {
-        this.res = {DestinationRates:[{}]};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-        if(this.resId){
-            resFactory.call('GetTPDestinationRate', {DestinationRateId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
-            resFactory.call('SetTPDestinationRate', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('RatingPlansCtrl', function($routeParams, resFactory) {
-        this.res = {RatingPlanBindings: [{}]};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-        if(this.resId){
-            resFactory.call('GetTPRatingPlan', {RatingPlanId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
-            resFactory.call('SetTPRatingPlan', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('RatingProfilesCtrl', function($routeParams, resFactory) {
-        this.res = {RatingPlanActivations:[{}]};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-
-        if(this.resId){
-            resFactory.call('GetTPRatingProfile', {RatingProfileId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
-            resFactory.call('SetTPRatingProfile', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('RatingProfileAliasesCtrl', function($routeParams, resFactory) {
-    })
-    .controller('LcrRulesCtrl', function($routeParams, resFactory) {
-    })
-    .controller('CdrStatsCtrl', function($routeParams, resFactory) {
-        this.res = {CdrStats:[{}]};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-
-        if(this.resId){
-            resFactory.call('GetTPCdrStats', {CdrStatsId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
-            resFactory.call('SetTPCdrStats', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('ActionsCtrl', function($routeParams, resFactory) {
-        this.res = {Actions:[{}]};
-        this.resId = $routeParams.res_id;
-        this.destIds = ['*any'];
-        var ctrl = this;
-
-        if(this.resId){
-            resFactory.call('GetTPActions', {ActionsId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
-            resFactory.call('SetTPActions', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('ActionPlansCtrl', function($routeParams, resFactory) {
-        this.res = {ActionPlan:[{}]};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-
-        if(this.resId){
-            resFactory.call('GetTPActionPlan', {Id: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
-            resFactory.call('SetTPActionPlan', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('ActionTriggersCtrl', function($routeParams, resFactory) {
-        this.res = {ActionTriggers:[{}]};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-
-        if(this.resId){
-            resFactory.call('GetTPActionTriggers', {ActionTriggersId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
-            resFactory.call('SetTPActionTriggers', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('AccountActionsCtrl', function($routeParams, resFactory) {
-        this.res = {};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-
-        if(this.resId){
-            resFactory.call('GetTPAccountActions', {AccountActionsId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
-            resFactory.call('SetTPAccountActions', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('SharedGroupsCtrl', function($routeParams, resFactory) {
-        this.res = {SharedGroups:[{}]};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-
-        if(this.resId){
-            resFactory.call('GetTPSharedGroups', {SharedGroupsId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
-            resFactory.call('SetTPSharedGroups', this.res).success(function(data){resFactory.addAlert(data);});
-            history.back();
-        };
-    })
-    .controller('DerivedChargersCtrl', function($routeParams, resFactory) {
-        this.res = {DerivedChargers:[{}]};
-        this.resId = $routeParams.res_id;
-        var ctrl = this;
-
-        if(this.resId){
-            resFactory.call('GetTPDerivedChargers', {DerivedChargersId: this.resId}).success(function(data) {ctrl.res = data;});
-        } else {
-            this.showId = true;
-        }
-
-        this.saveResource = function(){
-            resFactory.call('SetTPDerivedChargers', this.res).success(function(data){resFactory.addAlert(data);});
+            this.validate()
+            resFactory.call('SetTP' + this.name, this.res).success(function(data){resFactory.addAlert(data);});
             history.back();
         };
     })
