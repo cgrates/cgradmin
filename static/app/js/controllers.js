@@ -31,6 +31,7 @@ angular.module('cgradminApp.controllers', [])
         };
     })
     .controller('PanelCtrl', function(){
+        var ctrl = this;
         this.init = function(){
             this.index = 0;
         }
@@ -41,16 +42,19 @@ angular.module('cgradminApp.controllers', [])
         this.add = function(resources){
             resources.push({});
             this.index = resources.length-1;
-            }
+        }
         this.remove = function(resources, i, event){
             event.preventDefault();
-            if (!confirm("Are you sure you want to delete this resource?")) {
-                return;
-            }
-            resources.splice(i,1);
-            if (this.index >= i) {
-                this.index -= 1;
-            }
+            swal({title: "Are you sure?",
+                  text: "You will not be able to recover this resource!",
+                  type: "warning",   showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Yes, delete it!" },  function(){
+                      resources.splice(i,1);
+                      if (ctrl.index >= i) {
+                          ctrl.index -= 1;
+                      }
+                  });
         }
         this.isActive = function(i){
             return this.index === i;
@@ -103,24 +107,30 @@ angular.module('cgradminApp.controllers', [])
             }
         };
         this.activateSelected = function(){
-            if (!confirm("Are you sure you want to activate this resource(s)?")) {
-                return;
-            }
-            for (var index = 0; index < this.selectedResources.length; index++) {
-                var param = {};
-                param[this.res + 'Id'] = this.selectedResources[index];
-                resFactory.call('Load' + this.res, param).success(function(data){resFactory.addAlert(data);});
-            }
-            this.selectedResources = [];
+            swal({title: "Are you sure?",
+                  text: "This resource will be used immediately in running engine!",
+                  type: "warning",   showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Yes, activate it!" },  function(){
+                      for (var index = 0; index < ctrl.selectedResources.length; index++) {
+                          var param = {};
+                          param[ctrl.res + 'Id'] = ctrl.selectedResources[index];
+                          resFactory.call('Load' + ctrl.res, param).success(function(data){resFactory.addAlert(data);});
+                      }
+                      ctrl.selectedResources = [];
+                  });
         };
         this.deleteSelected = function(){
-            if (!confirm("Are you sure you want to delete this resource(s)?")) {
-                return;
-            }
-            for (var index = 0; index < this.selectedResources.length; index++) {
-                this.deleteResource(this.selectedResources[index]);
-            }
-            this.selectedResources = [];
+            swal({title: "Are you sure?",
+                  text: "You will not be able to recover this resource!",
+                  type: "warning",   showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Yes, delete it!" },  function(){
+                      for (var index = 0; index < ctrl.selectedResources.length; index++) {
+                          ctrl.deleteResource(ctrl.selectedResources[index]);
+                      }
+                      ctrl.selectedResources = [];
+                  });
         };
         this.hasActivate = function(){
             return hasActivateArray.indexOf(this.res) > -1;
@@ -131,23 +141,30 @@ angular.module('cgradminApp.controllers', [])
             this.res = res;
             this.resId = resId;
         }
+        var ctrl = this;
         this.activate = function(){
-            if (!confirm("Are you sure you want to activate this resource?")) {
-                return;
-            }
-            var param = {};
-            param[this.res + 'Id'] = this.resId;
-            resFactory.call('Load' + this.res, param).success(function(data){resFactory.addAlert(data);});
-            history.back();
+            swal({title: "Are you sure?",
+                  text: "This resource will be used immediately in running engine!",
+                  type: "warning",   showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Yes, activate it!" },  function(){
+                      var param = {};
+                      param[ctrl.res + 'Id'] = ctrl.resId;
+                      resFactory.call('Load' + ctrl.res, param).success(function(data){resFactory.addAlert(data);});
+                      history.back();
+                  });
         };
         this.delete = function(){
-            if (!confirm("Are you sure you want to delete this resource?")) {
-                return;
-            }
-            var param = {};
-            param[this.res + 'Id'] = this.resId;
-            resFactory.call('RemTP' + this.res, param).success(function(data){resFactory.addAlert(data);});
-            history.back();
+            swal({title: "Are you sure?",
+                  text: "You will not be able to recover this resource!",
+                  type: "warning",   showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Yes, delete it!" },  function(){
+                      var param = {};
+                      param[ctrl.res + 'Id'] = ctrl.resId;
+                      resFactory.call('RemTP' + ctrl.res, param).success(function(data){resFactory.addAlert(data);});
+                      history.back();
+                  });
         };
         this.hasActivate = function(){
             return hasActivateArray.indexOf(this.res) > -1;

@@ -19,5 +19,7 @@ var (
 func main() {
 	flag.Parse()
 	admin.Start(admin.NewCGRConnector("json", *server), *username, *password)
+
+	flag.Set("bind", ":8080")
 	goji.Serve()
 }
