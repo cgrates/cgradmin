@@ -24,7 +24,7 @@ angular.module('cgradminApp.services', [])
        })
        .value('hasActivateArray',
               ["Destination", "RatingPlan", "RatingProfile", "CdrStats",
-                "AccountActions", "SharedGroup", "DerivedChargers"]
+               "AccountActions", "SharedGroup", "DerivedChargers"]
        )
        .factory('breadcrumbsFactory', function(){
          var factory = {};
@@ -49,7 +49,9 @@ angular.module('cgradminApp.services', [])
          var param = {TPid : $cookieStore.get('tpid')};
          factory.call = function(func, finalParam, obj){
            if (typeof(obj) === "undefined") obj = "ApierV2";
-           angular.extend(finalParam, param);
+           if(angular.isObject(finalParam)) {
+             angular.extend(finalParam, param);
+           }
            var promise = $http.post('/call/' + obj + '.' + func, finalParam);
            promise.error(function(data, status, headers, config) {
              if (data.error === 'not_autenticated') {
