@@ -31,7 +31,8 @@ angular.module('cgradminApp', [
          $routeProvider.when('/derivedcharger/:res_id?', {templateUrl: 'partials/derived_charger.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/cdrstats/:res_id?', {templateUrl: 'partials/cdr_stat.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
          $routeProvider.when('/import/:message?', {templateUrl: 'partials/import.html', controller: 'ImportCtrl', controllerAs: 'impCtrl'});
-         $routeProvider.when('/exportcdrs/:message?', {templateUrl: 'partials/export_cdrs.html', controller: 'ExportCtrl', controllerAs: 'expCtrl'});
+         $routeProvider.when('/exportcdrs/:message?', {templateUrl: 'partials/export_cdrs.html', controller: 'ExportCdrsCtrl', controllerAs: 'expCdrsCtrl'});
+         $routeProvider.when('/exporttpcsv/:message?', {templateUrl: 'partials/export_tpcsv.html', controller: 'ExportTpCsvCtrl', controllerAs: 'expTpCsvCtrl'});
          $routeProvider.when('/activate/:res/:res_id?', {templateUrl: 'partials/activate.html', controller: 'ActivationCtrl', controllerAs: 'actCtrl'});
          $routeProvider.when('/tpid/new', {templateUrl: 'partials/tpid.html', controller: 'TpIdsCtrl', controllerAs: 'tpCtrl'});
          $routeProvider.when('/tpid/remove', {templateUrl: 'partials/activate.html', controller: 'TpIdsCtrl', controllerAs: 'tpCtrl'});

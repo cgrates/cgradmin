@@ -31,7 +31,7 @@ angular.module('cgradminApp.controllers', [])
                  confirmButtonColor: "#DD6B55",
                  confirmButtonText: "Yes, delete it!" },  function(){
                    var idx = ctrl.tpids.indexOf(ctrl.tpid);
-                   if (ctrl.tpid && idx !== -1){                     
+                   if (ctrl.tpid && idx !== -1){
                      resFactory.call('RemTP',ctrl.tpid).success(function(data){
                        resFactory.addAlert(data);
                        ctrl.tpids.splice(idx, 1);
@@ -263,9 +263,15 @@ angular.module('cgradminApp.controllers', [])
            resFactory.addAlert(atob($routeParams.message));
          }
        })
-       .controller('ExportCtrl', function($routeParams, $location, resFactory){
+       .controller('ExportCdrsCtrl', function($routeParams, $location, resFactory){
          if ($routeParams.message) {
-           $location.path('/export');
+           $location.path('/exportcdrs');
+           resFactory.addAlert(atob($routeParams.message));
+         }
+       })
+       .controller('ExportTpCsvCtrl', function($routeParams, $location, resFactory){
+         if ($routeParams.message) {
+           $location.path('/exporttpcsv');
            resFactory.addAlert(atob($routeParams.message));
          }
        })

@@ -1,0 +1,16 @@
+<h3>Export zipped TP CSV file</h3>
+<form role="form" method="POST" action="/exporttpcsv/" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="tpid">TP Id</label>
+    <input type="text" class="form-control" name="tpid" id="tpid" placeholder="Enter TP id here">
+  </div>
+  <div class="form-group">
+    <label for="fileformat">File Format</label>
+    <input type="text" class="form-control" name="fileformat" id="fileformat" placeholder="Enter file format here">
+  </div>
+  <div class="form-group">
+    <label for="fieldseparator">Field Separator</label>
+    <input type="text" class="form-control" name="fieldseparator" id="fieldseparator" placeholder="Enter field separator here">
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>

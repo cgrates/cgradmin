@@ -105,6 +105,44 @@ func importPost(c web.C, w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/app/#/import/"+base64.StdEncoding.EncodeToString(msg), 301)
 }
 
+func exportTpToCsvPost(c web.C, w http.ResponseWriter, r *http.Request) {
+	param := make(map[string]interface{})
+	if tmp := r.FormValue("tpid"); len(tmp) > 0 {
+		param["TPid"] = tmp
+	}
+	if tmp := r.FormValue("fileformat"); len(tmp) > 0 {
+		param["FileFormat"] = tmp
+	} else {
+		param["FileFormat"] = "csv"
+	}
+	if tmp := r.FormValue("fieldseparator"); len(tmp) > 0 {
+		param["FieldSeparator"] = tmp
+	} else {
+		param["FieldSeparator"] = ","
+	}
+	param["Compress"] = true
+
+	var response interface{}
+	var err error
+	if err = connector.call("ApierV2.ExportTPToZipString", param, &response); err != nil {
+		msg, _ := json.Marshal("ERROR: " + err.Error())
+		http.Redirect(w, r, "/app/#/exporttpcsv/"+base64.StdEncoding.EncodeToString(msg), 301)
+	}
+	if response != nil {
+		buf, err := base64.StdEncoding.DecodeString(response.(string))
+		if err != nil {
+			msg, _ := json.Marshal("ERROR: " + err.Error())
+			http.Redirect(w, r, "/app/#/exporttpcsv/"+base64.StdEncoding.EncodeToString(msg), 301)
+		}
+		w.Header().Set("Content-Type", "application/x-zip-compressed")
+		w.Header().Set("Content-Disposition", "attachment; filename=tp_csv.zip")
+		w.Write(buf)
+	} else {
+		msg, _ := json.Marshal("ERROR: no TP data found!")
+		http.Redirect(w, r, "/app/#/exporttpcsv/"+base64.StdEncoding.EncodeToString(msg), 301)
+	}
+}
+
 func exportCdrsPost(c web.C, w http.ResponseWriter, r *http.Request) {
 	param := make(map[string]interface{})
 	if tmp := r.FormValue("CdrFormat"); len(tmp) > 0 {

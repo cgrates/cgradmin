@@ -7,6 +7,7 @@ urlpatterns = patterns('',
                        url(r'^$', login_required(TemplateView.as_view(template_name="index.html"))),
                        url(r'^call/(?P<method>[\w\.]+)$', views.call, name='call'),
                        url(r'^import/$', views.imports, name='imports'),
-                       url(r'^exportcdrs/$', views.exports, name='exports'),
+                       url(r'^exportcdrs/$', views.exportcdrs, name='exportcdrs'),
+                       url(r'^exporttpcsv/$', views.exporttpcsv, name='exporttpcsv'),
 )
 

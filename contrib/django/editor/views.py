@@ -30,10 +30,26 @@ def imports(request):
    response = connector.call('ApierV2.ImportTPZipFile', param)
    response = json.dumps(response)
    return redirect('/static/app/index.html#/import/%s' % quote_plus(b64encode(response)))
-    
+
 @login_required
 @require_POST
-def exports(request):
+def exporttpcsv(request):
+   myfile = StringIO.StringIO()
+   param = {'TPid': request.POST['tpid']}
+   param['FileFormat'] = request.POST['fileformat'] or 'csv'
+   param['FieldSeparator'] = request.POST['fieldseparator'] or ','
+   response = connector.call('ApierV2.ExportTPToZipString', param)
+   if response.startswith("ERROR"):
+      response = json.dumps(response)
+      return redirect('/static/app/index.html#/exporttpcsv/%s' % quote_plus(b64encode(response)))
+   myfile.write(b64decode(response))
+   response = HttpResponse(myfile.getvalue(), content_type='application/x-zip-compressed')
+   response['Content-Disposition'] = 'attachment; filename=cgr_cdrs_export.zip'
+   return response
+   
+@login_required
+@require_POST
+def exportcdrs(request):
    myfile = StringIO.StringIO()
    param = request.POST.dict()
    if not param['CdrFormat']:

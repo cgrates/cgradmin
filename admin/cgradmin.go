@@ -31,5 +31,6 @@ func Start(conn *CGRConnector, user, pass string) {
 	auth.Use(SessionAuth)
 	auth.Post("/import/", importPost)
 	auth.Post("/exportcdrs/", exportCdrsPost)
+	auth.Post("/exporttpcsv/", exportTpToCsvPost)
 	auth.Get("/", http.RedirectHandler("/app/", 301))
 }
