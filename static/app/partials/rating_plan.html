@@ -17,9 +17,8 @@
     </div>
     <section ng-controller="PanelCtrl as panelCtrl">
       <div class="col-md-3">
-        <input ng-show="panelCtrl.showFilter" type="search" class="form-control" placeholder="Filter RP Binding" ng-model="rpFilter">
         <ul class="nav nav-pills nav-stacked marginBottom">
-          <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.RatingPlanBindings|filter:rpFilter">
+          <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.RatingPlanBindings">
             <a href ng-click="panelCtrl.select($index)">
               <button ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.RatingPlanBindings, $index, $event)" class="close closeTab" type="button" >×</button>
               RP Binding {{$index}}

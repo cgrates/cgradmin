@@ -59,6 +59,7 @@
                 <li ng-repeat="ti in tiCtrl.tpids"><a href ng-click="tiCtrl.setTpId(ti)">{{ti}}</a></li>
                 <li class="divider"></li>
                 <li><a href="#/tpid/new">New Tpid</a></li>
+                <li><a href ng-click="tiCtrl.removeTpId($event)">Remove Active Tpid</a></li>
               </ul>
             </li>
           </ul>

@@ -79,6 +79,7 @@ func loginPost(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func importPost(c web.C, w http.ResponseWriter, r *http.Request) {
 	param := make(map[string]string)
+	param["TPid"] = r.FormValue("tpid")
 	if param["TPid"] == "" {
 		msg, _ := json.Marshal("ERROR: Please enter a tpid")
 		http.Redirect(w, r, "/app/#/import/"+base64.StdEncoding.EncodeToString(msg), 301)
@@ -93,7 +94,6 @@ func importPost(c web.C, w http.ResponseWriter, r *http.Request) {
 	if file != nil {
 		defer file.Close()
 	}
-	param["TPid"] = r.FormValue("tpid")
 	content, err := ioutil.ReadAll(file)
 	param["File"] = base64.StdEncoding.EncodeToString(content)
 	var response interface{}

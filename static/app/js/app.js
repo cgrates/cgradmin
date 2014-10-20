@@ -34,5 +34,6 @@ angular.module('cgradminApp', [
          $routeProvider.when('/exportcdrs/:message?', {templateUrl: 'partials/export_cdrs.html', controller: 'ExportCtrl', controllerAs: 'expCtrl'});
          $routeProvider.when('/activate/:res/:res_id?', {templateUrl: 'partials/activate.html', controller: 'ActivationCtrl', controllerAs: 'actCtrl'});
          $routeProvider.when('/tpid/new', {templateUrl: 'partials/tpid.html', controller: 'TpIdsCtrl', controllerAs: 'tpCtrl'});
+         $routeProvider.when('/tpid/remove', {templateUrl: 'partials/activate.html', controller: 'TpIdsCtrl', controllerAs: 'tpCtrl'});
          $routeProvider.otherwise({redirectTo: '/dashboard'});
        }]);

@@ -23,6 +23,25 @@ angular.module('cgradminApp.controllers', [])
            $cookieStore.put('tpid', tpid);
            $window.location.reload();
          };
+         this.removeTpId = function(event){
+           event.preventDefault();
+           swal({title: "Are you sure?",
+                 text: "You will not be able to recover this TpId!",
+                 type: "warning",   showCancelButton: true,
+                 confirmButtonColor: "#DD6B55",
+                 confirmButtonText: "Yes, delete it!" },  function(){
+                   var idx = ctrl.tpids.indexOf(ctrl.tpid);
+                   if (ctrl.tpid && idx !== -1){                     
+                     resFactory.call('RemTP',ctrl.tpid).success(function(data){
+                       resFactory.addAlert(data);
+                       ctrl.tpids.splice(idx, 1);
+                       if(ctrl.tpids.length > 0){
+                         ctrl.setTpId(ctrl.tpids[0]);
+                       }
+                     });
+                   }
+                 });
+         };
        })
        .controller('AlertCtrl', function(resFactory){
          this.alerts = resFactory.alerts;
@@ -34,15 +53,13 @@ angular.module('cgradminApp.controllers', [])
          var ctrl = this;
          this.init = function(){
            this.index = 0;
-           this.showFilter = true;
          }
          this.init();
          this.select = function(i){
            this.index = i;
          }
          this.add = function(resources){
-           this.showFilter = false;
-           resources.push({});           
+           resources.push({});
            this.index = resources.length-1;
          }
          this.remove = function(resources, i, event){

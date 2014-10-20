@@ -16,10 +16,9 @@
       </div>
     </div>
     <section ng-controller="PanelCtrl as panelCtrl">
-      <div class="col-md-3">
-        <input ng-show="panelCtrl.showFilter" type="search" class="form-control" placeholder="Filter DR" ng-model="drFilter">
+      <div class="col-md-3">       
         <ul class="nav nav-pills nav-stacked marginBottom">
-          <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.DestinationRates|filter:drFilter">
+          <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.DestinationRates">
             <a href ng-click="panelCtrl.select($index)">
               <button ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.DestinationRates, $index, $event)" class="close closeTab" type="button" >×</button>
               DR {{$index}}
