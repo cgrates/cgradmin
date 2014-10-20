@@ -16,43 +16,49 @@
       </div>
     </div>
     <section ng-controller="PanelCtrl as panelCtrl">
-      <ul class="nav nav-tabs marginBottom">
-        <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.RatingPlanBindings">
-          <a href ng-click="panelCtrl.select($index)">
-            <button ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.RatingPlanBindings, $index, $event)" class="close closeTab" type="button" >×</button>
-            RP Binding {{$index}}
-          </a>
-        </li>
-        <li>
-          <a href ng-click="panelCtrl.add(resCtrl.res.RatingPlanBindings)">+</a>
-        </li>
-      </ul>
-      <div class="form-group">
-        <label for="destRateId" class="col-sm-2 control-label">DestinationRate Id</label>
-        <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
-          <input id="destRateId" type="text" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].DestinationRatesId" typeahead="id for id in tyaCtrl.getIds('DestinationRate', $viewValue)" typeahead-loading="loadingDestinationRateIds" class="form-control" typeahead-wait-ms="500">
-          <i ng-show="loadingDestinationRateIds" class="glyphicon glyphicon-refresh"></i>
-        </div>
-        <div class="btn-group">
-          <a class="btn btn-primary btn-sm" href="#/destinationrate/{{resCtrl.res.RatingPlanBindings[panelCtrl.index].DestinationRatesId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-          <a class="btn btn-primary btn-sm" href="#/destinationrate"><span class="glyphicon glyphicon-star"></span> New</a>
-        </div>
+      <div class="col-md-3">
+        <input ng-show="panelCtrl.showFilter" type="search" class="form-control" placeholder="Filter RP Binding" ng-model="rpFilter">
+        <ul class="nav nav-pills nav-stacked marginBottom">
+          <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.RatingPlanBindings|filter:rpFilter">
+            <a href ng-click="panelCtrl.select($index)">
+              <button ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.RatingPlanBindings, $index, $event)" class="close closeTab" type="button" >×</button>
+              RP Binding {{$index}}
+            </a>
+          </li>
+          <li>
+            <a href ng-click="panelCtrl.add(resCtrl.res.RatingPlanBindings)">+</a>
+          </li>
+        </ul>
       </div>
-      <div class="form-group">
-        <label for="tmid" class="col-sm-2 control-label">Timing Id</label>
-        <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
-          <input id="tmid" type="text" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].TimingId" typeahead="id for id in tyaCtrl.getIds('Timing', $viewValue)" typeahead-loading="loadingTimingIds" class="form-control" typeahead-wait-ms="500">
-          <i ng-show="loadingTimingIds" class="glyphicon glyphicon-refresh"></i>
+
+      <div class="col-md-9">
+        <div class="form-group">
+          <label for="destRateId" class="col-sm-2 control-label">DestinationRate Id</label>
+          <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+            <input id="destRateId" type="text" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].DestinationRatesId" typeahead="id for id in tyaCtrl.getIds('DestinationRate', $viewValue)" typeahead-loading="loadingDestinationRateIds" class="form-control" typeahead-wait-ms="500">
+            <i ng-show="loadingDestinationRateIds" class="glyphicon glyphicon-refresh"></i>
+          </div>
+          <div class="btn-group">
+            <a class="btn btn-primary btn-sm" href="#/destinationrate/{{resCtrl.res.RatingPlanBindings[panelCtrl.index].DestinationRatesId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+            <a class="btn btn-primary btn-sm" href="#/destinationrate"><span class="glyphicon glyphicon-star"></span> New</a>
+          </div>
         </div>
-        <div class="btn-group">
-          <a class="btn btn-primary btn-sm" href="#/timing/{{resCtrl.res.RatingPlanBindings[panelCtrl.index].TimingId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-          <a class="btn btn-primary btn-sm" href="#/timing"><span class="glyphicon glyphicon-star"></span> New</a>
+        <div class="form-group">
+          <label for="tmid" class="col-sm-2 control-label">Timing Id</label>
+          <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+            <input id="tmid" type="text" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].TimingId" typeahead="id for id in tyaCtrl.getIds('Timing', $viewValue)" typeahead-loading="loadingTimingIds" class="form-control" typeahead-wait-ms="500">
+            <i ng-show="loadingTimingIds" class="glyphicon glyphicon-refresh"></i>
+          </div>
+          <div class="btn-group">
+            <a class="btn btn-primary btn-sm" href="#/timing/{{resCtrl.res.RatingPlanBindings[panelCtrl.index].TimingId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+            <a class="btn btn-primary btn-sm" href="#/timing"><span class="glyphicon glyphicon-star"></span> New</a>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="weight" class="col-sm-2 control-label">Weight</label>
-        <div class="col-sm-2">
-          <input type="number" class="form-control" id="weight" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].Weight"/>
+        <div class="form-group">
+          <label for="weight" class="col-sm-2 control-label">Weight</label>
+          <div class="col-sm-2">
+            <input type="number" class="form-control" id="weight" ng-model="resCtrl.res.RatingPlanBindings[panelCtrl.index].Weight"/>
+          </div>
         </div>
       </div>
     </section>

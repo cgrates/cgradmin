@@ -34,13 +34,15 @@ angular.module('cgradminApp.controllers', [])
          var ctrl = this;
          this.init = function(){
            this.index = 0;
+           this.showFilter = true;
          }
          this.init();
          this.select = function(i){
            this.index = i;
          }
          this.add = function(resources){
-           resources.push({});
+           this.showFilter = false;
+           resources.push({});           
            this.index = resources.length-1;
          }
          this.remove = function(resources, i, event){

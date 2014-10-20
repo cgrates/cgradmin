@@ -120,7 +120,10 @@ body {
   background-color: #428bca;
 }
 
-
+ul.nav.nav-pills.nav-stacked {
+    max-height: 400px;
+    overflow-y: auto;
+}
 /*
  * Main content
  */
