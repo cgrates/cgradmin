@@ -45,7 +45,7 @@ def exporttpcsv(request):
       return redirect('/static/app/index.html#/exporttpcsv/%s' % quote_plus(b64encode(response)))
    myfile.write(b64decode(response))
    response = HttpResponse(myfile.getvalue(), content_type='application/x-zip-compressed')
-   response['Content-Disposition'] = 'attachment; filename=cgr_cdrs_export.zip'
+   response['Content-Disposition'] = 'attachment; filename=tp_csv.zip'
    return response
    
 @login_required
