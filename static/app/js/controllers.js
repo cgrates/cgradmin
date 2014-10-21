@@ -32,7 +32,7 @@ angular.module('cgradminApp.controllers', [])
                  confirmButtonText: "Yes, delete it!" },  function(){
                    var idx = ctrl.tpids.indexOf(ctrl.tpid);
                    if (ctrl.tpid && idx !== -1){
-                     resFactory.call('RemTP',ctrl.tpid).success(function(data){
+                     resFactory.call('RemTP', ctrl.tpid).success(function(data){
                        resFactory.addAlert(data);
                        ctrl.tpids.splice(idx, 1);
                        if(ctrl.tpids.length > 0){

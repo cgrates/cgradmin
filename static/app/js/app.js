@@ -5,8 +5,9 @@
 angular.module('cgradminApp', [
   'ngRoute',
   'ngCookies',
+  'angular-loading-bar',
   'ngAnimate',
-  'ui.bootstrap',
+  'ui.bootstrap',  
   'cgradminApp.filters',
   'cgradminApp.services',
   'cgradminApp.directives',
