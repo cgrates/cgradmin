@@ -35,9 +35,10 @@ def imports(request):
 @require_POST
 def exporttpcsv(request):
    myfile = StringIO.StringIO()
-   param = {'TPid': request.POST['tpid']}
-   param['FileFormat'] = request.POST['fileformat'] or 'csv'
+   param = {'TPid': request.POST['tpid']}   
    param['FieldSeparator'] = request.POST['fieldseparator'] or ','
+   param['FileFormat'] = 'csv'
+   param['Compress'] = True
    response = connector.call('ApierV2.ExportTPToZipString', param)
    if response.startswith("ERROR"):
       response = json.dumps(response)

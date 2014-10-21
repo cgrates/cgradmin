@@ -110,16 +110,12 @@ func exportTpToCsvPost(c web.C, w http.ResponseWriter, r *http.Request) {
 	if tmp := r.FormValue("tpid"); len(tmp) > 0 {
 		param["TPid"] = tmp
 	}
-	if tmp := r.FormValue("fileformat"); len(tmp) > 0 {
-		param["FileFormat"] = tmp
-	} else {
-		param["FileFormat"] = "csv"
-	}
 	if tmp := r.FormValue("fieldseparator"); len(tmp) > 0 {
 		param["FieldSeparator"] = tmp
 	} else {
 		param["FieldSeparator"] = ","
 	}
+	param["FileFormat"] = "csv"
 	param["Compress"] = true
 
 	var response interface{}
