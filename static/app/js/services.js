@@ -49,7 +49,7 @@ angular.module('cgradminApp.services', [])
          var param = {TPid : $cookieStore.get('tpid')};
          factory.call = function(func, finalParam, obj){
            if (typeof(obj) === "undefined") obj = "ApierV2";
-           if(angular.isObject(finalParam)) {
+           if(angular.isObject(finalParam)) {             
              angular.extend(finalParam, param);
            }
            var promise = $http.post('/call/' + obj + '.' + func, finalParam);

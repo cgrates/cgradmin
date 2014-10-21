@@ -32,7 +32,7 @@ angular.module('cgradminApp.controllers', [])
                  confirmButtonText: "Yes, delete it!" },  function(){
                    var idx = ctrl.tpids.indexOf(ctrl.tpid);
                    if (ctrl.tpid && idx !== -1){
-                     resFactory.call('RemTP', ctrl.tpid).success(function(data){
+                     resFactory.call('RemTP', {}).success(function(data){
                        resFactory.addAlert(data);
                        ctrl.tpids.splice(idx, 1);
                        if(ctrl.tpids.length > 0){
@@ -432,6 +432,6 @@ angular.module('cgradminApp.controllers', [])
            resFactory.call('ReloadCache', {}).success(function(data){resFactory.addAlert(data, 'CacheReload')});
          };
          ctrl.reloadScheduler = function(){
-           resFactory.call('ReloadScheduler', {}).success(function(data){resFactory.addAlert(data, 'SchedulerReload')});
+           resFactory.call('ReloadScheduler', '').success(function(data){resFactory.addAlert(data, 'SchedulerReload')});
          };
        });
