@@ -5,6 +5,7 @@ import cStringIO as StringIO
 from editor.json_client import CGRConnector
 from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.core.servers.basehttp import FileWrapper
@@ -12,6 +13,7 @@ from django.core.servers.basehttp import FileWrapper
 connector = CGRConnector()
 
 @require_POST
+@csrf_exempt
 def call(request, method):
    if not request.user.is_authenticated():
       return HttpResponseForbidden(json.dumps({"error":"not_autenticated"}), content_type='application/json')
@@ -21,6 +23,7 @@ def call(request, method):
 
 @login_required
 @require_POST
+@csrf_exempt
 def imports(request):
    if 'file' not in request.FILES or 'tpid' not in request.POST or not request.POST['tpid']:
       response = json.dumps('ERROR: Invalid data')
@@ -33,6 +36,7 @@ def imports(request):
 
 @login_required
 @require_POST
+@csrf_exempt
 def exporttpcsv(request):
    myfile = StringIO.StringIO()
    param = {'TPid': request.POST['tpid']}   
@@ -50,6 +54,7 @@ def exporttpcsv(request):
    
 @login_required
 @require_POST
+@csrf_exempt
 def exportcdrs(request):
    myfile = StringIO.StringIO()
    param = request.POST.dict()
