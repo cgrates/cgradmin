@@ -257,22 +257,31 @@ angular.module('cgradminApp.controllers', [])
            history.back();
          };
        })
-       .controller('ImportCtrl', function($routeParams, $location, resFactory){
+       .controller('ImportCtrl', function($routeParams, $location, resFactory, root_url){
          if ($routeParams.message) {
            $location.path('/import');
            resFactory.addAlert(atob($routeParams.message));
          }
+         this.getPostUrl = function(){
+           return root_url+'import/';
+         }
        })
-       .controller('ExportCdrsCtrl', function($routeParams, $location, resFactory){
+       .controller('ExportCdrsCtrl', function($routeParams, $location, resFactory, root_url){
          if ($routeParams.message) {
            $location.path('/exportcdrs');
            resFactory.addAlert(atob($routeParams.message));
          }
+         this.getPostUrl = function(){
+           return root_url+'exportcdrs/';
+         }
        })
-       .controller('ExportTpCsvCtrl', function($routeParams, $location, resFactory){
+       .controller('ExportTpCsvCtrl', function($routeParams, $location, resFactory, root_url){
          if ($routeParams.message) {
            $location.path('/exporttpcsv');
            resFactory.addAlert(atob($routeParams.message));
+         }
+         this.getPostUrl = function(){
+           return root_url+'exporttpcsv/';
          }
        })
        .controller('ActivationCtrl', function($routeParams, resFactory){

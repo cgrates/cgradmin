@@ -1,5 +1,5 @@
 <h3>Export zipped TP CSV file</h3>
-<form role="form" method="POST" action="/exporttpcsv/" enctype="multipart/form-data">
+<form role="form" method="POST" action="{{expTpCsvCtrl.getPostUrl()}}" enctype="multipart/form-data">
   <div class="form-group">
     <label for="tpid">TP Id</label>
     <input type="text" class="form-control" name="tpid" id="tpid" placeholder="Enter TP id here">

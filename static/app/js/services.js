@@ -26,6 +26,7 @@ angular.module('cgradminApp.services', [])
               ["Destination", "RatingPlan", "RatingProfile", "CdrStats",
                "AccountActions", "SharedGroup", "DerivedChargers"]
        )
+       .value('root_url', '/')
        .factory('breadcrumbsFactory', function(){
          var factory = {};
          factory.crumbs = [];
@@ -43,7 +44,7 @@ angular.module('cgradminApp.services', [])
          }
          return factory;
        })
-       .factory('resFactory', function($http, $cookieStore, $timeout, $location, $window) {
+       .factory('resFactory', function($http, $cookieStore, $timeout, $location, $window, root_url) {
          var factory = {};
          factory.alerts = [];
          var param = {TPid : $cookieStore.get('tpid')};
@@ -52,7 +53,7 @@ angular.module('cgradminApp.services', [])
            if(angular.isObject(finalParam)) {             
              angular.extend(finalParam, param);
            }
-           var promise = $http.post('/call/' + obj + '.' + func, finalParam);
+           var promise = $http.post(root_url + 'call/' + obj + '.' + func, finalParam);
            promise.error(function(data, status, headers, config) {
              if (data.error === 'not_autenticated') {
                $window.location = '/accounts/login/?next=/' + $window.location.hash;

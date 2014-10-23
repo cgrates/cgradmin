@@ -1,7 +1,7 @@
 <h3>Export CDRs</h3>
 
 
-<form class="form" role="form" method="POST" action="/exportcdrs/">
+<form class="form" role="form" method="POST" action="{{expCdrsCtrl.getPostUrl()}}">
   <div class="form-group">
     <label class="col-sm-3 control-label" for="CdrFormat">Cdr Format</label>
     <div class="col-sm-3"> <input type="text" class="form-control" name="CdrFormat" id="CdrFormat"></div>

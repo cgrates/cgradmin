@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.core.servers.basehttp import FileWrapper
+from django.conf import settings
 
 connector = CGRConnector()
 
@@ -27,12 +28,12 @@ def call(request, method):
 def imports(request):
    if 'file' not in request.FILES or 'tpid' not in request.POST or not request.POST['tpid']:
       response = json.dumps('ERROR: Invalid data')
-      return redirect('/static/app/index.html#/import/%s' % quote_plus(b64encode(response)))
+      return redirect('%s/app/index.html#/import/%s' % (settings.STATIC_URL, quote_plus(b64encode(response))))
    param = {'TPid': request.POST['tpid']}
    param['File'] = b64encode(request.FILES['file'].read()).decode('utf-8')
    response = connector.call('ApierV2.ImportTPZipFile', param)
    response = json.dumps(response)
-   return redirect('/static/app/index.html#/import/%s' % quote_plus(b64encode(response)))
+   return redirect('%s/app/index.html#/import/%s' % (settings.STATIC_URL, quote_plus(b64encode(response))))
 
 @login_required
 @require_POST
@@ -46,7 +47,7 @@ def exporttpcsv(request):
    response = connector.call('ApierV2.ExportTPToZipString', param)
    if response.startswith("ERROR"):
       response = json.dumps(response)
-      return redirect('/static/app/index.html#/exporttpcsv/%s' % quote_plus(b64encode(response)))
+      return redirect('%s/app/index.html#/exporttpcsv/%s' % (settings.STATIC_URL, quote_plus(b64encode(response))))
    myfile.write(b64decode(response))
    response = HttpResponse(myfile.getvalue(), content_type='application/x-zip-compressed')
    response['Content-Disposition'] = 'attachment; filename=tp_csv.zip'
@@ -161,7 +162,7 @@ def exportcdrs(request):
    response = connector.call('ApierV2.ExportCdrsToZipString', param)
    if response.startswith("ERROR"):
       response = json.dumps(response)
-      return redirect('/static/app/index.html#/exportcdrs/%s' % quote_plus(b64encode(response)))
+      return redirect('%s/app/index.html#/exportcdrs/%s' % (settings.STATIC_URL, quote_plus(b64encode(response))))
    myfile.write(b64decode(response))
    response = HttpResponse(myfile.getvalue(), content_type='application/x-zip-compressed')
    response['Content-Disposition'] = 'attachment; filename=cgr_cdrs_export.zip'
