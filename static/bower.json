@@ -11,7 +11,7 @@
     "angular-cookies": "1.2.x",
     "angular-animate": "1.2.x",
     "angular-mocks": "~1.2.x",
-    "bootstrap": "3.2.x",
+    "bootstrap": "3.3.x",
     "angular-bootstrap": "~0.11.0",
     "sweetalert": "~0.1.1",
     "angular-loading-bar": "~0.6.0"

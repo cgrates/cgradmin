@@ -37,5 +37,5 @@ angular.module('cgradminApp', [
          $routeProvider.when('/activate/:res/:res_id?', {templateUrl: 'partials/activate.html', controller: 'ActivationCtrl', controllerAs: 'actCtrl'});
          $routeProvider.when('/tpid/new', {templateUrl: 'partials/tpid.html', controller: 'TpIdsCtrl', controllerAs: 'tpCtrl'});
          $routeProvider.when('/tpid/remove', {templateUrl: 'partials/activate.html', controller: 'TpIdsCtrl', controllerAs: 'tpCtrl'});
-         $routeProvider.otherwise({redirectTo: '/resource/RatingProfile'});
+         $routeProvider.otherwise({redirectTo: '/dashboard'});
        }]);
