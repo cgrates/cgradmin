@@ -44,13 +44,41 @@ angular.module('cgradminApp.services', [])
          }
          return factory;
        })
+       .factory('menuFactory', function(){
+         var factory = {};
+         factory.menu = 'one';
+         factory.observerCallbacks = [];
+
+         //register an observer
+         factory.registerObserverCallback = function(callback){
+           factory.observerCallbacks.push(callback);
+         };
+
+         //call this when you know 'foo' has been changed
+         var notifyObservers = function(){
+           angular.forEach(factory.observerCallbacks, function(callback){
+             callback();
+           });
+         };
+
+         factory.setMenu = function(menu){
+           factory.menu = menu;
+           notifyObservers();
+         }
+         
+         factory.getMenu = function(){
+           return factory.menu;
+         }
+         
+         return factory;
+       })
        .factory('resFactory', function($http, $cookieStore, $timeout, $location, $window, root_url) {
          var factory = {};
          factory.alerts = [];
          var param = {TPid : $cookieStore.get('tpid')};
          factory.call = function(func, finalParam, obj){
            if (typeof(obj) === "undefined") obj = "ApierV2";
-           if(angular.isObject(finalParam)) {             
+           if(angular.isObject(finalParam)) {
              angular.extend(finalParam, param);
            }
            var promise = $http.post(root_url + 'call/' + obj + '.' + func, finalParam);

@@ -43,6 +43,12 @@ angular.module('cgradminApp.controllers', [])
                  });
          };
        })
+       .controller('MenuCtrl', function(menuFactory){
+         var ctrl = this;
+         menuFactory.registerObserverCallback(function(){
+           ctrl.menu = menuFactory.getMenu();
+         });
+       })
        .controller('AlertCtrl', function(resFactory){
          this.alerts = resFactory.alerts;
          this.closeAlert = function(index) {
@@ -79,7 +85,8 @@ angular.module('cgradminApp.controllers', [])
            return this.index === i;
          }
        })
-       .controller('ResourcesCtrl', function($routeParams, resFactory, idMethods, hasActivateArray){
+       .controller('ResourcesCtrl', function($routeParams, resFactory, idMethods, hasActivateArray, menuFactory){
+         menuFactory.setMenu('two');         
          var ctrl = this;
          ctrl.res = $routeParams.res;
          ctrl.resources = [];
@@ -253,7 +260,7 @@ angular.module('cgradminApp.controllers', [])
 
          this.saveResource = function(){
            this.validate()
-           resFactory.call('SetTP' + this.name, this.res).success(function(data){resFactory.addAlert(data);});
+             resFactory.call('SetTP' + this.name, this.res).success(function(data){resFactory.addAlert(data);});
            history.back();
          };
        })
@@ -330,7 +337,8 @@ angular.module('cgradminApp.controllers', [])
                });
 
        })
-       .controller('DashboardCtrl', function($interval, resFactory){
+       .controller('DashboardCtrl', function($interval, resFactory, menuFactory){
+         menuFactory.setMenu('one');
          var ctrl = this;
          ctrl.memstats = {};
          ctrl.statscache = {};
