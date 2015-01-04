@@ -33,8 +33,14 @@
         <div class="form-group">
           <label for="destid" class="col-sm-2 control-label">Destination Id</label>
           <div class="col-sm-4" ng-controller="TypeaheadCtrl as tyaCtrl">
-            <input id="destid" type="text" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId" typeahead="id for id in tyaCtrl.getIds('Destination', $viewValue)" typeahead-loading="loadingDestinationIds" class="form-control" typeahead-wait-ms="500">
-            <i ng-show="loadingDestinationIds" class="glyphicon glyphicon-refresh"></i>
+              <ui-select-match placeholder="Select person...">
+  
+</ui-select-match>
+            <input id="destid" type="text"  typeahead="" typeahead-loading="loadingDestinationIds" class="form-control" typeahead-wait-ms="500">
+            <ui-select-choices ng-model="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId"
+                               repeat="id for id in tyaCtrl.getIds('Destination', $select.search)"
+                               refresh="tyaCtrl.getIds('Destination', $select.search)"
+         refresh-delay="500">
           </div>
           <div class="btn-group">
             <a ng-hide="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId=='*any'" class="btn btn-primary btn-sm" href="#/destination/{{resCtrl.res.DestinationRates[panelCtrl.index].DestinationId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
