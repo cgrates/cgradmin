@@ -23,14 +23,14 @@ body {
     width: 60%;
 }
 
-#main-alert {
-    position: fixed;
-    z-index: 999999;
-    top: 12px;
-    right: 12px;
-    display: block;
-    min-width: 100px;
-    text-align: center;
+
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-image: none;
+}
+.alert-dismissable .close {
+    right: 0;
 }
 
 .slow-show-hide {
