@@ -1,82 +1,76 @@
 <div ng-init="resCtrl.init({DestinationRates:[{}]}, 'DestinationRate')"></div>
 <breadcrumbs label="resCtrl.resId"></breadcrumbs>
 <div id="detail-view">
-  <div ng-hide="resCtrl.showId" class="btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init(resCtrl.name, resCtrl.resId)">
-    <a ng-show="actCtrl.hasActivate()" class="btn btn-primary" href ng-click="actCtrl.activate()"><span class="glyphicon glyphicon-plane"></span> Activate</a>
-    <a class="btn btn-danger" href ng-click="actCtrl.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
-  </div>
-  <h4>Destination Rate {{resCtrl.res.DestinationRateId}}</h4>
-  <form class="form-horizontal" role="form">
-    <div class="form-group">
-      <div ng-show="resCtrl.showId">
-        <label for="res_id" class="col-sm-2 control-label">DestinationRateId</label>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.DestinationRateId"/>
-        </div>
-      </div>
+    <div ng-hide="resCtrl.showId" class="btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init(resCtrl.name, resCtrl.resId)">
+        <a ng-show="actCtrl.hasActivate()" class="btn btn-primary" href ng-click="actCtrl.activate()"><span class="glyphicon glyphicon-plane"></span> Activate</a>
+        <a class="btn btn-danger" href ng-click="actCtrl.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
     </div>
-    <section ng-controller="PanelCtrl as panelCtrl">
-      <div class="col-md-3">       
-        <ul class="nav nav-pills nav-stacked marginBottom">
-          <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.DestinationRates">
-            <a href ng-click="panelCtrl.select($index)">
-              <button ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.DestinationRates, $index, $event)" class="close closeTab" type="button" >×</button>
-              DR {{$index}}
-            </a>
-          </li>
-          <li>
-            <a href ng-click="panelCtrl.add(resCtrl.res.DestinationRates)">+</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-md-9">
+    <h4>Destination Rate {{resCtrl.res.DestinationRateId}}</h4>
+    <form class="form-horizontal" role="form">
         <div class="form-group">
-          <label for="destid" class="col-sm-2 control-label">Destination Id</label>
-          <div class="col-sm-4" ng-controller="TypeaheadCtrl as tyaCtrl">
-              <ui-select-match placeholder="Select person...">
-  
-</ui-select-match>
-            <input id="destid" type="text"  typeahead="" typeahead-loading="loadingDestinationIds" class="form-control" typeahead-wait-ms="500">
-            <ui-select-choices ng-model="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId"
-                               repeat="id for id in tyaCtrl.getIds('Destination', $select.search)"
-                               refresh="tyaCtrl.getIds('Destination', $select.search)"
-         refresh-delay="500">
-          </div>
-          <div class="btn-group">
-            <a ng-hide="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId=='*any'" class="btn btn-primary btn-sm" href="#/destination/{{resCtrl.res.DestinationRates[panelCtrl.index].DestinationId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-            <a class="btn btn-primary btn-sm" href="#/destination"><span class="glyphicon glyphicon-star"></span> New</a>
-          </div>
+            <div ng-show="resCtrl.showId">
+                <label for="res_id" class="col-sm-2 control-label">DestinationRateId</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="res_id" ng-model="resCtrl.res.DestinationRateId"/>
+                </div>
+            </div>
         </div>
+        <section ng-controller="PanelCtrl as panelCtrl">
+            <div class="col-md-3">
+                <ul class="nav nav-pills nav-stacked marginBottom">
+                    <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="rate_slot in resCtrl.res.DestinationRates">
+                        <a href ng-click="panelCtrl.select($index)">
+                            <button ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.DestinationRates, $index, $event)" class="close closeTab" type="button" >×</button>
+                            DR {{$index}}
+                        </a>
+                    </li>
+                    <li>
+                        <a href ng-click="panelCtrl.add(resCtrl.res.DestinationRates)">+</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="destid" class="col-sm-2 control-label">Destination Id</label>
+                    <div class="col-sm-4" ng-controller="TypeaheadCtrl as tyaCtrl">
+                        <input id="destid" type="text" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId" typeahead="id for id in tyaCtrl.getIds('Destination', $viewValue)" typeahead-loading="loadingDestinationIds" class="form-control" typeahead-wait-ms="500">
+                        <i ng-show="loadingDestinationIds" class="glyphicon glyphicon-refresh"></i>
+                    </div>
+                    <div class="btn-group">
+                        <a ng-hide="resCtrl.res.DestinationRates[panelCtrl.index].DestinationId=='*any'" class="btn btn-primary btn-sm" href="#/destination/{{resCtrl.res.DestinationRates[panelCtrl.index].DestinationId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                        <a class="btn btn-primary btn-sm" href="#/destination"><span class="glyphicon glyphicon-star"></span> New</a>
+                    </div>
+                </div>
 
-        <div class="form-group">
-          <label for="rateid" class="col-sm-2 control-label">Rate Id</label>
-          <div class="col-sm-4" ng-controller="TypeaheadCtrl as tyaCtrl">
-            <input id="rateid" type="text" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RateId" typeahead="id for id in tyaCtrl.getIds('Rate', $viewValue)" typeahead-loading="loadingRateIds" class="form-control" typeahead-wait-ms="500">
-            <i ng-show="loadingRateIds" class="glyphicon glyphicon-refresh"></i>
-          </div>
-          <div class="btn-group">
-            <a class="btn btn-primary btn-sm" href="#/rate/{{resCtrl.res.DestinationRates[panelCtrl.index].RateId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-            <a class="btn btn-primary btn-sm" href="#/rate"><span class="glyphicon glyphicon-star"></span> New</a>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="roundingmethod" class="col-sm-2 control-label">Rounding Method</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control" id="roundingmethod" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RoundingMethod"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="roundingdecimals" class="col-sm-2 control-label">Rounding Decimals</label>
-          <div class="col-sm-4">
-            <input type="number" class="form-control" id="roundingdecimals" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RoundingDecimals"/>
-          </div>
-        </div>
-      </div>
-    </section>
+                <div class="form-group">
+                    <label for="rateid" class="col-sm-2 control-label">Rate Id</label>
+                    <div class="col-sm-4" ng-controller="TypeaheadCtrl as tyaCtrl">
+                        <input id="rateid" type="text" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RateId" typeahead="id for id in tyaCtrl.getIds('Rate', $viewValue)" typeahead-loading="loadingRateIds" class="form-control" typeahead-wait-ms="500">
+                        <i ng-show="loadingRateIds" class="glyphicon glyphicon-refresh"></i>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-primary btn-sm" href="#/rate/{{resCtrl.res.DestinationRates[panelCtrl.index].RateId}}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                        <a class="btn btn-primary btn-sm" href="#/rate"><span class="glyphicon glyphicon-star"></span> New</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="roundingmethod" class="col-sm-2 control-label">Rounding Method</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="roundingmethod" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RoundingMethod"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="roundingdecimals" class="col-sm-2 control-label">Rounding Decimals</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control" id="roundingdecimals" ng-model="resCtrl.res.DestinationRates[panelCtrl.index].RoundingDecimals"/>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="btn-group">
-      <a class="btn btn-success" ng-click="resCtrl.saveResource()"><span class="glyphicon glyphicon-ok"></span> Save</a>
-      <back></back>
-    </div>
-  </form>
+        <div class="btn-group">
+            <a class="btn btn-success" ng-click="resCtrl.saveResource()"><span class="glyphicon glyphicon-ok"></span> Save</a>
+            <back></back>
+        </div>
+    </form>
 </div>

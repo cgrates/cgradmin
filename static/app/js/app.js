@@ -7,7 +7,7 @@ angular.module('cgradminApp', [
     'ngCookies',
     'angular-loading-bar',
     'ngAnimate',
-    'ui.select',
+    'ui.bootstrap',
     'cgradminApp.filters',
     'cgradminApp.services',
     'cgradminApp.directives',
@@ -38,6 +38,4 @@ angular.module('cgradminApp', [
            $routeProvider.when('/tpid/new', {templateUrl: 'partials/tpid.html', controller: 'TpIdsCtrl', controllerAs: 'tpCtrl'});
            $routeProvider.when('/tpid/remove', {templateUrl: 'partials/activate.html', controller: 'TpIdsCtrl', controllerAs: 'tpCtrl'});
            $routeProvider.otherwise({redirectTo: '/dashboard'});
-       }]).config(function(uiSelectConfig) {
-           uiSelectConfig.theme = 'bootstrap';
-       });
+       }]);

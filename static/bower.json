@@ -15,6 +15,6 @@
     "sweetalert": null,
     "angular-loading-bar": null,
     "flot": null,
-    "angular-ui-select": null
+    "angular-bootstrap": "~0.12.0"
   }
 }
