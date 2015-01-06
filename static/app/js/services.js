@@ -95,7 +95,7 @@ angular.module('cgradminApp.services', [])
            } else{
              prefix += ": ";
            }
-           if (angular.isString(message)) {
+             if (angular.isString(message) && message !== 'OK') {
              message = JSON.parse(message);
            }
            var error = false;
