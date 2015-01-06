@@ -355,7 +355,6 @@ angular.module('cgradminApp.controllers', [])
                      }
                      history.back();
                  });
-
        })
        .controller('DashboardCtrl', function($interval, resFactory, menuFactory){
            menuFactory.setMenu('one');
