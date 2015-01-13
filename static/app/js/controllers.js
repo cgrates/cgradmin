@@ -326,22 +326,22 @@ angular.module('cgradminApp.controllers', [])
                          case "all":
                              resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){
                                  resFactory.addAlert(data, 'Destinations');
-                                 if(data !== 'OK') break;
+                                 if(data !== 'OK') return;
                                  resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){
                                      resFactory.addAlert(data, 'RatingPlans');
-                                     if(data !== 'OK') break;
+                                     if(data !== 'OK') return;
                                      resFactory.call('LoadRatingProfile', {RatingProfileId:EMPTY}).success(function(data){                                        
                                          resFactory.addAlert(data, 'RatingProfiles');
-                                         if(data !== 'OK') break;
+                                         if(data !== 'OK') return;
                                          resFactory.call('LoadAccountActions', {AccountActionsId: EMPTY}).success(function(data){
                                              resFactory.addAlert(data, 'AccountActions');
-                                             if(data !== 'OK') break;
+                                             if(data !== 'OK') return;
                                              resFactory.call('LoadDerivedChargers', {DerivedChargersId: EMPTY}).success(function(data){
                                                  resFactory.addAlert(data, 'DerivedChargers');
-                                                 if(data !== 'OK') break;
+                                                 if(data !== 'OK') return;
                                                  resFactory.call('LoadSharedGroup', {SharedGroupId:EMPTY}).success(function(data){
                                                      resFactory.addAlert(data, 'SharedGroups');
-                                                     if(data !== 'OK') break;
+                                                     if(data !== 'OK') return;
                                                      resFactory.call('LoadCdrStats', {CdrStatsId:EMPTY}).success(function(data){
                                                          resFactory.addAlert(data, 'CdrStats');
                                                      });
