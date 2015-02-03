@@ -299,50 +299,49 @@ angular.module('cgradminApp.controllers', [])
                  confirmButtonText: "Yes, activate it!" },  function(){
                      this.res = $routeParams.res;
                      this.resId = $routeParams.res_id;
-                     var EMPTY = "_empty_";
                      if (!this.resId){}
                      switch (this.res) {
                          case "dt":
-                             resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadDestination', {DestinationId:''}).success(function(data){resFactory.addAlert(data);});
                              break;
                          case "rp":
-                             resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadRatingPlan', {RatingPlanId:''}).success(function(data){resFactory.addAlert(data);});
                              break;
                          case "rpf":
-                             resFactory.call('LoadRatingProfile', {RatingProfileId:EMPTY}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadRatingProfile', {RatingProfileId:''}).success(function(data){resFactory.addAlert(data);});
                              break;
                          case "aa":
-                             resFactory.call('LoadAccountActions', {AccountActionsId: EMPTY}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadAccountActions', {AccountActionsId: ''}).success(function(data){resFactory.addAlert(data);});
                              break;
                          case "dc":
-                             resFactory.call('LoadDerivedChargers', {DerivedChargersId: EMPTY}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadDerivedChargers', {DerivedChargersId: ''}).success(function(data){resFactory.addAlert(data);});
                              break
                          case "sg":
-                             resFactory.call('LoadSharedGroup', {SharedGroupId:EMPTY}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadSharedGroup', {SharedGroupId:''}).success(function(data){resFactory.addAlert(data);});
                              break;
                          case "cs":
-                             resFactory.call('LoadCdrStats', {CdrStatsId:EMPTY}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadCdrStats', {CdrStatsId:''}).success(function(data){resFactory.addAlert(data);});
                              break;
                          case "all":
-                             resFactory.call('LoadDestination', {DestinationId:EMPTY}).success(function(data){
+                             resFactory.call('LoadDestination', {DestinationId:''}).success(function(data){
                                  resFactory.addAlert(data, 'Destinations');
                                  if(data !== 'OK') return;
-                                 resFactory.call('LoadRatingPlan', {RatingPlanId:EMPTY}).success(function(data){
+                                 resFactory.call('LoadRatingPlan', {RatingPlanId:''}).success(function(data){
                                      resFactory.addAlert(data, 'RatingPlans');
                                      if(data !== 'OK') return;
-                                     resFactory.call('LoadRatingProfile', {RatingProfileId:EMPTY}).success(function(data){                                        
+                                     resFactory.call('LoadRatingProfile', {RatingProfileId:''}).success(function(data){                                        
                                          resFactory.addAlert(data, 'RatingProfiles');
                                          if(data !== 'OK') return;
-                                         resFactory.call('LoadAccountActions', {AccountActionsId: EMPTY}).success(function(data){
+                                         resFactory.call('LoadAccountActions', {AccountActionsId: ''}).success(function(data){
                                              resFactory.addAlert(data, 'AccountActions');
                                              if(data !== 'OK') return;
-                                             resFactory.call('LoadDerivedChargers', {DerivedChargersId: EMPTY}).success(function(data){
+                                             resFactory.call('LoadDerivedChargers', {DerivedChargersId: ''}).success(function(data){
                                                  resFactory.addAlert(data, 'DerivedChargers');
                                                  if(data !== 'OK') return;
-                                                 resFactory.call('LoadSharedGroup', {SharedGroupId:EMPTY}).success(function(data){
+                                                 resFactory.call('LoadSharedGroup', {SharedGroupId:''}).success(function(data){
                                                      resFactory.addAlert(data, 'SharedGroups');
                                                      if(data !== 'OK') return;
-                                                     resFactory.call('LoadCdrStats', {CdrStatsId:EMPTY}).success(function(data){
+                                                     resFactory.call('LoadCdrStats', {CdrStatsId:''}).success(function(data){
                                                          resFactory.addAlert(data, 'CdrStats');
                                                      });
                                                  });
