@@ -86,7 +86,7 @@ angular.module('cgradminApp.controllers', [])
            }
        })
        .controller('ResourcesCtrl', function($routeParams, resFactory, idMethods, hasActivateArray, menuFactory){
-           menuFactory.setMenu('two');
+           menuFactory.setMenu('tp_editor');
            var ctrl = this;
            ctrl.res = $routeParams.res;
            ctrl.resources = [];
@@ -356,7 +356,7 @@ angular.module('cgradminApp.controllers', [])
                  });
        })
        .controller('DashboardCtrl', function($interval, resFactory, menuFactory){
-           menuFactory.setMenu('one');
+           menuFactory.setMenu('dashboard');
            var ctrl = this;
            ctrl.memstats = {};
            ctrl.statscache = {};

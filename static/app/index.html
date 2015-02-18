@@ -40,19 +40,8 @@
                     <ul class="nav navbar-nav">
                         <li><a href="#/dashboard">Dashboard</a></li>
                         <li><a href="#/resource/RatingProfile">TP Editor</a></li>
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Import <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#/import">Import zipped CSV files</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Export <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#/exporttpcsv">Export TP</a></li>
-                                <li><a href="#/exportcdrs">Export CDRs</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="#/cdrmanager">CDR Manager</a></li>
+                        <li><a href="#/accounting">Accounting</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" ng-controller="TpIdsCtrl as tiCtrl">
                         <li ng-show="tiCtrl.tpid"><a href="#/activate/all">Activate</a></li>
@@ -76,33 +65,46 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <div ng-controller="MenuCtrl as menuCtrl"">
-                        <div ng-show="menuCtrl.menu == 'one'">
-                            <h1>One</h1>
+                        <div ng-show="menuCtrl.menu == 'dashboard'">
+                            <h3>Dashboard</h3>
                         </div>
-                        <div ng-show="menuCtrl.menu == 'two'">
-                            <h1>Two</h1>
+                        <div ng-show="menuCtrl.menu == 'tp_editor'">
+                            <h3>TP Editor</h3>
+                            <ul class="nav nav-sidebar">
+                                <li><a href="#/resource/Timing">Timings</a></li>
+                                <li><a href="#/resource/Destination">Destinations</a></li>
+                                <li><a href="#/resource/Rate">Rates</a></li>
+                                <li><a href="#/resource/DestinationRate">Destination Rates</a></li>
+                                <li><a href="#/resource/RatingPlan">Rating Plans</a></li>
+                                <li><a href="#/resource/RatingProfile">Rating Profiles</a></li>
+                                <!-- <li><a href="#/resource/RpAlias">Rating Profile Aliases</a></li> -->
+                                <!-- <li><a href="#/resource/LcrRule">Lcr Rules</a></li> -->
+                                <li><a href="#/resource/CdrStats">Cdr Stats</a></li>
+                            </ul>
+                            <ul class="nav nav-sidebar">
+                                <li><a href="#/resource/Action">Actions</a></li>
+                                <li><a href="#/resource/ActionPlan">Action Plans</a></li>
+                                <li><a href="#/resource/ActionTrigger">Action Triggers</a></li>
+                                <li><a href="#/resource/AccountAction">Account Actions</a></li>
+                                <li><a href="#/resource/SharedGroup">Shared Groups</a></li>
+                                <li><a href="#/resource/DerivedCharger">Derived Chargers</a></li>                                
+                            </ul>
+                            
+                            <ul class="nav nav-sidebar">
+                                <li><a href="#">Import</a>
+                                    <ul class="nav-secondary nav-list">
+                                        <li><a href="#/import">Import zipped CSV files</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Export</a>
+                                    <ul class="nav-secondary nav-list">
+                                        <li><a href="#/exporttpcsv">Export TP</a></li>
+                                        <li><a href="#/exportcdrs">Export CDRs</a></li>                                       
+                                    </ul>
+                                </li>                                
+                            </ul>
                         </div>
                     </div>
-                    <ul class="nav nav-sidebar">
-                        <li class="active"><a href="#/dashboard">Dashboard</a></li>
-                        <li><a href="#/resource/Timing">Timings</a></li>
-                        <li><a href="#/resource/Destination">Destinations</a></li>
-                        <li><a href="#/resource/Rate">Rates</a></li>
-                        <li><a href="#/resource/DestinationRate">Destination Rates</a></li>
-                        <li><a href="#/resource/RatingPlan">Rating Plans</a></li>
-                        <li><a href="#/resource/RatingProfile">Rating Profiles</a></li>
-                        <!-- <li><a href="#/resource/RpAlias">Rating Profile Aliases</a></li> -->
-                        <!-- <li><a href="#/resource/LcrRule">Lcr Rules</a></li> -->
-                        <li><a href="#/resource/CdrStats">Cdr Stats</a></li>
-                    </ul>
-                    <ul class="nav nav-sidebar">
-                        <li><a href="#/resource/Action">Actions</a></li>
-                        <li><a href="#/resource/ActionPlan">Action Plans</a></li>
-                        <li><a href="#/resource/ActionTrigger">Action Triggers</a></li>
-                        <li><a href="#/resource/AccountAction">Account Actions</a></li>
-                        <li><a href="#/resource/SharedGroup">Shared Groups</a></li>
-                        <li><a href="#/resource/DerivedCharger">Derived Chargers</a></li>
-                    </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
                     <div ng-controller="AlertCtrl as alCtrl" id="main-alert">
