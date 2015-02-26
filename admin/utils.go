@@ -32,7 +32,7 @@ func IsAuthenticated(r *http.Request) bool {
 	if err != nil || cookie == nil {
 		return false
 	}
-	if _, ok := sessionsMap[cookie.Value]; !ok {
+	if _, err := connector.redis.Get(cookie.Value); err != nil {
 		return false
 	}
 	return true

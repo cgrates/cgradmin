@@ -52,7 +52,9 @@ func loginPost(c web.C, w http.ResponseWriter, r *http.Request) {
 	remember := r.FormValue("remember")
 	if user == username && pass == password {
 		uuid := GenUUID()
-		sessionsMap[uuid] = true
+		log.Print(1)
+		connector.redis.Set(uuid, []byte("1"))
+		log.Print(2)
 		cookie := &http.Cookie{
 			Name:   LOGIN_COOKIE,
 			Value:  uuid,
@@ -61,8 +63,13 @@ func loginPost(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 		if remember == "on" {
 			oneMonth, _ := time.ParseDuration("720h")
+			connector.redis.Expire(uuid, int64(oneMonth.Seconds()))
 			cookie.Expires = time.Now().Add(oneMonth)
+		} else {
+			oneDay, _ := time.ParseDuration("24h")
+			connector.redis.Expire(uuid, int64(oneDay.Seconds()))
 		}
+		log.Print(3)
 		http.SetCookie(w, cookie)
 		next := r.FormValue("next")
 		if next != "" {
@@ -75,6 +82,15 @@ func loginPost(c web.C, w http.ResponseWriter, r *http.Request) {
 	} else {
 		writeJSON(w, 401, map[string]string{"error": "not_autenticated"})
 	}
+}
+
+func logoutGet(c web.C, w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie(LOGIN_COOKIE)
+	if err == nil || cookie != nil {
+		connector.redis.Del(cookie.Value)
+	}
+	http.Redirect(w, r, LOGIN_PATH, 301)
+	return
 }
 
 func importPost(c web.C, w http.ResponseWriter, r *http.Request) {

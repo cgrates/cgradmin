@@ -329,7 +329,7 @@ angular.module('cgradminApp.controllers', [])
                                  resFactory.call('LoadRatingPlan', {RatingPlanId:''}).success(function(data){
                                      resFactory.addAlert(data, 'RatingPlans');
                                      if(data !== 'OK') return;
-                                     resFactory.call('LoadRatingProfile', {RatingProfileId:''}).success(function(data){                                        
+                                     resFactory.call('LoadRatingProfile', {RatingProfileId:''}).success(function(data){
                                          resFactory.addAlert(data, 'RatingProfiles');
                                          if(data !== 'OK') return;
                                          resFactory.call('LoadAccountActions', {AccountActionsId: ''}).success(function(data){
@@ -469,4 +469,10 @@ angular.module('cgradminApp.controllers', [])
            ctrl.reloadScheduler = function(){
                resFactory.call('ReloadScheduler', '').success(function(data){resFactory.addAlert(data, 'SchedulerReload')});
            };
+       })
+       .controller('AccuntingCtrl', function(menuFactory){
+           menuFactory.setMenu('accounting');
+       })
+       .controller('CDRManagerCtrl', function(menuFactory){
+           menuFactory.setMenu('cdr_manager');
        });

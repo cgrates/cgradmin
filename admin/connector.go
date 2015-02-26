@@ -4,17 +4,21 @@ import (
 	"net/rpc"
 	"net/rpc/jsonrpc"
 	"strings"
+
+	"github.com/hoisie/redis"
 )
 
 type CGRConnector struct {
 	encoding string
 	server   string
 	client   *rpc.Client
+	redis    *redis.Client
 }
 
-func NewCGRConnector(encoding, server string) *CGRConnector {
+func NewCGRConnector(encoding, server, redisAdr string) *CGRConnector {
 	c := &CGRConnector{encoding: encoding, server: server}
-	c.connect()
+	// connect to redis
+	c.redis = &redis.Client{Addr: redisAdr, Db: 7}
 	return c
 }
 
