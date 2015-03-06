@@ -1,21 +1,6 @@
 <div class="col-md-9">
     <breadcrumbs label="resCtrl.res" reset="true">        
-    </breadcrumbs>
-    <div class="pull-right" ng-controller="TpIdsCtrl as tiCtrl">        
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                {{tiCtrl.tpid}}
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="ti in tiCtrl.tpids"><a href ng-click="tiCtrl.setTpId(ti)">{{ti}}</a></li>
-                <li class="divider"></li>
-                <li><a href="#/tpid/new">New Tpid</a></li>                
-                <li><a href ng-click="tiCtrl.removeTpId($event)">Remove Active Tpid</a></li>
-                <li><a href="#/activate/all">Submit Active Tpid</a></li>
-            </ul>
-        </div>
-    </div>
+    </breadcrumbs>    
     <h3>{{resCtrl.res}}</h3>
     <form class="form-inline" role="form" ng-submit="resCtrl.getPage()">
         <div id="main-search" class="input-append">

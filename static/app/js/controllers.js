@@ -6,18 +6,20 @@ angular.module('cgradminApp.controllers', [])
        .controller('TpIdsCtrl', function($cookieStore, $window, resFactory) {
            this.tpid = $cookieStore.get('tpid');
            var ctrl = this;
-           ctrl.tpids = [];
-           resFactory.call('GetTPIds', {}).success(function(data) {
+           ctrl.tpids = [];           
+
+           resFactory.call('GetTPIds', {}).then(function(data) {
                ctrl.tpids = data;
                if (ctrl.tpid && ctrl.tpids.indexOf(ctrl.tpid) === -1){
                    ctrl.tpids.push(ctrl.tpid);
                }
-               if((!ctrl.tpid || ctrl.tpid==='"') && angular.isArray(data)){ // TODO: find from where does single quote comes from
+               if((!ctrl.tpid || ctrl.tpid==='"') && angular.isArray(data)){
                    ctrl.tpid = data[0];
                    $cookieStore.put('tpid', ctrl.tpid);
                    $window.location.reload();
                }
            });
+           
            this.setTpId = function(tpid){
                this.tpid = tpid;
                $cookieStore.put('tpid', tpid);
@@ -32,7 +34,7 @@ angular.module('cgradminApp.controllers', [])
                      confirmButtonText: "Yes, delete it!" },  function(){
                          var idx = ctrl.tpids.indexOf(ctrl.tpid);
                          if (ctrl.tpid && idx !== -1){
-                             resFactory.call('RemTP', {}).success(function(data){
+                             resFactory.call('RemTP', {}).then(function(data){
                                  resFactory.addAlert(data);
                                  ctrl.tpids.splice(idx, 1);
                                  if(ctrl.tpids.length > 0){
@@ -43,11 +45,17 @@ angular.module('cgradminApp.controllers', [])
                      });
            };
        })
-       .controller('MenuCtrl', function(menuFactory){
+       .controller('MenuCtrl', function(menuFactory, resFactory){
            var ctrl = this;
            menuFactory.registerObserverCallback(function(){
                ctrl.menu = menuFactory.getMenu();
            });
+           ctrl.reloadCache = function(){
+               resFactory.call('ReloadCache', {}).then(function(data){resFactory.addAlert(data, 'CacheReload')});
+           };
+           ctrl.reloadScheduler = function(){
+               resFactory.call('ReloadScheduler', '').then(function(data){resFactory.addAlert(data, 'SchedulerReload')});
+           };
        })
        .controller('AlertCtrl', function(resFactory){
            this.alerts = resFactory.alerts;
@@ -103,7 +111,7 @@ angular.module('cgradminApp.controllers', [])
                ctrl.page =  p;
            }
            ctrl.itemsPerPage = 30;
-           resFactory.call(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).success(function(data) {
+           resFactory.call(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).then(function(data) {
                if (angular.isArray(data)){
                    ctrl.resources = data;
                }
@@ -111,7 +119,7 @@ angular.module('cgradminApp.controllers', [])
            this.deleteResource = function(resId){
                var param = {};
                param[ctrl.res + 'Id'] = resId;
-               resFactory.call('RemTP' + ctrl.res, param).success(function(data){resFactory.addAlert(data);});
+               resFactory.call('RemTP' + ctrl.res, param).then(function(data){resFactory.addAlert(data);});
                var index = this.resources.indexOf(resId);
                if (index > -1){
                    this.resources.splice(index, 1);
@@ -123,7 +131,7 @@ angular.module('cgradminApp.controllers', [])
                    ctrl.page = 0;
                }
                ctrl.page += page;
-               resFactory.call(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).success(function(data) {
+               resFactory.call(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).then(function(data) {
                    ctrl.resources = angular.isArray(data) ? data : [];
                });
            };
@@ -144,7 +152,7 @@ angular.module('cgradminApp.controllers', [])
                          for (var index = 0; index < ctrl.selectedResources.length; index++) {
                              var param = {};
                              param[ctrl.res + 'Id'] = ctrl.selectedResources[index];
-                             resFactory.call('Load' + ctrl.res, param).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('Load' + ctrl.res, param).then(function(data){resFactory.addAlert(data);});
                          }
                          ctrl.selectedResources = [];
                      });
@@ -179,7 +187,7 @@ angular.module('cgradminApp.controllers', [])
                      confirmButtonText: "Yes, activate it!" },  function(){
                          var param = {};
                          param[ctrl.res + 'Id'] = ctrl.resId;
-                         resFactory.call('Load' + ctrl.res, param).success(function(data){resFactory.addAlert(data);});
+                         resFactory.call('Load' + ctrl.res, param).then(function(data){resFactory.addAlert(data);});
                          history.back();
                      });
            };
@@ -191,7 +199,7 @@ angular.module('cgradminApp.controllers', [])
                      confirmButtonText: "Yes, delete it!" },  function(){
                          var param = {};
                          param[ctrl.res + 'Id'] = ctrl.resId;
-                         resFactory.call('RemTP' + ctrl.res, param).success(function(data){resFactory.addAlert(data);});
+                         resFactory.call('RemTP' + ctrl.res, param).then(function(data){resFactory.addAlert(data);});
                          history.back();
                      });
            };
@@ -226,7 +234,7 @@ angular.module('cgradminApp.controllers', [])
                    param['Page'] = ctrl.page
                    param['ItemsPerPage'] = ctrl.itemsPerPage
                    param['SearchTerm'] = ctrl.searchTerm
-                   resFactory.call('GetTP' + this.name, param).success(function(data) {ctrl.res = data;});
+                   resFactory.call('GetTP' + this.name, param).then(function(data) {ctrl.res = data;});
                } else {
                    this.showId = true;
                }
@@ -245,22 +253,22 @@ angular.module('cgradminApp.controllers', [])
                param['Page'] = ctrl.page
                param['ItemsPerPage'] = ctrl.itemsPerPage
                param['SearchTerm'] = ctrl.searchTerm
-               resFactory.call('GetTP' + ctrl.name, param).success(function(data) {ctrl.res = data;});
-               resFactory.call(func, {}).success(function(data){
+               resFactory.call('GetTP' + ctrl.name, param).then(function(data) {ctrl.res = data;});
+               resFactory.call(func, {}).then(function(data){
                    ctrl.resources = data;
                });
 
            };
 
            this.validate = function(){ // used for destinations only (TODO: find a better solution)
-               if(angular.isString(this.res.Prefixes)) {
-                   this.res.Prefixes = this.res.Prefixes.split(",");
-               }
+                                       if(angular.isString(this.res.Prefixes)) {
+                                           this.res.Prefixes = this.res.Prefixes.split(",");
+                                       }
            }
 
            this.saveResource = function(){
                this.validate()
-                   resFactory.call('SetTP' + this.name, this.res).success(function(data){resFactory.addAlert(data);});
+                   resFactory.call('SetTP' + this.name, this.res).then(function(data){resFactory.addAlert(data);});
                history.back();
            };
        })
@@ -302,46 +310,46 @@ angular.module('cgradminApp.controllers', [])
                      if (!this.resId){}
                      switch (this.res) {
                          case "dt":
-                             resFactory.call('LoadDestination', {DestinationId:''}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadDestination', {DestinationId:''}).then(function(data){resFactory.addAlert(data);});
                              break;
                          case "rp":
-                             resFactory.call('LoadRatingPlan', {RatingPlanId:''}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadRatingPlan', {RatingPlanId:''}).then(function(data){resFactory.addAlert(data);});
                              break;
                          case "rpf":
-                             resFactory.call('LoadRatingProfile', {RatingProfileId:''}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadRatingProfile', {RatingProfileId:''}).then(function(data){resFactory.addAlert(data);});
                              break;
                          case "aa":
-                             resFactory.call('LoadAccountActions', {AccountActionsId: ''}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadAccountActions', {AccountActionsId: ''}).then(function(data){resFactory.addAlert(data);});
                              break;
                          case "dc":
-                             resFactory.call('LoadDerivedChargers', {DerivedChargersId: ''}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadDerivedChargers', {DerivedChargersId: ''}).then(function(data){resFactory.addAlert(data);});
                              break
                          case "sg":
-                             resFactory.call('LoadSharedGroup', {SharedGroupId:''}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadSharedGroup', {SharedGroupId:''}).then(function(data){resFactory.addAlert(data);});
                              break;
                          case "cs":
-                             resFactory.call('LoadCdrStats', {CdrStatsId:''}).success(function(data){resFactory.addAlert(data);});
+                             resFactory.call('LoadCdrStats', {CdrStatsId:''}).then(function(data){resFactory.addAlert(data);});
                              break;
                          case "all":
-                             resFactory.call('LoadDestination', {DestinationId:''}).success(function(data){
+                             resFactory.call('LoadDestination', {DestinationId:''}).then(function(data){
                                  resFactory.addAlert(data, 'Destinations');
                                  if(data !== 'OK') return;
-                                 resFactory.call('LoadRatingPlan', {RatingPlanId:''}).success(function(data){
+                                 resFactory.call('LoadRatingPlan', {RatingPlanId:''}).then(function(data){
                                      resFactory.addAlert(data, 'RatingPlans');
                                      if(data !== 'OK') return;
-                                     resFactory.call('LoadRatingProfile', {RatingProfileId:''}).success(function(data){
+                                     resFactory.call('LoadRatingProfile', {RatingProfileId:''}).then(function(data){
                                          resFactory.addAlert(data, 'RatingProfiles');
                                          if(data !== 'OK') return;
-                                         resFactory.call('LoadAccountActions', {AccountActionsId: ''}).success(function(data){
+                                         resFactory.call('LoadAccountActions', {AccountActionsId: ''}).then(function(data){
                                              resFactory.addAlert(data, 'AccountActions');
                                              if(data !== 'OK') return;
-                                             resFactory.call('LoadDerivedChargers', {DerivedChargersId: ''}).success(function(data){
+                                             resFactory.call('LoadDerivedChargers', {DerivedChargersId: ''}).then(function(data){
                                                  resFactory.addAlert(data, 'DerivedChargers');
                                                  if(data !== 'OK') return;
-                                                 resFactory.call('LoadSharedGroup', {SharedGroupId:''}).success(function(data){
+                                                 resFactory.call('LoadSharedGroup', {SharedGroupId:''}).then(function(data){
                                                      resFactory.addAlert(data, 'SharedGroups');
                                                      if(data !== 'OK') return;
-                                                     resFactory.call('LoadCdrStats', {CdrStatsId:''}).success(function(data){
+                                                     resFactory.call('LoadCdrStats', {CdrStatsId:''}).then(function(data){
                                                          resFactory.addAlert(data, 'CdrStats');
                                                      });
                                                  });
@@ -405,10 +413,10 @@ angular.module('cgradminApp.controllers', [])
                }
            });
 
-
            var x = 0;
            $interval(function() {
-               resFactory.call('Status', '', 'Responder').success(function(data){
+               var promise = resFactory.call('Status', '', 'Responder');               
+               promise.then(function(data){                   
                    ctrl.memstats = data;
                    if (memStatData.length > 100) {
                        memStatData = memStatData.slice(1);
@@ -423,7 +431,7 @@ angular.module('cgradminApp.controllers', [])
                x += 1;
            }, 5000);
 
-           resFactory.call('GetCacheStats', {}).success(function(data){
+           resFactory.call('GetCacheStats', {}).then(function(data){
                ctrl.cachestats = data;
                cacheData = [
                    ["Actions",  data.Actions],
@@ -449,7 +457,7 @@ angular.module('cgradminApp.controllers', [])
                    reset = true;
                }
                ctrl.page += page;
-               resFactory.call(func, {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm: ctrl.searchTerm}).success(function(data){
+               resFactory.call(func, {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm: ctrl.searchTerm}).then(function(data){
                    ctrl.resources = data;
                });
                if(reset) {
@@ -463,12 +471,12 @@ angular.module('cgradminApp.controllers', [])
                }
            }
 
-           ctrl.reloadCache = function(){
-               resFactory.call('ReloadCache', {}).success(function(data){resFactory.addAlert(data, 'CacheReload')});
-           };
-           ctrl.reloadScheduler = function(){
-               resFactory.call('ReloadScheduler', '').success(function(data){resFactory.addAlert(data, 'SchedulerReload')});
-           };
+
+           ctrl.readablizeBytes = function(bytes) {
+               var s = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'];
+               var e = Math.floor(Math.log(bytes) / Math.log(1024));
+               return (bytes / Math.pow(1024, e)).toFixed(2) + " " + s[e];
+           }
        })
        .controller('AccuntingCtrl', function(menuFactory){
            menuFactory.setMenu('accounting');

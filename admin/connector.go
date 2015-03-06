@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"log"
 	"net/rpc"
 	"net/rpc/jsonrpc"
 	"strings"
@@ -13,6 +14,11 @@ type CGRConnector struct {
 	server   string
 	client   *rpc.Client
 	redis    *redis.Client
+}
+
+type Args struct {
+	ServiceMethod string
+	Params        interface{}
 }
 
 func NewCGRConnector(encoding, server, redisAdr string) *CGRConnector {
@@ -46,4 +52,9 @@ func (c *CGRConnector) call(serviceMethod string, args interface{}, reply interf
 		}
 	}
 	return
+}
+
+func (c *CGRConnector) Call(args Args, reply *interface{}) error {
+	log.Printf("Call: %+v", args)
+	return c.call(args.ServiceMethod, args.Params, reply)
 }

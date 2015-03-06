@@ -8,11 +8,11 @@
         <table class="table table-condensed">
           <tr>
             <td style="color:gold">Current</td>
-            <td>{{dashCtrl.memstats.memstat}} Kb</td>
+            <td>{{dashCtrl.readablizeBytes(dashCtrl.memstats.memstat*1024)}}</td>
           </tr>
           <tr>
             <td style="color:lightblue">Footprint</td>
-            <td>{{dashCtrl.memstats.footprint}} Kb</td>
+            <td>{{dashCtrl.readablizeBytes(dashCtrl.memstats.footprint*1024)}}</td>
           </tr>
         </table>
         <div id="memChart" style="width:100%;height:200px"></div>
@@ -60,17 +60,6 @@
           </tr>
         </table>
         <div id="cacheChart" style="width:100%;height:100px"></div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="panel panel-success">
-      <div class="panel-heading">
-        <h3 class="panel-title">Quick Actions</h3>
-      </div>
-      <div class="panel-body">
-        <a class="btn btn-link" href ng-click="dashCtrl.reloadCache()"><span class="glyphicon glyphicon-refresh"></span> Reload cache</a>
-        <a class="btn btn-link" href ng-click="dashCtrl.reloadScheduler()"><span class="glyphicon glyphicon-time"></span> Reload scheduler</a>
       </div>
     </div>
   </div>

@@ -4,7 +4,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -12,25 +11,6 @@ import (
 
 	"github.com/zenazn/goji/web"
 )
-
-func callPost(c web.C, w http.ResponseWriter, r *http.Request) {
-	if !IsAuthenticated(r) {
-		writeJSON(w, 401, map[string]string{"error": "not_autenticated"})
-		return
-	}
-	method := c.URLParams["method"]
-	var param map[string]interface{}
-	decoder := json.NewDecoder(r.Body)
-	defer r.Body.Close()
-	decoder.Decode(&param)
-	var response interface{}
-	if err := connector.call(method, param, &response); err != nil {
-		log.Print("CALL: ", err)
-		writeJSON(w, 200, map[string]string{"ERROR": err.Error()})
-		return
-	}
-	writeJSON(w, 200, response)
-}
 
 func loginGet(c web.C, w http.ResponseWriter, r *http.Request) {
 	if IsAuthenticated(r) {
@@ -52,9 +32,7 @@ func loginPost(c web.C, w http.ResponseWriter, r *http.Request) {
 	remember := r.FormValue("remember")
 	if user == username && pass == password {
 		uuid := GenUUID()
-		log.Print(1)
 		connector.redis.Set(uuid, []byte("1"))
-		log.Print(2)
 		cookie := &http.Cookie{
 			Name:   LOGIN_COOKIE,
 			Value:  uuid,
@@ -69,7 +47,6 @@ func loginPost(c web.C, w http.ResponseWriter, r *http.Request) {
 			oneDay, _ := time.ParseDuration("24h")
 			connector.redis.Expire(uuid, int64(oneDay.Seconds()))
 		}
-		log.Print(3)
 		http.SetCookie(w, cookie)
 		next := r.FormValue("next")
 		if next != "" {

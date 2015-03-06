@@ -2,10 +2,13 @@ package admin
 
 import (
 	"net/http"
+	"net/rpc"
+	"net/rpc/jsonrpc"
 	"text/template"
 
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
+	"golang.org/x/net/websocket"
 )
 
 var (
@@ -20,15 +23,19 @@ func Start(conn *CGRConnector, user, pass string) {
 	password = pass
 	templates = template.Must(template.ParseGlob("templates/*.tmpl"))
 
+	rpc.Register(conn)
+
 	goji.Get(LOGIN_PATH, loginGet)
 	goji.Post(LOGIN_PATH, loginPost)
 
-	goji.Post("/call/:method", callPost)
 	goji.Get("/app/*", http.FileServer(http.Dir("./static")))
 
 	auth := web.New()
 	goji.Handle("/*", auth)
 	auth.Use(SessionAuth)
+	auth.Handle("/ws", websocket.Handler(func(ws *websocket.Conn) {
+		jsonrpc.ServeConn(ws)
+	}))
 	auth.Post("/import/", importPost)
 	auth.Post("/exportcdrs/", exportCdrsPost)
 	auth.Post("/exporttpcsv/", exportTpToCsvPost)
