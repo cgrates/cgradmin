@@ -64,7 +64,7 @@
                              </ul>
                         </div>
                         <div ng-show="menuCtrl.menu == 'tp_editor'">                            
-                            <div class="pull-right" ng-controller="TpIdsCtrl as tiCtrl">
+                            <div ng-controller="TpIdsCtrl as tiCtrl">
                                 <div class="dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                                         {{tiCtrl.tpid}}
@@ -101,12 +101,12 @@
                             </ul>
 
                             <ul class="nav nav-sidebar">
-                                <li><a href="#">Import</a>
+                                <li>Import
                                     <ul class="nav-secondary nav-list">
                                         <li><a href="#/import">Import zipped CSV files</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Export</a>
+                                <li>Export
                                     <ul class="nav-secondary nav-list">
                                         <li><a href="#/exporttpcsv">Export TP</a></li>
                                         <li><a href="#/exportcdrs">Export CDRs</a></li>

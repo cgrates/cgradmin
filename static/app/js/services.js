@@ -80,7 +80,7 @@ angular.module('cgradminApp.services', [])
                                                 var ready = false;
                                                 var connecting = false;
                                                 var param = {TPid : $cookieStore.get('tpid')};
-
+                                                console.log("Param: ", param);
                                                 var connect = function(){
                                                     connecting = true;
                                                     ws = new WebSocket("ws://localhost:8080/ws");
@@ -114,14 +114,14 @@ angular.module('cgradminApp.services', [])
 
                                                 var ws = connect();
 
-                                                factory.call = function(func, finalParam, obj){
+                                                factory.call = function(func, finalParam, obj){                                                    
                                                     if (!ready && !connecting) {
                                                         ws = connect();
                                                     }
                                                     if (typeof(obj) === "undefined") obj = "ApierV2";
                                                     if(angular.isObject(finalParam)) {
                                                         angular.extend(finalParam, param);
-                                                    }
+                                                    }                                                    
                                                     current_cb_id += 1;
                                                     var request = {
                                                         "jsonrpc": "2.0",
@@ -134,6 +134,7 @@ angular.module('cgradminApp.services', [])
                                                     callbacks[request.id] = {cb: deferred};
 
                                                     if (ready) {
+                                                        console.log("Call: ", request);
                                                         ws.send(JSON.stringify(request));
                                                     }
                                                     return deferred.promise;

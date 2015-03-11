@@ -55,6 +55,7 @@ func (c *CGRConnector) call(serviceMethod string, args interface{}, reply interf
 }
 
 func (c *CGRConnector) Call(args Args, reply *interface{}) error {
-	log.Printf("Call: %+v", args)
-	return c.call(args.ServiceMethod, args.Params, reply)
+	resp := c.call(args.ServiceMethod, args.Params, reply)
+	log.Printf("Call: %+v Response: %+v", args, resp)
+	return resp
 }

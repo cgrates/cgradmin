@@ -7,8 +7,9 @@ angular.module('cgradminApp.controllers', [])
            this.tpid = $cookieStore.get('tpid');
            var ctrl = this;
            ctrl.tpids = [];           
-
+           
            resFactory.call('GetTPIds', {}).then(function(data) {
+               console.log("DATA: ", data);
                ctrl.tpids = data;
                if (ctrl.tpid && ctrl.tpids.indexOf(ctrl.tpid) === -1){
                    ctrl.tpids.push(ctrl.tpid);
@@ -111,7 +112,8 @@ angular.module('cgradminApp.controllers', [])
                ctrl.page =  p;
            }
            ctrl.itemsPerPage = 30;
-           resFactory.call(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).then(function(data) {
+           var limit = Math.max(ctrl.itemsPerPage*ctrl.page, ctrl.itemsPerPage);
+           resFactory.call(idMethods[ctrl.res], {Offset:ctrl.page, Limit:limit, SearchTerm:ctrl.searchTerm}).then(function(data) {
                if (angular.isArray(data)){
                    ctrl.resources = data;
                }
@@ -131,7 +133,7 @@ angular.module('cgradminApp.controllers', [])
                    ctrl.page = 0;
                }
                ctrl.page += page;
-               resFactory.call(idMethods[ctrl.res], {Page:ctrl.page, ItemsPerPage:ctrl.itemsPerPage, SearchTerm:ctrl.searchTerm}).then(function(data) {
+               resFactory.call(idMethods[ctrl.res], {Offset:ctrl.page, Limit:limit, SearchTerm:ctrl.searchTerm}).then(function(data) {
                    ctrl.resources = angular.isArray(data) ? data : [];
                });
            };
