@@ -79,8 +79,7 @@ angular.module('cgradminApp.services', [])
                                                 var current_cb_id = 0;
                                                 var ready = false;
                                                 var connecting = false;
-                                                var param = {TPid : $cookieStore.get('tpid')};
-                                                var lock;                                                
+                                                var param = {TPid : $cookieStore.get('tpid')};                                                
                                                 var connect = function(){
                                                     connecting = true;
                                                     ws = new WebSocket("ws://localhost:8080/ws");
@@ -92,8 +91,10 @@ angular.module('cgradminApp.services', [])
                                                     ws.onopen = function(){
                                                         ready = true;
                                                         connecting = false;
-                                                        console.log("Connected!");
-                                                        window.clearTimeout(lock);
+                                                        //console.log("Connected!");
+                                                        if (typeof(factory.initCallback) !== "undefined") {
+                                                            factory.initCallback();
+                                                        }
                                                     };
                                                     ws.onmessage = function(msg) {
                                                         var reply = JSON.parse(msg.data)
@@ -141,6 +142,11 @@ angular.module('cgradminApp.services', [])
                                                     }
                                                     return deferred.promise;
                                                 };
+
+                                                // callback will be called after websocket is connected
+                                                factory.addInitCallback = function(callback){                                                    
+                                                    factory.initCallback = callback;
+                                                }
 
                                                 factory.addAlert = function(message, prefix) {
                                                     if(typeof(prefix)==='undefined') {
