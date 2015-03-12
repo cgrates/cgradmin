@@ -80,7 +80,7 @@ angular.module('cgradminApp.services', [])
                                                 var ready = false;
                                                 var connecting = false;
                                                 var param = {TPid : $cookieStore.get('tpid')};
-                                                console.log("Param: ", param);
+                                                var lock;                                                
                                                 var connect = function(){
                                                     connecting = true;
                                                     ws = new WebSocket("ws://localhost:8080/ws");
@@ -92,6 +92,8 @@ angular.module('cgradminApp.services', [])
                                                     ws.onopen = function(){
                                                         ready = true;
                                                         connecting = false;
+                                                        console.log("Connected!");
+                                                        window.clearTimeout(lock);
                                                     };
                                                     ws.onmessage = function(msg) {
                                                         var reply = JSON.parse(msg.data)
@@ -115,9 +117,9 @@ angular.module('cgradminApp.services', [])
                                                 var ws = connect();
 
                                                 factory.call = function(func, finalParam, obj){                                                    
-                                                    if (!ready && !connecting) {
-                                                        ws = connect();
-                                                    }
+                                                    if (!ready && connecting) {
+                                                        //ws = connect();                                                        
+                                                    }                                                    
                                                     if (typeof(obj) === "undefined") obj = "ApierV2";
                                                     if(angular.isObject(finalParam)) {
                                                         angular.extend(finalParam, param);
@@ -134,7 +136,7 @@ angular.module('cgradminApp.services', [])
                                                     callbacks[request.id] = {cb: deferred};
 
                                                     if (ready) {
-                                                        console.log("Call: ", request);
+                                                        //console.log("Call: ", request);
                                                         ws.send(JSON.stringify(request));
                                                     }
                                                     return deferred.promise;

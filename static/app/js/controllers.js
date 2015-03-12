@@ -6,21 +6,24 @@ angular.module('cgradminApp.controllers', [])
        .controller('TpIdsCtrl', function($cookieStore, $window, resFactory) {
            this.tpid = $cookieStore.get('tpid');
            var ctrl = this;
-           ctrl.tpids = [];           
-           
-           resFactory.call('GetTPIds', {}).then(function(data) {
-               console.log("DATA: ", data);
-               ctrl.tpids = data;
-               if (ctrl.tpid && ctrl.tpids.indexOf(ctrl.tpid) === -1){
-                   ctrl.tpids.push(ctrl.tpid);
-               }
-               if((!ctrl.tpid || ctrl.tpid==='"') && angular.isArray(data)){
-                   ctrl.tpid = data[0];
-                   $cookieStore.put('tpid', ctrl.tpid);
-                   $window.location.reload();
-               }
-           });
-           
+           ctrl.tpids = [];
+
+           var init = function(){
+               resFactory.call('GetTPIds', {}).then(function(data) {
+                   //console.log("DATA: ", data);
+                   ctrl.tpids = data;
+                   if (ctrl.tpid && ctrl.tpids.indexOf(ctrl.tpid) === -1){
+                       ctrl.tpids.push(ctrl.tpid);
+                   }
+                   if((!ctrl.tpid || ctrl.tpid==='"') && angular.isArray(data)){
+                       ctrl.tpid = data[0];
+                       $cookieStore.put('tpid', ctrl.tpid);
+                       //$window.location.reload();
+                   }
+               });
+           }
+           setTimeout(init, 500);
+
            this.setTpId = function(tpid){
                this.tpid = tpid;
                $cookieStore.put('tpid', tpid);
@@ -417,8 +420,8 @@ angular.module('cgradminApp.controllers', [])
 
            var x = 0;
            $interval(function() {
-               var promise = resFactory.call('Status', '', 'Responder');               
-               promise.then(function(data){                   
+               var promise = resFactory.call('Status', '', 'Responder');
+               promise.then(function(data){
                    ctrl.memstats = data;
                    if (memStatData.length > 100) {
                        memStatData = memStatData.slice(1);
