@@ -219,7 +219,8 @@ angular.module('cgradminApp.controllers', [])
                });
            };
        })
-       .controller('ResourceCtrl', function($routeParams, resFactory) {
+       .controller('ResourceCtrl', function($routeParams, resFactory, menuFactory) {
+           menuFactory.setMenu('tp_editor');
            this.resId = $routeParams.res_id;
            this.init = function(res, name, idName){
                this.page = 0;

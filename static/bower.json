@@ -16,5 +16,8 @@
     "angular-loading-bar": null,
     "flot": null,
     "angular-bootstrap": "~0.12.0"
+  },
+  "resolutions": {
+    "angular": "1.3.x"
   }
 }
