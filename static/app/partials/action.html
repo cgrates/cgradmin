@@ -34,6 +34,12 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="balanceid" class="col-sm-2 control-label">BalanceId</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="balanceid" ng-model="resCtrl.res.Actions[panelCtrl.index].BalanceId"/>
+        </div>
+      </div>
+      <div class="form-group">
         <label for="balancetype" class="col-sm-2 control-label">BalanceType</label>
         <div class="col-sm-2">
           <input type="text" class="form-control" id="balancetype" ng-model="resCtrl.res.Actions[panelCtrl.index].BalanceType"/>
@@ -46,7 +52,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="destid" class="col-sm-2 control-label">Destination Id</label>
+        <label for="destid" class="col-sm-2 control-label">DestinationId</label>
         <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
           <input id="destid" type="text" ng-model="resCtrl.res.Actions[panelCtrl.index].DestinationId" typeahead="id for id in tyaCtrl.getIds('Destination', $viewValue)" typeahead-loading="loadingDestinationIds" class="form-control" typeahead-wait-ms="500">
           <i ng-show="loadingDestinationIds" class="glyphicon glyphicon-refresh"></i>
