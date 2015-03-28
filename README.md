@@ -4,4 +4,4 @@
 
 ## Get up and running
 
-[Watch terminal cast here](https://asciinema.org/a/17066)
+[![asciicast](https://asciinema.org/a/17066.png)](https://asciinema.org/a/17066)
