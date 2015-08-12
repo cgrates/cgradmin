@@ -79,7 +79,7 @@ angular.module('cgradminApp.services', [])
                                                 var current_cb_id = 0;
                                                 var ready = false;
                                                 var connecting = false;
-                                                var param = {TPid : $cookieStore.get('tpid')};                                                
+                                                var param = {TPid : $cookieStore.get('tpid')};
                                                 var connect = function(){
                                                     connecting = true;
                                                     ws = new WebSocket("ws://localhost:8080/ws");
@@ -100,7 +100,7 @@ angular.module('cgradminApp.services', [])
                                                         var reply = JSON.parse(msg.data)
                                                             if (!!reply['id']) {
                                                                 if(!!reply['error']) {
-                                                                    callbacks[reply.id].cb.reject(reply.error);
+                                                                    callbacks[reply.id].cb.resolve(reply.error);
                                                                 }
 
                                                                 if(!!reply['result']) {
@@ -117,14 +117,14 @@ angular.module('cgradminApp.services', [])
 
                                                 var ws = connect();
 
-                                                factory.call = function(func, finalParam, obj){                                                    
+                                                factory.call = function(func, finalParam, obj){
                                                     if (!ready && connecting) {
-                                                        //ws = connect();                                                        
-                                                    }                                                    
+                                                        //ws = connect();
+                                                    }
                                                     if (typeof(obj) === "undefined") obj = "ApierV2";
                                                     if(angular.isObject(finalParam)) {
                                                         angular.extend(finalParam, param);
-                                                    }                                                    
+                                                    }
                                                     current_cb_id += 1;
                                                     var request = {
                                                         "jsonrpc": "2.0",
@@ -144,7 +144,7 @@ angular.module('cgradminApp.services', [])
                                                 };
 
                                                 // callback will be called after websocket is connected
-                                                factory.addInitCallback = function(callback){                                                    
+                                                factory.addInitCallback = function(callback){
                                                     factory.initCallback = callback;
                                                 }
 
@@ -155,7 +155,16 @@ angular.module('cgradminApp.services', [])
                                                         prefix += ": ";
                                                     }
                                                     if (angular.isString(message) && message !== 'OK') {
-                                                        message = JSON.parse(message);
+                                                        try
+                                                        {
+
+                                                            message = JSON.parse(message);
+                                                        }
+                                                        catch(e)
+                                                        {
+                                                            // leave message as it is
+                                                        }
+
                                                     }
                                                     var error = false;
                                                     if (message['ERROR']) {
@@ -168,7 +177,7 @@ angular.module('cgradminApp.services', [])
                                                     });
                                                     $timeout(function(){
                                                         factory.alerts.splice(0, 1);
-                                                    }, 7000);
+                                                    }, 10000);
                                                 };
                                                 return factory;
                                             });

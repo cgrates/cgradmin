@@ -22,7 +22,7 @@ angular.module('cgradminApp.controllers', [])
                    }
                });
            }
-           resFactory.addInitCallback(init);           
+           resFactory.addInitCallback(init);
 
            this.setTpId = function(tpid){
                this.tpid = tpid;

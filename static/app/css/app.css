@@ -29,8 +29,8 @@ body {
     margin-bottom: 10px;
     background-image: none;
 }
-.alert-dismissable .close {
-    right: 0;
+.alert-dismissable .close, .alert-dismissible .close {
+    right: 0px;
 }
 
 .slow-show-hide {
