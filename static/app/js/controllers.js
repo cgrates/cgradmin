@@ -116,7 +116,7 @@ angular.module('cgradminApp.controllers', [])
            }
            ctrl.itemsPerPage = 30;
            var limit = Math.max(ctrl.itemsPerPage*ctrl.page, ctrl.itemsPerPage);
-           resFactory.call(idMethods[ctrl.res], {Offset:ctrl.page, Limit:limit, SearchTerm:ctrl.searchTerm}).then(function(data) {
+           resFactory.call(idMethods[ctrl.res].method, {Offset:ctrl.page, Limit:limit, SearchTerm:ctrl.searchTerm}, idMethods[ctrl.res].object).then(function(data) {
                if (angular.isArray(data)){
                    ctrl.resources = data;
                }
