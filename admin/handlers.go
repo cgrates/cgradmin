@@ -95,6 +95,13 @@ func importPost(c web.C, w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/app/#/import/"+base64.StdEncoding.EncodeToString(msg), 301)
 	}
 	msg, _ := json.Marshal(response)
+	/*cookie := &http.Cookie{
+		Name:   TPID_COOKIE,
+		Value:  "\"" + param["TPid"] + "\"",
+		Domain: r.URL.Host,
+		Path:   "/app",
+	}
+	http.SetCookie(w, cookie)*/
 	http.Redirect(w, r, "/app/#/import/"+base64.StdEncoding.EncodeToString(msg), 301)
 }
 

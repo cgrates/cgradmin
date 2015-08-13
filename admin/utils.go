@@ -13,6 +13,7 @@ import (
 
 const (
 	LOGIN_COOKIE = "sessionid"
+	TPID_COOKIE  = "tpid"
 	LOGIN_PATH   = "/accounts/login/"
 )
 

@@ -18,7 +18,7 @@ angular.module('cgradminApp.controllers', [])
                    if((!ctrl.tpid || ctrl.tpid==='"') && angular.isArray(data)){
                        ctrl.tpid = data[0];
                        $cookieStore.put('tpid', ctrl.tpid);
-                       //$window.location.reload();
+                       $window.location.reload();
                    }
                });
            }
@@ -46,6 +46,7 @@ angular.module('cgradminApp.controllers', [])
                                  }
                              });
                          }
+                         $window.location.reload();
                      });
            };
        })
@@ -81,7 +82,7 @@ angular.module('cgradminApp.controllers', [])
                this.index = resources.length-1;
            }
            this.remove = function(resources, i, event){
-               event.preventDefault();
+               //event.preventDefault();
                swal({title: "Are you sure?",
                      text: "You will not be able to recover this resource!",
                      type: "warning",   showCancelButton: true,
@@ -448,6 +449,10 @@ angular.module('cgradminApp.controllers', [])
                    ["RatingPlans",  data.RatingPlans],
                    ["RatingProfiles",  data.RatingProfiles],
                    ["SharedGroups",  data.SharedGroups]
+                   ["LcrProfiles", data.LcrProfiles],
+	               ["CdrStats", data.CdrStats],
+	               ["Users", data.Users],
+	               ["Aliases", data.Aliases]
                ];
                cachePlot.setData([cacheData]);
                cachePlot.setupGrid();

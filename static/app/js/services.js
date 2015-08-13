@@ -22,7 +22,7 @@ angular.module('cgradminApp.services', [])
                                                 "SharedGroup": {object:"ApierV2", method: "GetTPSharedGroupIds"},
                                                 "DerivedCharger": {object:"ApierV2", method: "GetTPDerivedChargerIds"},
                                                 "User":{object:"ApierV2", method: "GetUserIds"},
-                                                "Alias":{object:"ApierV2", method: "GetAliasIds"},
+                                                "Alias":{object:"ApierV2", method: "GetAliasIds"}
                                             })
                                             .value('hasActivateArray',
                                                    ["Destination", "RatingPlan", "RatingProfile", "CdrStats",
@@ -102,7 +102,7 @@ angular.module('cgradminApp.services', [])
                                                         var reply = JSON.parse(msg.data)
                                                             if (!!reply['id']) {
                                                                 if(!!reply['error']) {
-                                                                    callbacks[reply.id].cb.resolve(reply.error);
+                                                                    callbacks[reply.id].cb.resolve("ERROR: " + reply.error);
                                                                 }
 
                                                                 if(!!reply['result']) {
@@ -153,26 +153,19 @@ angular.module('cgradminApp.services', [])
                                                 factory.addAlert = function(message, prefix) {
                                                     if(typeof(prefix)==='undefined') {
                                                         prefix = '';
-                                                    } else{
-                                                        prefix += ": ";
                                                     }
-                                                    if (angular.isString(message) && message !== 'OK') {
-                                                        try
-                                                        {
 
-                                                            message = JSON.parse(message);
-                                                        }
-                                                        catch(e)
-                                                        {
-                                                            // leave message as it is
-                                                        }
-
-                                                    }
+                                                    try {message = JSON.parse(message);} catch(e) {}// leave message as it is
                                                     var error = false;
+                                                    if (message.toLowerCase().indexOf('error') > -1){
+                                                        error = true;
+                                                    }
                                                     if (message['ERROR']) {
                                                         error = true;
                                                         message = message['ERROR'];
                                                     }
+                                                    prefix += error ? ' ' : ': ';
+
                                                     factory.alerts.push({
                                                         type: error ? 'danger' : 'success',
                                                         msg: prefix + message
