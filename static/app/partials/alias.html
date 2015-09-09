@@ -1,3 +1,101 @@
-<div ng-init="resCtrl.init({}, 'Aliases')"></div>
+<div ng-init="resCtrl.init({AliasValues:[{}]}, 'Alias')"></div>
 <breadcrumbs label="resCtrl.resId"></breadcrumbs>
-<h3>Aliases</h3>
+<div id="detail-view">
+  <div ng-hide="resCtrl.showId" class="btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init(resCtrl.name, resCtrl.resId)">
+    <a ng-show="actCtrl.hasActivate()" class="btn btn-primary" href ng-click="actCtrl.activate()"><span class="glyphicon glyphicon-plane"></span> Activate</a>
+    <a class="btn btn-danger" href ng-click="actCtrl.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+  </div>
+  <h4>Alias {{resCtrl.resId}}</h4>
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Direction" class="col-sm-2 control-label">Direction</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Direction" ng-model="resCtrl.res.Direction"/>
+        </div>
+      </div>
+      <div ng-hide="resCtrl.showId">Direction: {{resCtrl.res.Direction}}</div>
+    </div>
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Tenant" class="col-sm-2 control-label">Tenant</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Tenant" ng-model="resCtrl.res.Tenant"/>
+        </div>
+      </div>
+      <div ng-hide="resCtrl.showId">Tenant: {{resCtrl.res.Tenant}}</div>
+    </div>
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Category" class="col-sm-2 control-label">Category</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Category" ng-model="resCtrl.res.Category"/>
+        </div>
+      </div>
+      <div ng-hide="resCtrl.showId">Category: {{resCtrl.res.Category}}</div>
+    </div>
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Account" class="col-sm-2 control-label">Account</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Account" ng-model="resCtrl.res.Account"/>
+        </div>
+      </div>
+      <div ng-hide="resCtrl.showId">Account: {{resCtrl.res.Account}}</div>
+    </div>
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Subject" class="col-sm-2 control-label">Subject</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Subject" ng-model="resCtrl.res.Subject"/>
+        </div>
+      </div>
+      <div ng-hide="resCtrl.showId">Subject: {{resCtrl.res.Subject}}</div>
+    </div>
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Group" class="col-sm-2 control-label">Group</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Group" ng-model="resCtrl.res.Group"/>
+        </div>
+      </div>
+      <div ng-hide="resCtrl.showId">Group: {{resCtrl.res.Group}}</div>
+    </div>
+    <section  ng-controller="PanelCtrl as panelCtrl">
+      <ul class="nav nav-tabs marginBottom">
+        <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="value in resCtrl.res.Values">
+          <a href ng-click="panelCtrl.select($index)">
+            <button type="button" ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.Values, $index, $event)" class="close closeTab">×</button>
+            Value {{$index}}
+          </a>
+        </li>
+        <li>
+          <a href ng-click="panelCtrl.add(resCtrl.res.Values)">+</a>
+        </li>
+      </ul>
+      <div class="form-group">
+        <label for="DestinationId" class="col-sm-2 control-label">DestinationId</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="DestinationId" ng-model="resCtrl.res.Values[panelCtrl.index].DestinationId"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="alias" class="col-sm-2 control-label">Alias</label>
+        <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
+          <input id="alias" type="text" ng-model="resCtrl.res.Values[panelCtrl.index].Alias" typeahead="id for id in tyaCtrl.getIds('RatingPlan', $viewValue)" typeahead-loading="loadingAliass" class="form-control" typeahead-wait-ms="500">
+          <i ng-show="loadingAliass" class="glyphicon glyphicon-refresh"></i>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Weight" class="col-sm-2 control-label">Weight</label>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="Weight" ng-model="resCtrl.res.Values[panelCtrl.index].Weight"/>
+        </div>
+      </div>
+    </section>
+    <div class="btn-group">
+      <a class="btn btn-success" ng-click="resCtrl.saveResource()"><span class="glyphicon glyphicon-ok"></span> Save</a>
+      <back></back>
+    </div>
+  </form>
+</div>

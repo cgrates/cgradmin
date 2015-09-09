@@ -31,6 +31,8 @@ angular.module('cgradminApp', [
            $routeProvider.when('/sharedgroup/:res_id?', {templateUrl: 'partials/shared_group.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
            $routeProvider.when('/accountaction/:res_id?', {templateUrl: 'partials/account_action.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
            $routeProvider.when('/lcrrule/:res_id?', {templateUrl: 'partials/lcr_rule.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
+           $routeProvider.when('/alias/:res_id?', {templateUrl: 'partials/alias.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
+           $routeProvider.when('/user/:res_id?', {templateUrl: 'partials/user.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
            $routeProvider.when('/derivedcharger/:res_id?', {templateUrl: 'partials/derived_charger.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
            $routeProvider.when('/cdrstats/:res_id?', {templateUrl: 'partials/cdr_stat.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
            $routeProvider.when('/import/:message?', {templateUrl: 'partials/import.html', controller: 'ImportCtrl', controllerAs: 'impCtrl'});

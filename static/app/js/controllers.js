@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('cgradminApp.controllers', [])
-       .controller('TpIdsCtrl', function($cookieStore, $window, resFactory) {
-           this.tpid = $cookieStore.get('tpid');
+       .controller('TpIdsCtrl', function($cookies, $window, resFactory) {
+           this.tpid = $cookies.get('tpid');
            var ctrl = this;
            ctrl.tpids = [];
 
@@ -17,7 +17,7 @@ angular.module('cgradminApp.controllers', [])
                    }
                    if((!ctrl.tpid || ctrl.tpid==='"') && angular.isArray(data)){
                        ctrl.tpid = data[0];
-                       $cookieStore.put('tpid', ctrl.tpid);
+                       $cookies.put('tpid', ctrl.tpid);
                        $window.location.reload();
                    }
                });
@@ -26,8 +26,8 @@ angular.module('cgradminApp.controllers', [])
 
            this.setTpId = function(tpid){
                this.tpid = tpid;
-               $cookieStore.put('tpid', tpid);
-               $window.location.reload();
+               $cookies.put('tpid', tpid);
+               //$window.location.reload();
            };
            this.removeTpId = function(event){
                event.preventDefault();
@@ -41,12 +41,14 @@ angular.module('cgradminApp.controllers', [])
                              resFactory.call('RemTP', {}).then(function(data){
                                  resFactory.addAlert(data);
                                  ctrl.tpids.splice(idx, 1);
+                                 console.log("remaining: ", ctrl.tpids);
                                  if(ctrl.tpids.length > 0){
                                      ctrl.setTpId(ctrl.tpids[0]);
+                                     console.log("Setting TPID: ", ctrl.tpids[0]);
                                  }
                              });
                          }
-                         $window.location.reload();
+                         //$window.location.reload();
                      });
            };
        })

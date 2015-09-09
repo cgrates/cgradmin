@@ -21,8 +21,8 @@ angular.module('cgradminApp.services', [])
                                                 "AccountAction": {object:"ApierV2", method: "GetTPAccountActionIds"},
                                                 "SharedGroup": {object:"ApierV2", method: "GetTPSharedGroupIds"},
                                                 "DerivedCharger": {object:"ApierV2", method: "GetTPDerivedChargerIds"},
-                                                "User":{object:"ApierV2", method: "GetUserIds"},
-                                                "Alias":{object:"ApierV2", method: "GetAliasIds"}
+                                                "User":{object:"ApierV2", method: "GetTPUserIds"},
+                                                "Alias":{object:"ApierV2", method: "GetTPAliasIds"}
                                             })
                                             .value('hasActivateArray',
                                                    ["Destination", "RatingPlan", "RatingProfile", "CdrStats",
@@ -74,14 +74,14 @@ angular.module('cgradminApp.services', [])
 
                                                 return factory;
                                             })
-                                            .factory('resFactory', function($cookieStore, $timeout, $location, $window, $q, root_url) {
+                                            .factory('resFactory', function($cookies, $timeout, $location, $window, $q, root_url) {
                                                 var factory = {};
                                                 factory.alerts = [];
                                                 var callbacks = {};
                                                 var current_cb_id = 0;
                                                 var ready = false;
                                                 var connecting = false;
-                                                var param = {TPid : $cookieStore.get('tpid')};
+                                                var param = {TPid : $cookies.get('tpid')};
                                                 var connect = function(){
                                                     connecting = true;
                                                     ws = new WebSocket("ws://localhost:8080/ws");
