@@ -1,2 +1,56 @@
+<div ng-init="resCtrl.init({Profile:[{}]}, 'User')"></div>
 <breadcrumbs label="resCtrl.resId"></breadcrumbs>
-<h3>Rating Profile Aliases</h3>
+<div id="detail-view">
+  <div ng-hide="resCtrl.showId" class="btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init(resCtrl.name, resCtrl.resId)">
+    <a ng-show="actCtrl.hasActivate()" class="btn btn-primary" href ng-click="actCtrl.activate()"><span class="glyphicon glyphicon-plane"></span> Activate</a>
+    <a class="btn btn-danger" href ng-click="actCtrl.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+  </div>
+  <h4>Alias {{resCtrl.resId}}</h4>
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="Tenant" class="col-sm-2 control-label">Tenant</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Tenant" ng-model="resCtrl.res.Tenant"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div ng-show="resCtrl.showId">
+        <label for="UserName" class="col-sm-2 control-label">UserName</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="UserName" ng-model="resCtrl.res.UserName"/>
+        </div>
+      </div>
+    </div>
+    <section  ng-controller="PanelCtrl as panelCtrl">
+      <ul class="nav nav-tabs marginBottom">
+        <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="value in resCtrl.res.Profile">
+          <a href ng-click="panelCtrl.select($index)">
+            <button type="button" ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.Profile, $index, $event)" class="close closeTab">×</button>
+            Profile {{$index}}
+          </a>
+        </li>
+        <li>
+          <a href ng-click="panelCtrl.add(resCtrl.res.Profile)">+</a>
+        </li>
+      </ul>
+      <div class="form-group">
+        <label for="AttributeName" class="col-sm-2 control-label">Attribute Name</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="AttributeName" ng-model="resCtrl.res.Profile[panelCtrl.index].AttrName"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="AttributeValue" class="col-sm-2 control-label">Attribute Value</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="AttributeValue" ng-model="resCtrl.res.Profile[panelCtrl.index].AttrValue"/>
+        </div>
+      </div>
+    </section>
+    <div class="btn-group">
+      <a class="btn btn-success" ng-click="resCtrl.saveResource()"><span class="glyphicon glyphicon-ok"></span> Save</a>
+      <back></back>
+    </div>
+  </form>
+</div>
