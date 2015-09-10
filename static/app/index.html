@@ -63,6 +63,14 @@
                                  <li><a href ng-click="dashCtrl.reloadScheduler()"><span class="glyphicon glyphicon-time"></span> Reload scheduler</a></li>
                              </ul>
                         </div>
+                        <div ng-show="menuCtrl.menu == 'accounting'">
+                            <h3>Dashboard</h3>
+                             <ul class="nav nav-sidebar">
+                                 <li><a href="#/accounts"><span class="glyphicon glyphicon-lock"></span> Accounts</a></li>
+                                 <li><a href="#/aliases"><span class="glyphicon glyphicon-link"></span> Aliases</a></li>
+                                 <li><a href="#/users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+                             </ul>
+                        </div>
                         <div ng-show="menuCtrl.menu == 'tp_editor'">
                             <div ng-controller="TpIdsCtrl as tiCtrl">
                                 <div class="dropdown">

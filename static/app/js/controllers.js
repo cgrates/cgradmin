@@ -452,9 +452,9 @@ angular.module('cgradminApp.controllers', [])
                    ["RatingProfiles",  data.RatingProfiles],
                    ["SharedGroups",  data.SharedGroups]
                    ["LcrProfiles", data.LcrProfiles],
-	               ["CdrStats", data.CdrStats],
-	               ["Users", data.Users],
-	               ["Aliases", data.Aliases]
+                   ["CdrStats", data.CdrStats],
+                   ["Users", data.Users],
+                   ["Aliases", data.Aliases]
                ];
                cachePlot.setData([cacheData]);
                cachePlot.setupGrid();
@@ -491,8 +491,35 @@ angular.module('cgradminApp.controllers', [])
                return (bytes / Math.pow(1024, e)).toFixed(2) + " " + s[e];
            }
        })
-       .controller('AccuntingCtrl', function(menuFactory){
+       .controller('AccountingCtrl', function(menuFactory){
            menuFactory.setMenu('accounting');
+       })
+       .controller('AccountsCtrl', function(menuFactory){
+           menuFactory.setMenu('accounting');
+       })
+       .controller('AliasesCtrl', function(menuFactory){
+           menuFactory.setMenu('accounting');
+       })
+       .controller('UsersCtrl', function($routeParams, resFactory, menuFactory){
+           menuFactory.setMenu('accounting');
+           var ctrl = this;
+           ctrl.resources = [];
+           ctrl.page = 0;
+           ctrl.searchTerm = "";
+           if ($routeParams.page){
+               var p = Number($routeParams.page);
+               if (p > 0){
+                   p -= 1;
+               } else {
+                   p = 1;
+               }
+               ctrl.page =  p;
+           }
+           ctrl.itemsPerPage = 30;
+           var limit = Math.max(ctrl.itemsPerPage*ctrl.page, ctrl.itemsPerPage);
+           resFactory.call('GetUsers', {Offset:ctrl.page, Limit:limit, SearchTerm:ctrl.searchTerm}, 'UsersV1').then(function(data) {
+                   ctrl.resources = angular.isArray(data) ? data : [];
+               });
        })
        .controller('CDRManagerCtrl', function(menuFactory){
            menuFactory.setMenu('cdr_manager');

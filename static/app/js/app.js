@@ -17,6 +17,9 @@ angular.module('cgradminApp', [
            $routeProvider.when('/dashboard', {templateUrl: 'partials/dashboard.html', controller: 'DashboardCtrl', controllerAs: 'dashCtrl'});
            $routeProvider.when('/cdrmanager', {templateUrl: 'partials/cdrmanager.html', controller: 'CDRManagerCtrl', controllerAs: 'cdrmCtrl'});
            $routeProvider.when('/accounting', {templateUrl: 'partials/accounting.html', controller: 'AccountingCtrl', controllerAs: 'accCtrl'});
+           $routeProvider.when('/accounts', {templateUrl: 'partials/accounts.html', controller: 'AccountsCtrl', controllerAs: 'acntCtrl'});
+           $routeProvider.when('/aliases', {templateUrl: 'partials/aliases.html', controller: 'AliasesCtrl', controllerAs: 'alsCtrl'});
+           $routeProvider.when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl', controllerAs: 'usrCtrl'});
            $routeProvider.when('/resource/:res/:page?', {templateUrl: 'partials/resources.html', controller: 'ResourcesCtrl', controllerAs: 'resCtrl'});
            $routeProvider.when('/timing/:res_id?', {templateUrl: 'partials/timing.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
            $routeProvider.when('/destination/:res_id?', {templateUrl: 'partials/destination.html', controller: 'ResourceCtrl', controllerAs: 'resCtrl'});
