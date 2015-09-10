@@ -74,10 +74,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="alias" class="col-sm-2 control-label">Alias</label>
-        <div class="col-sm-2" ng-controller="TypeaheadCtrl as tyaCtrl">
-          <input id="alias" type="text" ng-model="resCtrl.res.Values[panelCtrl.index].Alias" typeahead="id for id in tyaCtrl.getIds('RatingPlan', $viewValue)" typeahead-loading="loadingAliass" class="form-control" typeahead-wait-ms="500">
-          <i ng-show="loadingAliass" class="glyphicon glyphicon-refresh"></i>
+        <label for="Alias" class="col-sm-2 control-label">Alias</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="Alias" ng-model="resCtrl.res.Values[panelCtrl.index].Alias"/>
         </div>
       </div>
       <div class="form-group">

@@ -21,6 +21,7 @@ angular.module('cgradminApp.services', [])
                                                 "AccountAction": {object:"ApierV2", method: "GetTPAccountActionIds"},
                                                 "SharedGroup": {object:"ApierV2", method: "GetTPSharedGroupIds"},
                                                 "DerivedCharger": {object:"ApierV2", method: "GetTPDerivedChargerIds"},
+                                                "LcrRule": {object:"ApierV2", method: "GetTPLcrRuleIds"},
                                                 "User":{object:"ApierV2", method: "GetTPUserIds"},
                                                 "Alias":{object:"ApierV2", method: "GetTPAliasIds"}
                                             })

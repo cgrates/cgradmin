@@ -1,2 +1,104 @@
+<div ng-init="resCtrl.init({Rules:[{}]}, 'LcrRule')"></div>
 <breadcrumbs label="resCtrl.resId"></breadcrumbs>
-<h3>Lcr Rules</h3>
+<div id="detail-view">
+    <div ng-hide="resCtrl.showId" class="btn-group pull-right" ng-controller="ResActCtrl as actCtrl" ng-init="actCtrl.init(resCtrl.name, resCtrl.resId)">
+        <a ng-show="actCtrl.hasActivate()" class="btn btn-primary" href ng-click="actCtrl.activate()"><span class="glyphicon glyphicon-plane"></span> Activate</a>
+        <a class="btn btn-danger" href ng-click="actCtrl.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+    </div>
+    <h4>LCR Rule {{resCtrl.resId}}</h4>
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <div ng-show="resCtrl.showId">
+                <label for="Direction" class="col-sm-2 control-label">Direction</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="Direction" ng-model="resCtrl.res.Direction"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div ng-show="resCtrl.showId">
+                <label for="Tenant" class="col-sm-2 control-label">Tenant</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="Tenant" ng-model="resCtrl.res.Tenant"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div ng-show="resCtrl.showId">
+                <label for="Category" class="col-sm-2 control-label">Category</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="Category" ng-model="resCtrl.res.Category"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div ng-show="resCtrl.showId">
+                <label for="Account" class="col-sm-2 control-label">Account</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="Account" ng-model="resCtrl.res.Account"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div ng-show="resCtrl.showId">
+                <label for="Subject" class="col-sm-2 control-label">Subject</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="Subject" ng-model="resCtrl.res.Subject"/>
+                </div>
+            </div>
+        </div>
+        <section  ng-controller="PanelCtrl as panelCtrl">
+            <ul class="nav nav-tabs marginBottom">
+                <li ng-class="{'active':panelCtrl.isActive($index)}" ng-repeat="value in resCtrl.res.Rules">
+                    <a href ng-click="panelCtrl.select($index)">
+                        <button type="button" ng-if="$index > 0" ng-click="panelCtrl.remove(resCtrl.res.Rules, $index, $event)" class="close closeTab">×</button>
+                        Rule {{$index}}
+                    </a>
+                </li>
+                <li>
+                    <a href ng-click="panelCtrl.add(resCtrl.res.Rules)">+</a>
+                </li>
+            </ul>
+            <div class="form-group">
+                <label for="DestinationId" class="col-sm-2 control-label">DestinationId</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="DestinationId" ng-model="resCtrl.res.Rules[panelCtrl.index].DestinationId"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="RpCategory" class="col-sm-2 control-label">RpCategory</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="RpCategory" ng-model="resCtrl.res.Rules[panelCtrl.index].RpCategory"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Strategy" class="col-sm-2 control-label">Strategy</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="Strategy" ng-model="resCtrl.res.Rules[panelCtrl.index].Strategy"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="StrategyParams" class="col-sm-2 control-label">StrategyParams</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="StrategyParams" ng-model="resCtrl.res.Rules[panelCtrl.index].StrategyParams"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ActivationTime" class="col-sm-2 control-label">ActivationTime</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="ActivationTime" ng-model="resCtrl.res.Rules[panelCtrl.index].ActivationTime"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Weight" class="col-sm-2 control-label">Weight</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" id="Weight" ng-model="resCtrl.res.Rules[panelCtrl.index].Weight"/>
+                </div>
+            </div>
+        </section>
+        <div class="btn-group">
+            <a class="btn btn-success" ng-click="resCtrl.saveResource()"><span class="glyphicon glyphicon-ok"></span> Save</a>
+            <back></back>
+        </div>
+    </form>
+</div>
