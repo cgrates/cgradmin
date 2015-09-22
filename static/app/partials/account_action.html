@@ -53,6 +53,30 @@
         <a class="btn btn-primary btn-sm" href="#/actiontrigger"><span class="glyphicon glyphicon-star"></span> New</a>
       </div>
     </div>
+    <div class="form-group">
+        <div ng-show="resCtrl.showId">
+            <label for="AllowNegative" class="col-sm-2 control-label">AllowNegative</label>
+            <div class="col-sm-2">
+                <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="AllowNegative" ng-model="resCtrl.res.AllowNegative"> AllowNegative
+                </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div ng-show="resCtrl.showId">
+            <label for="Disabled" class="col-sm-2 control-label">Disabled</label>
+            <div class="col-sm-2">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="Disabled" ng-model="resCtrl.res.Disabled"> Disabled
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="btn-group">
       <a class="btn btn-success" ng-click="resCtrl.saveResource()"><span class="glyphicon glyphicon-ok"></span> Save</a>
       <back></back>

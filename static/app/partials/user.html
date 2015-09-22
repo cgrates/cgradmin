@@ -16,12 +16,20 @@
       </div>
     </div>
     <div class="form-group">
-      <div ng-show="resCtrl.showId">
-        <label for="UserName" class="col-sm-2 control-label">UserName</label>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="UserName" ng-model="resCtrl.res.UserName"/>
+        <div ng-show="resCtrl.showId">
+            <label for="UserName" class="col-sm-2 control-label">UserName</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="UserName" ng-model="resCtrl.res.UserName"/>
+            </div>
         </div>
-      </div>
+    </div>
+    <div class="form-group">
+        <div ng-show="resCtrl.showId">
+            <label for="Masked" class="col-sm-2 control-label">Masked</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="Masked" ng-model="resCtrl.res.Masked"/>
+            </div>
+        </div>
     </div>
     <section  ng-controller="PanelCtrl as panelCtrl">
       <ul class="nav nav-tabs marginBottom">
