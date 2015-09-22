@@ -340,32 +340,7 @@ angular.module('cgradminApp.controllers', [])
                              resFactory.call('LoadCdrStats', {CdrStatsId:''}).then(function(data){resFactory.addAlert(data);});
                              break;
                          case "all":
-                             resFactory.call('LoadDestination', {DestinationId:''}).then(function(data){
-                                 resFactory.addAlert(data, 'Destinations');
-                                 if(data !== 'OK') return;
-                                 resFactory.call('LoadRatingPlan', {RatingPlanId:''}).then(function(data){
-                                     resFactory.addAlert(data, 'RatingPlans');
-                                     if(data !== 'OK') return;
-                                     resFactory.call('LoadRatingProfile', {RatingProfileId:''}).then(function(data){
-                                         resFactory.addAlert(data, 'RatingProfiles');
-                                         if(data !== 'OK') return;
-                                         resFactory.call('LoadAccountActions', {AccountActionsId: ''}).then(function(data){
-                                             resFactory.addAlert(data, 'AccountActions');
-                                             if(data !== 'OK') return;
-                                             resFactory.call('LoadDerivedChargers', {DerivedChargersId: ''}).then(function(data){
-                                                 resFactory.addAlert(data, 'DerivedChargers');
-                                                 if(data !== 'OK') return;
-                                                 resFactory.call('LoadSharedGroup', {SharedGroupId:''}).then(function(data){
-                                                     resFactory.addAlert(data, 'SharedGroups');
-                                                     if(data !== 'OK') return;
-                                                     resFactory.call('LoadCdrStats', {CdrStatsId:''}).then(function(data){
-                                                         resFactory.addAlert(data, 'CdrStats');
-                                                     });
-                                                 });
-                                             });
-                                         });
-                                     });
-                                 });
+                             resFactory.call('LoadTariffPlanFromStorDb', {DestinationId:''}).then(function(data){resFactory.addAlert(data, 'LoadTariffPlanFormStorDb');
                              });
                              break;
                      }
