@@ -316,34 +316,7 @@ angular.module('cgradminApp.controllers', [])
                  confirmButtonText: "Yes, activate it!" },  function(){
                      this.res = $routeParams.res;
                      this.resId = $routeParams.res_id;
-                     if (!this.resId){}
-                     switch (this.res) {
-                         case "dt":
-                             resFactory.call('LoadDestination', {DestinationId:''}).then(function(data){resFactory.addAlert(data);});
-                             break;
-                         case "rp":
-                             resFactory.call('LoadRatingPlan', {RatingPlanId:''}).then(function(data){resFactory.addAlert(data);});
-                             break;
-                         case "rpf":
-                             resFactory.call('LoadRatingProfile', {RatingProfileId:''}).then(function(data){resFactory.addAlert(data);});
-                             break;
-                         case "aa":
-                             resFactory.call('LoadAccountActions', {AccountActionsId: ''}).then(function(data){resFactory.addAlert(data);});
-                             break;
-                         case "dc":
-                             resFactory.call('LoadDerivedChargers', {DerivedChargersId: ''}).then(function(data){resFactory.addAlert(data);});
-                             break
-                         case "sg":
-                             resFactory.call('LoadSharedGroup', {SharedGroupId:''}).then(function(data){resFactory.addAlert(data);});
-                             break;
-                         case "cs":
-                             resFactory.call('LoadCdrStats', {CdrStatsId:''}).then(function(data){resFactory.addAlert(data);});
-                             break;
-                         case "all":
-                             resFactory.call('LoadTariffPlanFromStorDb', {DestinationId:''}).then(function(data){resFactory.addAlert(data, 'LoadTariffPlanFormStorDb');
-                             });
-                             break;
-                     }
+                     resFactory.call('LoadTariffPlanFromStorDb', {}).then(function(data){resFactory.addAlert(data, 'LoadTariffPlanFormStorDb')});
                      history.back();
                  });
        })
