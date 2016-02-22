@@ -36,6 +36,7 @@ information, please see the [`CONTRIBUTING.md`](CONTRIBUTING.md) file.
 | --------------- | --------- |
 | @danbogos | Dan Christian Bogos |
 | @eloycoto | Eloy Coto Pereiro |
+| @elfranne | Tom Braarup Cuykens |
 
 <!-- to sign, include a single line above this comment containing the following text:
 | @username | First Last |
